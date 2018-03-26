@@ -48,8 +48,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandEnum.cs" />
+    <Compile Include="CommandRecievedEventArgs.cs" />
+    <Compile Include="DirectoryCloseEventArgs.cs" />
+    <Compile Include="DirectoryHandler.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="IDirectoryHandler.cs" />
+    <Compile Include="IImageController.cs" />
     <Compile Include="IImageServiceModal.cs" />
     <Compile Include="ILoggingService.cs" />
+    <Compile Include="ImageController.cs" />
+    <Compile Include="ImageServer.cs" />
     <Compile Include="ImageService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -60,6 +69,7 @@
     <Compile Include="LoggingService.cs" />
     <Compile Include="MessageRecievedEventArgs.cs" />
     <Compile Include="MessageTypeEnum.cs" />
+    <Compile Include="NewFileCommand.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -68,7 +78,6 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PropertyItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -27,79 +27,24 @@ namespace ImageService
 
         public string AddFile(string path, out bool result)
         {
-            // Determine whether the directory exists.
-            if (!Directory.Exists(path))
-            {
-                if (!CreateDir(m_OutputFolder))
-                {
-                    result = false;
-                    return "Error in creating output folder.";
-                }
-            }
-            DateTime imageDate = GetDateTakenFromImage(path);
-            if (!setInDir(imageDate, path))
-            {
-                result = false;
-                return "Error in creating specific folder of year/month";
-            }
-            result = true;
-            return "File in the right directory";
-
-        }
-
-        public bool setInDir(DateTime date, string path)
-        {
-            int year = date.Year;
-            string checkPathY = m_OutputFolder + "/" + year.ToString();
-            if (!Directory.Exists(checkPathY))
-            {
-                if (!CreateDir(checkPathY)) return false;
-            }
-
-            int month = date.Month;
-            string checkPathM = m_OutputFolder + "/" + year.ToString() + "/" + month.ToString();
-            if (!Directory.Exists(checkPathM))
-            {
-                if (!CreateDir(checkPathM)) return false;
-            }
-            File.Move(path, checkPathM);
-            return true;
-
-
-        }
-
-        public bool CreateDir(string path)
-        {
-
             try
             {
-                // Try to create the directory.
-                DirectoryInfo di = Directory.CreateDirectory(path);
+                if (!Directory.Exists(m_OutputFolder))
+                {
+                    Directory.CreateDirectory(m_OutputFolder);
+                }
+                DateTime imageDate = GetDateTakenFromImage(path);
+                setInDir(imageDate, path, false);
+                setInDir(imageDate, path, true);
             }
             catch (Exception e)
             {
-                Console.WriteLine("The process failed: {0}", e.ToString());
-                return false;
+                result = false;
+                return e.ToString();
             }
-            finally { }
+            result = true;
+            return path;
 
-            return true;
-
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
 
         public static DateTime GetDateTakenFromImage(string path)
@@ -107,24 +52,39 @@ namespace ImageService
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             using (Image myImage = Image.FromStream(fs, false, false))
             {
-                System.Drawing.Imaging.PropertyItem propItem = null;
-                try
-                {
-                    propItem =  myImage.GetPropertyItem(36867);
-                }
-                catch { }
-                if (propItem != null)
-                {
-                    string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
-                    return DateTime.Parse(dateTaken);
-                }
-                else
-                    return new FileInfo(path).LastWriteTime;
+                PropertyItem propItem = myImage.GetPropertyItem(36867);
+                string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
+                return DateTime.Parse(dateTaken);
             }
         }
 
-        #endregion
+        public void handleThumbnailSize(string imagePath, string thumnmailDirPath)
+        {
+            Image image = Image.FromFile(imagePath);
+            Image thumb = image.GetThumbnailImage(m_thumbnailSize, m_thumbnailSize, () => false, IntPtr.Zero);
+            thumb.Save(thumnmailDirPath);
+        }
+        public void setInDir(DateTime date, string path, bool thumbnail)
+        {
+            // normal copy
+            if (thumbnail)
+            {
+                m_OutputFolder = m_OutputFolder + "/Thumbnails";
+            }
+            int year = date.Year;
+            int month = date.Month;
+            string totalPath = Path.Combine(path, year.ToString(), month.ToString());
+            Directory.CreateDirectory(totalPath);
+            if (!thumbnail)
+            {
+                File.Move(path, totalPath);
 
+            }else
+            {
+                handleThumbnailSize(path, totalPath);
+            }
+        }
+        #endregion
     }
 
 }
