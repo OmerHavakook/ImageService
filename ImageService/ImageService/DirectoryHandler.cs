@@ -9,36 +9,81 @@ namespace ImageService
 {
     class DirectoryHandler : IDirectoryHandler
     {
+        #region Members
         private IImageController m_controller;              // The Image Processing Controller
         private ILoggingService m_logging;
         private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
-        private string m_path;
-        public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;
+        private string m_path;                              // The Path of directory
+        #endregion
 
+        public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
 
-        public DirectoryHandler(IImageController m_controller, ILoggingService m_logging)
+        public DirectoryHandler(IImageController controller, ILoggingService logger)
         {
-            this.m_controller = m_controller;
-            this.m_logging = m_logging;
+            this.m_controller = controller;
+            m_logging = logger;
             m_dirWatcher = new FileSystemWatcher();
-            m_dirWatcher.Created += M_dirWatcher_Created; 
-            m_dirWatcher.Filter = "*.jpg ,*.png ,*.gif ,*.bmp";
-        }
-
-        public void M_dirWatcher_Created(object sender, FileSystemEventArgs e)
-        {
-            string[] arg = { e.FullPath };
-            m_controller.ExecuteCommand(1, arg, out bool res);
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
-            throw new NotImplementedException();
+            if (e.RequestDirPath.Equals(m_path))
+            {
+                if (e.CommandID == 1)
+                {
+                    handleAddingFile(e);
+                }
+                else
+                {
+                    handleClose();
+                }
+            }
         }
+
+        public void handleClose() { }
+
+        public void handleAddingFile(CommandRecievedEventArgs e)
+        {
+            Task addingTask = new Task(() =>
+            {
+                bool result;
+                String msg = m_controller.ExecuteCommand(e.CommandID, e.Args, out result);
+
+                if (result)
+                {
+                    m_logging.Log(msg, MessageTypeEnum.INFO);
+                }
+                else
+                {
+                    m_logging.Log(msg, MessageTypeEnum.FAIL);
+                }
+            });
+            addingTask.Start();
+        }
+
 
         public void StartHandleDirectory(string dirPath)
         {
-           
+            this.m_path = dirPath;
+            m_dirWatcher.Path = m_path;
+            m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
+            m_dirWatcher.Filter = "*.*";
+            m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
+            m_dirWatcher.EnableRaisingEvents = true;
+
+        }
+
+        private void checkEvent(object source, FileSystemEventArgs e)
+        {
+            String[] args = { e.FullPath };
+            string ending = Path.GetExtension(e.FullPath);
+            string[] endings = { ".bmp", ".gif", ".png", ".jpg" };
+            if (endings.Contains(ending))
+            {
+                CommandRecievedEventArgs eventArg = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand,
+                    args, this.m_path);
+                this.OnCommandRecieved(this, eventArg);
+            }
         }
     }
 }
