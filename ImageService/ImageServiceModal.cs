@@ -16,6 +16,7 @@ namespace ImageService
         #region Members
         private string m_OutputFolder;            // The Output Folder
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
+        private string saveNewImagePath;
 
         private static Regex r = new Regex(":");
 
@@ -58,30 +59,36 @@ namespace ImageService
             }
         }
 
-        public void handleThumbnailSize(string imagePath, string thumnmailDirPath)
+        public void handleThumbnailSize(string path, string thumnmailDirPath)
         {
-            Image image = Image.FromFile(imagePath);
-            Image thumb = image.GetThumbnailImage(m_thumbnailSize, m_thumbnailSize, () => false, IntPtr.Zero);
-            thumb.Save(thumnmailDirPath);
+            using (
+            Image thumb = Image.FromFile(path).GetThumbnailImage(m_thumbnailSize, m_thumbnailSize, () => false, IntPtr.Zero))
+            {
+                thumb.Save(thumnmailDirPath);
+
+            }
+            
         }
         public void setInDir(DateTime date, string path, bool thumbnail)
         {
             // normal copy
             if (thumbnail)
             {
-                m_OutputFolder = m_OutputFolder + "/Thumbnails";
+                m_OutputFolder = Path.Combine(m_OutputFolder, "Thumbnails");
             }
             int year = date.Year;
             int month = date.Month;
-            string totalPath = Path.Combine(path, year.ToString(), month.ToString());
+            string totalPath = Path.Combine(m_OutputFolder, year.ToString(), month.ToString());
             Directory.CreateDirectory(totalPath);
+            totalPath = Path.Combine(totalPath, Path.GetFileName(path));
             if (!thumbnail)
             {
+                saveNewImagePath = totalPath;
                 File.Move(path, totalPath);
 
             }else
             {
-                handleThumbnailSize(path, totalPath);
+                handleThumbnailSize(saveNewImagePath, totalPath);
             }
         }
         #endregion

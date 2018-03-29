@@ -23,6 +23,7 @@ namespace ImageService
             this.m_controller = controller;
             m_logging = logger;
             m_dirWatcher = new FileSystemWatcher();
+            logger.Log("INSIDE WATCHER", MessageTypeEnum.INFO);
             StartHandleDirectory(path);
         }
 
@@ -30,8 +31,12 @@ namespace ImageService
         {
             if (e.Args != null && e.RequestDirPath.Equals(m_path))
             {
-                if (e.CommandID == 1)
+                m_logging.Log("inside", MessageTypeEnum.INFO);
+
+                if (e.CommandID == (int)CommandEnum.NewFileCommand)
                 {
+                    m_logging.Log("call", MessageTypeEnum.INFO);
+
                     handleAddingFile(e);
                 }
                 else
@@ -47,6 +52,7 @@ namespace ImageService
 
         public void handleAddingFile(CommandRecievedEventArgs e)
         {
+            m_logging.Log("5", MessageTypeEnum.INFO);
             Task addingTask = new Task(() =>
             {
                 bool result;
@@ -65,19 +71,28 @@ namespace ImageService
         }
 
 
+
         public void StartHandleDirectory(string dirPath)
         {
             this.m_path = dirPath;
             m_dirWatcher.Path = m_path;
-            m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
-            m_dirWatcher.Filter = "*.*";
+            //m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
+            m_dirWatcher.Filter = "*";
+            m_logging.Log("1", MessageTypeEnum.INFO);
             m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
+            m_dirWatcher.Created += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.EnableRaisingEvents = true;
-
+            m_logging.Log("3", MessageTypeEnum.INFO);
         }
+
+
+
 
         private void checkEvent(object source, FileSystemEventArgs e)
         {
+            m_logging.Log("2.1", MessageTypeEnum.INFO);
+            string s = "My Error is :                " + e.FullPath;
+            m_logging.Log(s, MessageTypeEnum.INFO);
             String[] args = { e.FullPath };
             string ending = Path.GetExtension(e.FullPath);
             string[] endings = { ".bmp", ".gif", ".png", ".jpg" };
@@ -87,6 +102,8 @@ namespace ImageService
                     args, this.m_path);
                 this.OnCommandRecieved(this, eventArg);
             }
+            m_logging.Log("2", MessageTypeEnum.INFO);
+
         }
     }
 }

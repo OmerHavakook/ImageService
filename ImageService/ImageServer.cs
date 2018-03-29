@@ -18,6 +18,7 @@ namespace ImageService
 
         public ImageServer(IImageController m_controller, ILoggingService m_logging)
         {
+            
             this.m_controller = m_controller;
             this.m_logging = m_logging;
             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
@@ -38,6 +39,7 @@ namespace ImageService
             IDirectoryHandler handler = new DirectoryHandler(directory,m_controller, m_logging);
             // notify command
             CommandRecieved += handler.OnCommandRecieved;
+
 
         }
         #endregion

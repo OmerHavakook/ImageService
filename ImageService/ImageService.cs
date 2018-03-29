@@ -89,6 +89,7 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
+            this.logger.Log("On Start..",MessageTypeEnum.INFO);
             ImageServer server = new ImageServer(controller,logger);
         }
 
@@ -105,7 +106,7 @@ namespace ImageService
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            eventLog.WriteEntry("On Stop...");
+            this.logger.Log("On Stop..", MessageTypeEnum.INFO);
 
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);

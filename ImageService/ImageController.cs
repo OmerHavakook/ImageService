@@ -17,8 +17,8 @@ namespace ImageService
             this.m_modal = m_modal;
             commands = new Dictionary<int, ICommand>()
             {
-                {1,new NewFileCommand(m_modal) },
-                {2, new CloseCommand() }
+                {(int)CommandEnum.NewFileCommand ,new NewFileCommand(m_modal) },
+                {(int)CommandEnum.CloseCommand, new CloseCommand() }
                 // For Now will contain NEW_FILE_COMMAND
             };
         }
