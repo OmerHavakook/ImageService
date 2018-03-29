@@ -8,6 +8,8 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Configuration;
+
 public enum ServiceState
 {
     SERVICE_STOPPED = 0x00000001,
@@ -40,12 +42,20 @@ namespace ImageService
         ILoggingService logger;
         //private System.Diagnostics.EventLog eventLog;
         private int eventId = 1;
+        private IImageServiceModal modal;
+        private IImageController controller;
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
         public ImageService(string[] args)
         {
             InitializeComponent();
+            string outputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
+            int thumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
+            this.modal = new ImageServiceModal(outputFolder, thumbnailSize);
+            this.controller = new ImageController(this.modal);
+            
+
             string eventSourceName = "MySource";
             string logName = "MyNewLog";
             if (args.Count() > 0)
@@ -64,11 +74,7 @@ namespace ImageService
             eventLog.Source = eventSourceName;
             eventLog.Log = logName;
         }
-        public void OnTimer(object sender, System.Timers.ElapsedEventArgs args)
-        {
-            // TODO: Insert monitoring activities here.  
-            eventLog.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
-        }
+
         protected override void OnStart(string[] args)
         {
             // Update the service state to Start Pending.  
@@ -82,6 +88,8 @@ namespace ImageService
 
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
+            ImageServer server = new ImageServer(controller,logger);
         }
 
         private void Logger_MessageRecieved(object sender, MessageRecievedEventArgs e)

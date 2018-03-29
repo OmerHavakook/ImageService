@@ -18,16 +18,17 @@ namespace ImageService
 
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
 
-        public DirectoryHandler(IImageController controller, ILoggingService logger)
+        public DirectoryHandler(string path, IImageController controller, ILoggingService logger)
         {
             this.m_controller = controller;
             m_logging = logger;
             m_dirWatcher = new FileSystemWatcher();
+            StartHandleDirectory(path);
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
-            if (e.RequestDirPath.Equals(m_path))
+            if (e.Args != null && e.RequestDirPath.Equals(m_path))
             {
                 if (e.CommandID == 1)
                 {
@@ -40,7 +41,9 @@ namespace ImageService
             }
         }
 
-        public void handleClose() { }
+        public void handleClose() {
+
+        }
 
         public void handleAddingFile(CommandRecievedEventArgs e)
         {
