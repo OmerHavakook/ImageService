@@ -71,14 +71,15 @@ namespace ImageService
         }
         public void setInDir(DateTime date, string path, bool thumbnail)
         {
+            string targetDir = m_OutputFolder;
             // normal copy
             if (thumbnail)
             {
-                m_OutputFolder = Path.Combine(m_OutputFolder, "Thumbnails");
+                targetDir = Path.Combine(m_OutputFolder, "Thumbnails");
             }
             int year = date.Year;
             int month = date.Month;
-            string totalPath = Path.Combine(m_OutputFolder, year.ToString(), month.ToString());
+            string totalPath = Path.Combine(targetDir, year.ToString(), month.ToString());
             Directory.CreateDirectory(totalPath);
             totalPath = Path.Combine(totalPath, Path.GetFileName(path));
             if (!thumbnail)
