@@ -56,8 +56,8 @@ namespace ImageService
             this.controller = new ImageController(this.modal);
             
 
-            string eventSourceName = "MySource";
-            string logName = "MyNewLog";
+            string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
+            string logName = ConfigurationManager.AppSettings.Get("LogName");
             if (args.Count() > 0)
             {
                 eventSourceName = args[0];
