@@ -31,7 +31,9 @@ namespace ImageService
             {
                 if (!Directory.Exists(m_OutputFolder))
                 {
-                    Directory.CreateDirectory(m_OutputFolder);
+                    DirectoryInfo di = Directory.CreateDirectory(m_OutputFolder);
+                    di.Attributes = FileAttributes.Hidden;
+
                 }
                 DateTime imageDate = GetDateTakenFromImage(path);
                 string saveNewImagePath = setInDir(imageDate, path, false,null);
