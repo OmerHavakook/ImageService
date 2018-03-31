@@ -29,24 +29,47 @@ namespace ImageService
 
         }
 
-        public void invokeCommand(CommandRecievedEventArgs commandArgs)
-        {
-            CommandRecieved?.Invoke(this, commandArgs);
-        }
-
         private void createHandler(string directory)
         {
             IDirectoryHandler handler = new DirectoryHandler(directory,m_controller, m_logging);
             // notify command
             CommandRecieved += handler.OnCommandRecieved;
+            handler.DirectoryClose += closeServer;
 
 
         }
-        #endregion
+
+        public void closeServer(object sender, DirectoryCloseEventArgs args)
+        {
+            m_logging.Log(args.Message, MessageTypeEnum.INFO);
+            IDirectoryHandler handler = (IDirectoryHandler)sender;
+            CommandRecieved -= handler.OnCommandRecieved;
+            handler.DirectoryClose -= closeServer;
+        }
+
+        public void createCommand(int CommandID, string[] Args, string RequestDirPath)
+        {
+            m_logging.Log("In create command", MessageTypeEnum.INFO);
+            CommandRecievedEventArgs closeCommandArgs = new CommandRecievedEventArgs(
+                CommandID, Args, RequestDirPath);
+            this.CommandRecieved?.Invoke(this, closeCommandArgs);
+
+        }
+
+        ~ImageServer()
+        {
+            m_logging.Log("In ~~~~~~", MessageTypeEnum.INFO);
+             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
+                foreach (string dir in directories)
+                {
+                    createCommand((int)CommandEnum.CloseCommand,null, dir);
+                }
+        }
 
         #region Properties
         #endregion
 
-        
+
     }
+#endregion
 }

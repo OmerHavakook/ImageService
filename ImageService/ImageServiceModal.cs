@@ -45,8 +45,7 @@ namespace ImageService
                 return e.ToString();
             }
             result = true;
-            return path;
-
+            return "Adding File completed successfully at the path: " + path;
         }
 
         public static DateTime GetDateTakenFromImage(string path)
@@ -64,12 +63,13 @@ namespace ImageService
         {
 
             using (Image thumb = Image.FromFile(path))
-            using (thumb.GetThumbnailImage(
-                m_thumbnailSize, m_thumbnailSize, () => false, IntPtr.Zero))
+            using (Image newIm = thumb.GetThumbnailImage(
+              m_thumbnailSize, m_thumbnailSize, () => false, IntPtr.Zero))
+
             {
-                thumb.Save(thumnmailDirPath);
+                newIm.Save(thumnmailDirPath);
             }
-            
+
         }
         public string setInDir(DateTime date, string path, bool thumbnail, string saveNewImagePath)
         {
