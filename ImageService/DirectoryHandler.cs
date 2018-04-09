@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageService
@@ -89,18 +90,19 @@ namespace ImageService
 
            // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes | NotifyFilters.LastAccess | NotifyFilters.LastWrite
            //| NotifyFilters.FileName | NotifyFilters.DirectoryName;
-            //m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
+           // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
             m_dirWatcher.Filter = "*";
             //m_dirWatcher.IncludeSubdirectories = true;
            // m_dirWatcher.Path = ConfigurationManager.AppSettings["Directory"];
            // m_dirWatcher.EnableRaisingEvents = true;
-            //m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
+            m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.Created += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.EnableRaisingEvents = true;
         }
 
         private void checkEvent(object source, FileSystemEventArgs e)
         {
+            Thread.Sleep(50);
             String[] args = { e.FullPath };
             string ending = Path.GetExtension(e.FullPath);
             string[] endings = { ".bmp", ".gif", ".png", ".jpg" };

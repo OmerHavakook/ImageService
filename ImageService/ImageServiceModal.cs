@@ -99,7 +99,10 @@ namespace ImageService
             int year = date.Year;
             int month = date.Month;
             string totalPath = Path.Combine(targetDir, year.ToString(), month.ToString());
-            Directory.CreateDirectory(totalPath);
+            if (!Directory.Exists(totalPath))
+            {
+                Directory.CreateDirectory(totalPath);
+            }
             totalPath = getName(totalPath, Path.GetFileName(path));
             if (!thumbnail)
             {
