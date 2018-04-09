@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,6 @@ namespace ImageService
         }
 
         public void handleClose() {
-            m_logging.Log("In handle command",MessageTypeEnum.INFO);
             string msg;
             try
             {
@@ -86,9 +86,15 @@ namespace ImageService
         {
             this.m_path = dirPath;
             m_dirWatcher.Path = m_path;
+
+           // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes | NotifyFilters.LastAccess | NotifyFilters.LastWrite
+           //| NotifyFilters.FileName | NotifyFilters.DirectoryName;
             //m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
             m_dirWatcher.Filter = "*";
-            m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
+            //m_dirWatcher.IncludeSubdirectories = true;
+           // m_dirWatcher.Path = ConfigurationManager.AppSettings["Directory"];
+           // m_dirWatcher.EnableRaisingEvents = true;
+            //m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.Created += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.EnableRaisingEvents = true;
         }

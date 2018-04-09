@@ -49,7 +49,6 @@ namespace ImageService
 
         public void createCommand(int CommandID, string[] Args, string RequestDirPath)
         {
-            m_logging.Log("In create command", MessageTypeEnum.INFO);
             CommandRecievedEventArgs closeCommandArgs = new CommandRecievedEventArgs(
                 CommandID, Args, RequestDirPath);
             this.CommandRecieved?.Invoke(this, closeCommandArgs);
@@ -58,7 +57,6 @@ namespace ImageService
 
         ~ImageServer()
         {
-            m_logging.Log("In ~~~~~~", MessageTypeEnum.INFO);
              string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
                 foreach (string dir in directories)
                 {

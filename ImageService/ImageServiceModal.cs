@@ -10,7 +10,6 @@ using System.Drawing;
 
 namespace ImageService
 {
-
     public class ImageServiceModal : IImageServiceModal
     {
         #region Members
@@ -33,7 +32,6 @@ namespace ImageService
                 {
                     DirectoryInfo di = Directory.CreateDirectory(m_OutputFolder);
                     di.Attributes = FileAttributes.Hidden;
-
                 }
                 DateTime imageDate = GetDateTakenFromImage(path);
                 string saveNewImagePath = setInDir(imageDate, path, false,null);
@@ -71,6 +69,25 @@ namespace ImageService
             }
 
         }
+
+        public string getName(string path,string file)
+        {
+            int count = 1;
+
+            string fileNameOnly = Path.GetFileNameWithoutExtension(file);
+            string extension = Path.GetExtension(file);
+            //string path = Path.GetDirectoryName(fullPath);
+            string newFullPath = Path.Combine(path, Path.GetFileName(file));
+            //string newFullPath = Path;
+
+            while (File.Exists(newFullPath))
+            {
+                string tempFileName = string.Format("{0}({1})", fileNameOnly, count++);
+                newFullPath = Path.Combine(path, tempFileName + extension);
+            }
+            return newFullPath;
+        }
+
         public string setInDir(DateTime date, string path, bool thumbnail, string saveNewImagePath)
         {
             string targetDir = m_OutputFolder;
@@ -83,7 +100,7 @@ namespace ImageService
             int month = date.Month;
             string totalPath = Path.Combine(targetDir, year.ToString(), month.ToString());
             Directory.CreateDirectory(totalPath);
-            totalPath = Path.Combine(totalPath, Path.GetFileName(path));
+            totalPath = getName(totalPath, Path.GetFileName(path));
             if (!thumbnail)
             {
                 File.Move(path, totalPath);
