@@ -9,6 +9,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Configuration;
+using ImageService.Modal.Event;
+using ImageService.Logging;
+using IImageService.Modal;
+using ImageService.Controller;
+using ImageService.Enums;
+using ImageService.Server;
+using ImageService.Modal;
 
 public enum ServiceState
 {

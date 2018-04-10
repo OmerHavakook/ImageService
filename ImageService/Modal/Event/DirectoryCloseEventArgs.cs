@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService
+namespace ImageService.Modal.Event
 {
     class DirectoryCloseEventArgs : EventArgs
     {

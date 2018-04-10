@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Drawing.Imaging;
 using System.Drawing;
+using ImageService.Modal;
 
-namespace ImageService
+namespace IImageService.Modal
 {
     public class ImageServiceModal : IImageServiceModal
     {

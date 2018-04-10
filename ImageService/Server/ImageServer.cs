@@ -1,4 +1,9 @@
 ﻿using ImageService;
+using ImageService.Controller;
+using ImageService.Controller.Handlers;
+using ImageService.Enums;
+using ImageService.Logging;
+using ImageService.Modal.Event;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -6,7 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService
+namespace ImageService.Server
 {
      class ImageServer
     {

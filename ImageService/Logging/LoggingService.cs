@@ -1,10 +1,12 @@
-﻿using System;
+﻿using ImageService.Enums;
+using ImageService.Modal.Event;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService
+namespace ImageService.Logging
 {
     class LoggingService : ILoggingService
     {

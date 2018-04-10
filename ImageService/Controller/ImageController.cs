@@ -1,11 +1,14 @@
-﻿using System;
+﻿using ImageService.Commands;
+using ImageService.Enums;
+using ImageService.Modal;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ImageService
+namespace ImageService.Controller
 {
     class ImageController : IImageController
     {
@@ -18,7 +21,7 @@ namespace ImageService
             commands = new Dictionary<int, ICommand>()
             {
                 {(int)CommandEnum.NewFileCommand ,new NewFileCommand(m_modal) },
-                {(int)CommandEnum.CloseCommand, new CloseCommand() }
+                //{(int)CommandEnum.CloseCommand, new CloseCommand() }
                 // For Now will contain NEW_FILE_COMMAND
             };
         }

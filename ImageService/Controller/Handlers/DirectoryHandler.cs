@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ImageService.Enums;
+using ImageService.Logging;
+using ImageService.Modal.Event;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -7,7 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ImageService
+namespace ImageService.Controller.Handlers
 {
     class DirectoryHandler : IDirectoryHandler
     {

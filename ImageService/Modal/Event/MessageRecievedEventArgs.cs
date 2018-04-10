@@ -1,10 +1,11 @@
-﻿using System;
+﻿using ImageService.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService
+namespace ImageService.Modal.Event
 {
     public class MessageRecievedEventArgs : EventArgs
     {

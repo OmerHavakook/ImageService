@@ -49,29 +49,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CloseCommand.cs" />
-    <Compile Include="CommandEnum.cs" />
-    <Compile Include="CommandRecievedEventArgs.cs" />
-    <Compile Include="DirectoryCloseEventArgs.cs" />
-    <Compile Include="DirectoryHandler.cs" />
-    <Compile Include="ICommand.cs" />
-    <Compile Include="IDirectoryHandler.cs" />
-    <Compile Include="IImageController.cs" />
-    <Compile Include="IImageServiceModal.cs" />
-    <Compile Include="ILoggingService.cs" />
-    <Compile Include="ImageController.cs" />
-    <Compile Include="ImageServer.cs" />
+    <Compile Include="Enums\CommandEnum.cs" />
+    <Compile Include="Modal\Event\CommandRecievedEventArgs.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\NewFileCommand.cs" />
+    <Compile Include="Modal\Event\DirectoryCloseEventArgs.cs" />
+    <Compile Include="Controller\Handlers\DirectoryHandler.cs" />
+    <Compile Include="Controller\Handlers\IDirectoryHandler.cs" />
+    <Compile Include="Controller\IImageController.cs" />
+    <Compile Include="Modal\IImageServiceModal.cs" />
+    <Compile Include="Logging\ILoggingService.cs" />
+    <Compile Include="Controller\ImageController.cs" />
+    <Compile Include="Server\ImageServer.cs" />
     <Compile Include="ImageService.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ImageService.Designer.cs">
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImageServiceModal.cs" />
-    <Compile Include="LoggingService.cs" />
-    <Compile Include="MessageRecievedEventArgs.cs" />
-    <Compile Include="MessageTypeEnum.cs" />
-    <Compile Include="NewFileCommand.cs" />
+    <Compile Include="Modal\ImageServiceModal.cs" />
+    <Compile Include="Logging\LoggingService.cs" />
+    <Compile Include="Modal\Event\MessageRecievedEventArgs.cs" />
+    <Compile Include="Enums\MessageTypeEnum.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -92,6 +91,7 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
