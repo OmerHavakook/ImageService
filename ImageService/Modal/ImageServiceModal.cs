@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Drawing.Imaging;
 using System.Drawing;
 using ImageService.Modal;
+using System.Threading;
 
 namespace IImageService.Modal
 {
@@ -27,6 +28,7 @@ namespace IImageService.Modal
 
         public string AddFile(string path, out bool result)
         {
+            string saveNewImagePath = "";
             try
             {
                 if (!Directory.Exists(m_OutputFolder))
@@ -35,9 +37,14 @@ namespace IImageService.Modal
                     di.Attributes = FileAttributes.Hidden;
                 }
                 DateTime imageDate = GetDateTakenFromImage(path);
-                string saveNewImagePath = setInDir(imageDate, path, false,null);
+                saveNewImagePath = setInDir(imageDate, path, false,null);
                 setInDir(imageDate, path, true, saveNewImagePath);
+
             }
+            //catch (FileNotFoundException e)
+            //{
+
+            //}
             catch (Exception e)
             {
                 result = false;

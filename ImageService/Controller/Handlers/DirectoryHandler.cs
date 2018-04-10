@@ -33,6 +33,8 @@ namespace ImageService.Controller.Handlers
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
+            m_logging.Log("OnCommandRecieved function is being called", MessageTypeEnum.INFO);
+
             if (e.RequestDirPath.Equals(m_path))
             {
                 if (e.CommandID == (int)CommandEnum.NewFileCommand)
@@ -41,7 +43,6 @@ namespace ImageService.Controller.Handlers
                 }
                 else
                 {
-                    m_logging.Log("Call func", MessageTypeEnum.INFO);
                     handleClose();
                 }
             }
@@ -84,6 +85,7 @@ namespace ImageService.Controller.Handlers
                 }
             });
             addingTask.Start();
+            
         }
 
         public void StartHandleDirectory(string dirPath)
@@ -91,14 +93,16 @@ namespace ImageService.Controller.Handlers
             this.m_path = dirPath;
             m_dirWatcher.Path = m_path;
 
-           // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes | NotifyFilters.LastAccess | NotifyFilters.LastWrite
-           //| NotifyFilters.FileName | NotifyFilters.DirectoryName;
-           // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
+            // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes | NotifyFilters.LastAccess | NotifyFilters.LastWrite
+            //| NotifyFilters.FileName | NotifyFilters.DirectoryName;
+            //m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
+            //m_dirWatcher.NotifyFilter = NotifyFilters.LastWrite; 
+
             m_dirWatcher.Filter = "*";
             //m_dirWatcher.IncludeSubdirectories = true;
            // m_dirWatcher.Path = ConfigurationManager.AppSettings["Directory"];
            // m_dirWatcher.EnableRaisingEvents = true;
-            m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
+            //m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.Created += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.EnableRaisingEvents = true;
         }
@@ -116,5 +120,7 @@ namespace ImageService.Controller.Handlers
                 this.OnCommandRecieved(this, eventArg);
             }
         }
+
+        
     }
 }
