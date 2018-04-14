@@ -33,7 +33,10 @@ namespace ImageService.Server
             }
 
         }
-
+        /// <summary>
+        /// create new directory handler.
+        /// </summary>
+        /// <param name="directory"></param>
         private void createHandler(string directory)
         {
             IDirectoryHandler handler = new DirectoryHandler(directory,m_controller, m_logging);
@@ -43,7 +46,11 @@ namespace ImageService.Server
 
 
         }
-
+        /// <summary>
+        /// The function inform the server that a handler is done handle the dir.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         public void closeServer(object sender, DirectoryCloseEventArgs args)
         {
             m_logging.Log(args.Message, MessageTypeEnum.INFO);
@@ -51,7 +58,12 @@ namespace ImageService.Server
             CommandRecieved -= handler.OnCommandRecieved;
             handler.DirectoryClose -= closeServer;
         }
-
+        /// <summary>
+        /// create the command and invoke the event command recieved.
+        /// </summary>
+        /// <param name="CommandID"></param>
+        /// <param name="Args"></param>
+        /// <param name="RequestDirPath"></param>
         public void createCommand(int CommandID, string[] Args, string RequestDirPath)
         {
             CommandRecievedEventArgs closeCommandArgs = new CommandRecievedEventArgs(
@@ -59,7 +71,9 @@ namespace ImageService.Server
             this.CommandRecieved?.Invoke(this, closeCommandArgs);
 
         }
-
+        /// <summary>
+        /// distructor when the server is closed.
+        /// </summary>
         ~ImageServer()
         {
              string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));

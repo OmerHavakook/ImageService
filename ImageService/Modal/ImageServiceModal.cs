@@ -46,7 +46,11 @@ namespace IImageService.Modal
             result = true;
             return "Adding File completed successfully at the path: " + path;
         }
-
+        /// <summary>
+        /// get the date of picture being taken.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static DateTime GetDateTakenFromImage(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -57,7 +61,11 @@ namespace IImageService.Modal
                 return DateTime.Parse(dateTaken);
             }
         }
-
+        /// <summary>
+        /// save the thumbnail.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="thumnmailDirPath"></param>
         public void handleThumbnailSize(string path, string thumnmailDirPath)
         {
 
@@ -70,17 +78,19 @@ namespace IImageService.Modal
             }
 
         }
-
+        /// <summary>
+        /// get the name of the image if there is an image 
+        /// with the same name its add ({num}).
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="file"></param>
+        /// <returns>the name of image</returns>
         public string getName(string path,string file)
         {
             int count = 1;
-
             string fileNameOnly = Path.GetFileNameWithoutExtension(file);
             string extension = Path.GetExtension(file);
-            //string path = Path.GetDirectoryName(fullPath);
             string newFullPath = Path.Combine(path, Path.GetFileName(file));
-            //string newFullPath = Path;
-
             while (File.Exists(newFullPath))
             {
                 string tempFileName = string.Format("{0}({1})", fileNameOnly, count++);
@@ -88,7 +98,15 @@ namespace IImageService.Modal
             }
             return newFullPath;
         }
-
+        /// <summary>
+        /// this function set the image in the dirctory.
+        /// if the dirctory doesn't exist it cretae it.
+        /// </summary>
+        /// <param name="date"></param>
+        /// <param name="path"></param>
+        /// <param name="thumbnail">bool to check if thubnail creation or regular.</param>
+        /// <param name="saveNewImagePath"></param>
+        /// <returns></returns>
         public string setInDir(DateTime date, string path, bool thumbnail, string saveNewImagePath)
         {
             string targetDir = m_OutputFolder;

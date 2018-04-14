@@ -30,7 +30,12 @@ namespace ImageService.Controller.Handlers
             m_dirWatcher = new FileSystemWatcher();
             StartHandleDirectory(path);
         }
-
+        /// <summary>
+        /// the event method that activates the controller 
+        /// and sends message to the logging if the fail or sucsess.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             if (e.RequestDirPath.Equals(m_path))
@@ -47,6 +52,10 @@ namespace ImageService.Controller.Handlers
             }
         }
 
+        /// <summary>
+        /// when the service is closed it sends a massage to all the handlers 
+        /// and close them.
+        /// </summary>
         public void handleClose() {
             string msg;
             try
@@ -66,7 +75,11 @@ namespace ImageService.Controller.Handlers
                 m_dirWatcher.Created -= new FileSystemEventHandler(checkEvent);
             }
         }
-
+        /// <summary>
+        /// this function handle adding new file to the dirctory.
+        /// by create new task and move the image using image modal.
+        /// </summary>
+        /// <param name="e"></param>
         public void handleAddingFile(CommandRecievedEventArgs e)
         {
             Task addingTask = new Task(() =>
@@ -86,26 +99,28 @@ namespace ImageService.Controller.Handlers
             addingTask.Start();
         }
 
+        /// <summary>
+        /// this function works on when the server start to handle directory.
+        /// </summary>
+        /// <param name="dirPath"></param>
         public void StartHandleDirectory(string dirPath)
         {
             this.m_path = dirPath;
             m_dirWatcher.Path = m_path;
-
-           // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes | NotifyFilters.LastAccess | NotifyFilters.LastWrite
-           //| NotifyFilters.FileName | NotifyFilters.DirectoryName;
-           // m_dirWatcher.NotifyFilter = NotifyFilters.Attributes;
             m_dirWatcher.Filter = "*";
-            //m_dirWatcher.IncludeSubdirectories = true;
-           // m_dirWatcher.Path = ConfigurationManager.AppSettings["Directory"];
-           // m_dirWatcher.EnableRaisingEvents = true;
             m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.Created += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.EnableRaisingEvents = true;
         }
 
+        ///<summary>
+        /// this function is the file watcher event handler.
+        /// </summary>
+        ///<param name="source"></param>
+        ///<param name="e"></param>
         private void checkEvent(object source, FileSystemEventArgs e)
         {
-            Thread.Sleep(50);
+            Thread.Sleep(50);//wait for image being prefectly in directory.
             String[] args = { e.FullPath };
             string ending = Path.GetExtension(e.FullPath);
             string[] endings = { ".bmp", ".gif", ".png", ".jpg" };
