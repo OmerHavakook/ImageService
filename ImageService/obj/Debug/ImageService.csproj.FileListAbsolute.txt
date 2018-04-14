@@ -17,3 +17,13 @@ C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.csproj.Co
 C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.exe
 C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.pdb
 C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Desktop\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\DELL\Desktop\ImageService\bin\Debug\ImageService.exe
+C:\Users\DELL\Desktop\ImageService\bin\Debug\ImageService.pdb
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.exe
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.pdb

@@ -1,0 +1,9 @@
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Release\ImageService.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Release\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Release\ImageService.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Release\ImageService.ImageService.resources
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Release\ImageService.ProjectInstaller.resources
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Release\ImageService.csproj.GenerateResource.Cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Release\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Release\ImageService.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Release\ImageService.csprojResolveAssemblyReference.cache

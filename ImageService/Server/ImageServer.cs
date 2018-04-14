@@ -20,7 +20,6 @@ namespace ImageService.Server
         private ILoggingService m_logging;
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
 
-
         public ImageServer(IImageController m_controller, ILoggingService m_logging)
         {
             
@@ -31,8 +30,8 @@ namespace ImageService.Server
             {
                 createHandler(dir);
             }
-
         }
+
         /// <summary>
         /// create new directory handler.
         /// </summary>
@@ -43,9 +42,8 @@ namespace ImageService.Server
             // notify command
             CommandRecieved += handler.OnCommandRecieved;
             handler.DirectoryClose += closeServer;
-
-
         }
+
         /// <summary>
         /// The function inform the server that a handler is done handle the dir.
         /// </summary>
@@ -58,6 +56,7 @@ namespace ImageService.Server
             CommandRecieved -= handler.OnCommandRecieved;
             handler.DirectoryClose -= closeServer;
         }
+
         /// <summary>
         /// create the command and invoke the event command recieved.
         /// </summary>
@@ -71,6 +70,7 @@ namespace ImageService.Server
             this.CommandRecieved?.Invoke(this, closeCommandArgs);
 
         }
+
         /// <summary>
         /// distructor when the server is closed.
         /// </summary>
@@ -85,8 +85,6 @@ namespace ImageService.Server
 
         #region Properties
         #endregion
-
-
     }
 #endregion
 }

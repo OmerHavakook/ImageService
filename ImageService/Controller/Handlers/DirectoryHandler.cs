@@ -23,6 +23,12 @@ namespace ImageService.Controller.Handlers
 
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
 
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="controller"></param>
+        /// <param name="logger"></param>
         public DirectoryHandler(string path, IImageController controller, ILoggingService logger)
         {
             this.m_controller = controller;
@@ -30,6 +36,7 @@ namespace ImageService.Controller.Handlers
             m_dirWatcher = new FileSystemWatcher();
             StartHandleDirectory(path);
         }
+
         /// <summary>
         /// the event method that activates the controller 
         /// and sends message to the logging if the fail or sucsess.
@@ -46,7 +53,6 @@ namespace ImageService.Controller.Handlers
                 }
                 else
                 {
-                    m_logging.Log("Call func", MessageTypeEnum.INFO);
                     handleClose();
                 }
             }
@@ -71,10 +77,10 @@ namespace ImageService.Controller.Handlers
                 m_logging.Log(msg, MessageTypeEnum.INFO);
             } finally
             {
-                m_dirWatcher.Changed -= new FileSystemEventHandler(checkEvent);
                 m_dirWatcher.Created -= new FileSystemEventHandler(checkEvent);
             }
         }
+
         /// <summary>
         /// this function handle adding new file to the dirctory.
         /// by create new task and move the image using image modal.
@@ -105,10 +111,11 @@ namespace ImageService.Controller.Handlers
         /// <param name="dirPath"></param>
         public void StartHandleDirectory(string dirPath)
         {
+            string msg = "Start handle directory at path: " + dirPath;
+            m_logging.Log(msg, MessageTypeEnum.INFO);
             this.m_path = dirPath;
             m_dirWatcher.Path = m_path;
             m_dirWatcher.Filter = "*";
-            m_dirWatcher.Changed += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.Created += new FileSystemEventHandler(checkEvent);
             m_dirWatcher.EnableRaisingEvents = true;
         }
@@ -120,14 +127,14 @@ namespace ImageService.Controller.Handlers
         ///<param name="e"></param>
         private void checkEvent(object source, FileSystemEventArgs e)
         {
-            Thread.Sleep(50);//wait for image being prefectly in directory.
+            Thread.Sleep(50); //wait for image being prefectly in directory.
             String[] args = { e.FullPath };
             string ending = Path.GetExtension(e.FullPath);
             string[] endings = { ".bmp", ".gif", ".png", ".jpg" };
             if (endings.Contains(ending.ToLower()))
             {
-                CommandRecievedEventArgs eventArg = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand,
-                    args, this.m_path);
+                CommandRecievedEventArgs eventArg = new CommandRecievedEventArgs(
+                    (int)CommandEnum.NewFileCommand,args, this.m_path);
                 this.OnCommandRecieved(this, eventArg);
             }
         }

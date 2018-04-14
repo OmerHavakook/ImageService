@@ -40,8 +40,6 @@ public struct ServiceStatus
     public int dwWaitHint;
 };
 
-
-
 namespace ImageService
 {
     public partial class ImageService : ServiceBase
@@ -54,6 +52,11 @@ namespace ImageService
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
+        
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="args"></param>
         public ImageService(string[] args)
         {
             InitializeComponent();
@@ -61,8 +64,6 @@ namespace ImageService
             int thumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
             this.modal = new ImageServiceModal(outputFolder, thumbnailSize);
             this.controller = new ImageController(this.modal);
-            
-
             string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
             string logName = ConfigurationManager.AppSettings.Get("LogName");
             if (args.Count() > 0)
@@ -82,6 +83,10 @@ namespace ImageService
             eventLog.Log = logName;
         }
 
+        /// <summary>
+        /// This methos is being called when the service starts
+        /// </summary>
+        /// <param name="args"></param>
         protected override void OnStart(string[] args)
         {
             // Update the service state to Start Pending.  
@@ -100,14 +105,22 @@ namespace ImageService
             ImageServer server = new ImageServer(controller,logger);
         }
 
+        /// <summary>
+        /// This method is being written to the MessageRecieved event and
+        /// write to the logger
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Logger_MessageRecieved(object sender, MessageRecievedEventArgs e)
         {
-            eventLog.WriteEntry(e.Message);
+            eventLog.WriteEntry(e.Message,EventLogEntryType.Information,eventId++);
         }
 
+        /// <summary>
+        /// This method is being called when the service shuts down.
+        /// </summary>
         protected override void OnStop()
         {
-
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING;
             serviceStatus.dwWaitHint = 100000;
