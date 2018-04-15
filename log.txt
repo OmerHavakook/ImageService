@@ -1,0 +1,102 @@
+commit 553edfc1a9c33875038dc01cf7e298b49cc1235e
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Sat Apr 14 22:20:44 2018 +0300
+
+    Fixing bugs, adding more comments and ready for submission
+
+commit 4e533faa10ff243f41afdf5b37d1b1230dd6f59c
+Merge: 500393e 7bb9829
+Author: OmerLee <darhavakook@gmail.com>
+Date:   Sat Apr 14 21:09:46 2018 +0300
+
+    Add comments
+
+commit 500393ef732471d9ef50f5d8617b4cb6693fd97f
+Author: OmerLee <darhavakook@gmail.com>
+Date:   Sat Apr 14 21:06:05 2018 +0300
+
+    Add comments
+
+commit 7bb9829cf2587d63b119efd926a93a1d4120277f
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Tue Apr 10 22:10:03 2018 +0300
+
+    Fixing bugs
+
+commit cec370c2ddbd4e0f26bee08f3ce14d42e6aa51dc
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Tue Apr 10 16:51:51 2018 +0300
+
+    split to directories
+
+commit c4b01b5974846459853e5ca708276c3d6a51554e
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Tue Apr 10 00:22:57 2018 +0300
+
+    Met ha'holam metgit add -Agit add -Agit add -Agit add -Agit add -Agit add -Agit add -Agit add -Agit add -Agit add -A!
+
+commit 7b4a8a66579111187aec836f309272319af8124b
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Mon Apr 9 22:28:35 2018 +0300
+
+    Handling images with the same name
+
+commit d5e8abf827855c5eccd41d41203b4968774087ff
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Sun Apr 1 00:12:14 2018 +0300
+
+    finished, coding style and comments are needed
+
+commit c0c26e84b20f47bb15029d8dd5bfc1c3864b09d0
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Fri Mar 30 15:11:31 2018 +0300
+
+    make outdir hidden
+
+commit 9ae700ca6d7c66853999449d58514b1bc2ba66eb
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Fri Mar 30 13:37:02 2018 +0300
+
+     fixing the bug in the removing the photo while the service is running
+
+commit 072a3a94868245d430e2c14c6e8ff6c5f23ca064
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Fri Mar 30 02:01:51 2018 +0300
+
+    fixing the bug in the thumbnail
+
+commit 662d3b0f8496b2e02762903533606249b616a9a6
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Fri Mar 30 01:37:12 2018 +0300
+
+    Removing photos is available, bug in the thumbnail directory, closing handlers is required and handling the app.config
+
+commit e1851113978fc56e5b47656996b32c88b31426b4
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Thu Mar 29 21:03:10 2018 +0300
+
+    working on the sever, before checking and with no closing dir handling
+
+commit 9dca33dfcb1d62ec0248b7dcb19d89163b4f7b1c
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Tue Mar 27 23:38:38 2018 +0300
+
+    continue working on the handler and the controller
+
+commit abd766b2156656b30df754ee11effde4b8b74663
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Tue Mar 27 19:53:31 2018 +0300
+
+    creating the controller (mission 5)
+
+commit b2557b817842a873c6d0659dc51ead5e294f2e0f
+Author: LeeAlima <leealima28@gmail.com>
+Date:   Mon Mar 26 23:18:33 2018 +0300
+
+    mission 1 2 3 and half of 6
+
+commit ee7377c345bf27296d9d743256b08469d17f44c0
+Author: OmerLee <darhavakook@gmail.com>
+Date:   Sat Mar 24 20:57:18 2018 +0300
+
+    New project created

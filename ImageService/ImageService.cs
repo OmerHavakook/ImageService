@@ -113,7 +113,20 @@ namespace ImageService
         /// <param name="e"></param>
         private void Logger_MessageRecieved(object sender, MessageRecievedEventArgs e)
         {
-            eventLog.WriteEntry(e.Message,EventLogEntryType.Information,eventId++);
+            EventLogEntryType msg = EventLogEntryType.Information; // default
+            // for error or warning msg
+            switch (e.Status)
+            {
+                case MessageTypeEnum.FAIL:
+                    msg = EventLogEntryType.Error;
+                    break;
+                case MessageTypeEnum.WARNING:
+                    msg = EventLogEntryType.Warning;
+                    break;
+
+            }
+            // write entry with the msg
+            eventLog.WriteEntry(e.Message,msg,eventId++);
         }
 
         /// <summary>

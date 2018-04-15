@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Drawing.Imaging;
 using System.Drawing;
 using ImageService.Modal;
+using System.Threading;
 
 namespace IImageService.Modal
 {
@@ -39,8 +40,11 @@ namespace IImageService.Modal
                     di.Attributes = FileAttributes.Hidden;
                 }
                 // get date and time
+                Thread.Sleep(300); //wait for image being prefectly in directory.
                 DateTime imageDate = GetDateTakenFromImage(path);
+                // call for moving normally the image
                 string saveNewImagePath = setInDir(imageDate, path, false, null);
+                // call for creating thumbnail image
                 setInDir(imageDate, path, true, saveNewImagePath);
             }
             catch (Exception e)
@@ -62,9 +66,14 @@ namespace IImageService.Modal
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
             using (Image myImage = Image.FromStream(fs, false, false))
             {
-                PropertyItem propItem = myImage.GetPropertyItem(36867);
-                string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
-                return DateTime.Parse(dateTaken);
+                if (myImage.PropertyIdList.Any(p => p == 36867))
+                {
+                    // if there is the date in GetPropertyItem(36867), save it
+                    PropertyItem propItem = myImage.GetPropertyItem(36867);
+                    string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
+                    return DateTime.Parse(dateTaken);
+                } // if no info exists take the creation time
+                return File.GetCreationTime(path);
             }
         }
 
