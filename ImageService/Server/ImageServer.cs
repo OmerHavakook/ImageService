@@ -7,13 +7,14 @@ using ImageService.Modal.Event;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ImageService.Server
 {
-     class ImageServer
+    class ImageServer
     {
         #region Members
         private IImageController m_controller;
@@ -22,13 +23,20 @@ namespace ImageService.Server
 
         public ImageServer(IImageController m_controller, ILoggingService m_logging)
         {
-            
+
             this.m_controller = m_controller;
             this.m_logging = m_logging;
             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             foreach (string dir in directories)
             {
-                createHandler(dir);
+                if (Directory.Exists(dir))
+                {
+                    createHandler(dir);
+                }
+                else
+                {
+                    m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.FAIL);
+                }
             }
         }
 
@@ -38,7 +46,7 @@ namespace ImageService.Server
         /// <param name="directory"></param>
         private void createHandler(string directory)
         {
-            IDirectoryHandler handler = new DirectoryHandler(directory,m_controller, m_logging);
+            IDirectoryHandler handler = new DirectoryHandler(directory, m_controller, m_logging);
             // notify command
             CommandRecieved += handler.OnCommandRecieved;
             handler.DirectoryClose += closeServer;
@@ -76,15 +84,19 @@ namespace ImageService.Server
         /// </summary>
         ~ImageServer()
         {
-             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
-                foreach (string dir in directories)
+            string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
+            foreach (string dir in directories)
+            {
+                if (Directory.Exists(dir))
                 {
-                    createCommand((int)CommandEnum.CloseCommand,null, dir);
+                    createCommand((int)CommandEnum.CloseCommand, null, dir);
                 }
+
+            }
         }
 
         #region Properties
         #endregion
     }
-#endregion
+    #endregion
 }
