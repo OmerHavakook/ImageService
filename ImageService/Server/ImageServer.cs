@@ -1,16 +1,11 @@
-﻿using ImageService;
-using ImageService.Controller;
+﻿using ImageService.Controller;
 using ImageService.Controller.Handlers;
-using ImageService.Enums;
-using ImageService.Logging;
-using ImageService.Modal.Event;
+using ImageServiceInfrastructure.Enums;
+using ImageServiceInfrastructure.Event;
+using ImageServiceLogging.Logging;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ImageService.Server
 {

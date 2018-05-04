@@ -1,16 +1,13 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using System.Drawing.Imaging;
-using System.Drawing;
-using ImageService.Modal;
 using System.Threading;
 
-namespace IImageService.Modal
+namespace ImageService.Modal
 {
     public class ImageServiceModal : IImageServiceModal
     {

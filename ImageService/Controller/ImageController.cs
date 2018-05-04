@@ -1,5 +1,4 @@
 ﻿using ImageService.Commands;
-using ImageService.Enums;
 using ImageService.Modal;
 using System;
 using System.Collections.Generic;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ImageServiceInfrastructure.Enums;
 
 namespace ImageService.Controller
 {

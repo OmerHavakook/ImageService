@@ -1,12 +1,9 @@
-﻿using ImageService.Enums;
-using ImageService.Logging;
-using ImageService.Modal.Event;
+﻿using ImageServiceInfrastructure.Enums;
+using ImageServiceInfrastructure.Event;
+using ImageServiceLogging.Logging;
 using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -62,7 +59,8 @@ namespace ImageService.Controller.Handlers
         /// when the service is closed it sends a massage to all the handlers 
         /// and close them.
         /// </summary>
-        public void handleClose() {
+        public void handleClose()
+        {
             string msg;
             try
             {
@@ -75,7 +73,8 @@ namespace ImageService.Controller.Handlers
             {
                 msg = "Handler at path " + m_path + " failed closing";
                 m_logging.Log(msg, MessageTypeEnum.INFO);
-            } finally
+            }
+            finally
             {
                 m_dirWatcher.Created -= new FileSystemEventHandler(checkEvent);
             }
@@ -134,7 +133,7 @@ namespace ImageService.Controller.Handlers
             if (endings.Contains(ending.ToLower()))
             {
                 CommandRecievedEventArgs eventArg = new CommandRecievedEventArgs(
-                    (int)CommandEnum.NewFileCommand,args, this.m_path);
+                    (int)CommandEnum.NewFileCommand, args, this.m_path);
                 this.OnCommandRecieved(this, eventArg);
             }
         }

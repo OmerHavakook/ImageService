@@ -1,0 +1,8 @@
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\bin\Release\ImageServiceLogging.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\bin\Release\ImageServiceLogging.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\bin\Release\ImageServiceLogging.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\bin\Release\ImageServiceInfrastructure.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\bin\Release\ImageServiceInfrastructure.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\obj\Release\ImageServiceLogging.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\obj\Release\ImageServiceLogging.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceLogging\obj\Release\ImageServiceLogging.pdb
