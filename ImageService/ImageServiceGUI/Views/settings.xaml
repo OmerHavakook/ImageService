@@ -13,13 +13,20 @@
             </Grid>
 
             <Grid Height="180">
-                <StackPanel>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Output Directory:" VerticalAlignment="Top" FontSize="25"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Source Name:" VerticalAlignment="Top" FontSize="25"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Log Name:" VerticalAlignment="Top" FontSize="25"/>
-                    <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Thumbnail Size:" VerticalAlignment="Top" FontSize="25"/>
-        
-                </StackPanel>
+                
+                <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Output Directory:" VerticalAlignment="Top" FontSize="25"/>
+                <TextBlock HorizontalAlignment="Left" Margin="210,10,0,0" TextWrapping="Wrap" Text= "{Binding VM_OutputDirectory}" VerticalAlignment="Top" FontSize="25"/>
+
+
+                <TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" Text="Source Name:" VerticalAlignment="Top" FontSize="25"/>
+                <TextBlock HorizontalAlignment="Left" Margin="170,50,0,0" TextWrapping="Wrap" Text="{Binding VM_SourceName}" VerticalAlignment="Top" FontSize="25"/>
+
+                <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="Log Name:" VerticalAlignment="Top" FontSize="25"/>
+                <TextBlock HorizontalAlignment="Left" Margin="140,90,0,0" TextWrapping="Wrap" Text="{Binding VM_LogName}" VerticalAlignment="Top" FontSize="25"/>
+
+
+                <TextBlock HorizontalAlignment="Left" Margin="10,130,0,0" TextWrapping="Wrap" Text="Thumbnail Size:" VerticalAlignment="Top" FontSize="25"/>
+                <TextBlock HorizontalAlignment="Left" Margin="190,130,0,0" TextWrapping="Wrap" Text="{Binding VM_ThumbnailSize}" VerticalAlignment="Top" FontSize="25"/>
 
 
             </Grid>
@@ -32,6 +39,7 @@
 
 
             </Grid>
+            <TextBlock TextWrapping="Wrap" Text="TextBlock"/>
         </StackPanel>
     </Grid>
 </UserControl>

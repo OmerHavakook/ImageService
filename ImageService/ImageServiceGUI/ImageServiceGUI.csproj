@@ -75,6 +75,7 @@
     <Compile Include="Models\ISettingsModel.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="ViewModels\SettingsVM.cs" />
     <Compile Include="Views\Logs.xaml.cs">
       <DependentUpon>Logs.xaml</DependentUpon>
     </Compile>
@@ -134,9 +135,7 @@
       <Name>ImageServiceLogging</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>

@@ -16,7 +16,7 @@ namespace ImageServiceGUI.Models
 
         // ADD C'TOR THAT COMMUNICATE WITH THE SERVER!!!!!!
 
-        private string m_OutputDirectory;
+        private string m_OutputDirectory = "aaa";
         public string OutputDirectory
         {
             get { return this.m_OutputDirectory; }
@@ -27,7 +27,7 @@ namespace ImageServiceGUI.Models
             }
         }
 
-        private string m_SourceName;
+        private string m_SourceName = "bbb";
         public string SourceName
         {
             get { return this.m_SourceName; }
@@ -38,7 +38,7 @@ namespace ImageServiceGUI.Models
             }
         }
 
-        private string m_LogName;
+        private string m_LogName = "ccc";
         public string LogName
         {
             get { return this.m_LogName; }
@@ -49,7 +49,7 @@ namespace ImageServiceGUI.Models
             }
         }
 
-        private int m_ThumbnailSize;
+        private int m_ThumbnailSize = 120;
         public int ThumbnailSize
         {
             get { return this.m_ThumbnailSize; }
