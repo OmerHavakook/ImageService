@@ -24,3 +24,6 @@ C:\Users\DELL\source\repos\ImageServiceGUI\ImageServiceGUI\bin\Debug\ImageServic
 C:\Users\DELL\source\repos\ImageServiceGUI\ImageServiceGUI\bin\Debug\ImageServiceLogging.exe.config
 C:\Users\DELL\source\repos\ImageServiceGUI\ImageServiceGUI\bin\Debug\ImageServiceInfrastructure.pdb
 C:\Users\DELL\source\repos\ImageServiceGUI\ImageServiceGUI\bin\Debug\ImageServiceInfrastructure.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceGUI\bin\Debug\ImageServiceGUI.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.pdb

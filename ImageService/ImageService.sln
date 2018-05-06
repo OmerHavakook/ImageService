@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceCommunication",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService", "ImageService\ImageService.csproj", "{0B1B4C17-8281-446D-986E-DA6FF410F2BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceGUI", "..\ImageServiceGUI\ImageServiceGUI\ImageServiceGUI.csproj", "{B2CDA84B-36FC-4C8A-94E5-61BFF5B71359}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceGUI", "ImageServiceGUI\ImageServiceGUI.csproj", "{B2CDA84B-36FC-4C8A-94E5-61BFF5B71359}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
