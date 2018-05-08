@@ -1,40 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using ImageServiceCommunication.Interfaces;
+using ImageServiceInfrastructure.Enums;
+using ImageServiceLogging.Logging;
+using System;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ImageServiceCommunication
 {
-    class TcpServerChannel
+    class TcpServerChannel : IChannel
     {
         private readonly int _port;
+        private readonly string _ip;
+        private readonly ILoggingService _logger;
         private TcpListener _listener;
-        private IClientHandler ch;
-        public TcpServerChannel(int port, IClientHandler ch)
+
+        public TcpServerChannel(int port, string ip)
         {
             this._port = port;
-            this.ch = ch;
+            _ip = ip;
+
+            _logger = new LoggingService();
         }
-        public void Start()
+
+        public void Close()
+        {
+            ///SEND TO ALL CLIENTSSSS//
+            _listener.Stop();
+        }
+
+        public bool Start()
         {
             IPEndPoint ep = new
-                IPEndPoint(IPAddress.Parse("127.0.0.1"), _port);
+                IPEndPoint(IPAddress.Parse(_ip), _port);
             _listener = new TcpListener(ep);
 
             _listener.Start();
-            Console.WriteLine("Waiting for connections...");
+            _logger.Log("Waiting for connections...", MessageTypeEnum.INFO);
 
-            Task task = new Task(() => {
+            Task task = new Task(() =>
+            {
                 while (true)
                 {
                     try
                     {
                         TcpClient client = _listener.AcceptTcpClient();
-                        Console.WriteLine("Got new connection");
-                        ch.HandleClient(client);
+                        _logger.Log("Got new connection", MessageTypeEnum.INFO);
                     }
                     catch (SocketException)
                     {
@@ -44,16 +55,13 @@ namespace ImageServiceCommunication
                 Console.WriteLine("Server stopped");
             });
             task.Start();
+            return true;
         }
 
 
 
-        public void Stop()
-        {
-            _listener.Stop();
-        }
     }
 
-  
+
 
 }

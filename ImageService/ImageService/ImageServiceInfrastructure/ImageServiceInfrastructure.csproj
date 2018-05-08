@@ -43,9 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Event\DateCommandArgs.cs" />
     <Compile Include="Enums\CommandEnum.cs" />
     <Compile Include="Enums\MessageTypeEnum.cs" />
-    <Compile Include="Event\CommandInfo.cs" />
+    <Compile Include="Event\CommandInfoEventArgs.cs" />
     <Compile Include="Event\CommandRecievedEventArgs.cs" />
     <Compile Include="Event\DirectoryCloseEventArgs.cs" />
     <Compile Include="Event\MessageRecievedEventArgs.cs" />

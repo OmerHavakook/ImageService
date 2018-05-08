@@ -1,72 +1,51 @@
-﻿using ImageServiceInfrastructure.Event;
-using Newtonsoft.Json.Linq;
+﻿using ImageServiceCommunication.Interfaces;
 using System;
-using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
 namespace ImageServiceCommunication
 {
-    public class TcpClientChannel
+    public class TcpClientChannel : IClientChannel
     {
-
+        private int _port;
+        private string _ip;
         private TcpClient _client;
+        private IClientChannel _cHandler;
 
-        private static TcpClientChannel _clientInstance;
-
-        public event EventHandler<CommandInfo> MessageReceived;
-
-
-        public static TcpClientChannel Instance
+        public TcpClientChannel(int port, string ip)
         {
-            get
-            {
-                if (_clientInstance == null)
-                {
-                    _clientInstance = new TcpClientChannel();
-
-                }
-                return _clientInstance;
-            }
+            this._port = port;
+            this._ip = ip;
+            _cHandler = null;
         }
 
-        public void Connect()
+
+        public void Close()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Start()
         {
             try
             {
-                IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8000);
+                IPEndPoint ep = new IPEndPoint(IPAddress.Parse(_ip), _port);
                 _client = new TcpClient();
                 _client.Connect(ep);
+                _cHandler.Start();
                 Console.WriteLine("You are connected");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
+
+            return true;
         }
-        public JObject ReciveJObject(int command)
+
+        public int Send(string data)
         {
-            using (NetworkStream stream = _client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            {
-                var json = reader.ReadBytes(int.MaxValue);
-                var jobj = JObject.Parse(json.ToString());
-                return jobj;
-            }
+            return _cHandler.Send(data);
         }
-        public void SendCommand(CommandInfo info)
-        {
-            using (NetworkStream stream = _client.GetStream())
-            using (BinaryWriter writer = new BinaryWriter(stream))
-            {
-                // Send data to server
-              //  writer.Write(command);
-              //  Console.WriteLine($"Send {command} to Server");
-
-            }
-        }
-
-
-
     }
 }
