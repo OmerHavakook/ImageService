@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using ImageServiceInfrastructure.Event;
+using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net;
@@ -6,12 +7,14 @@ using System.Net.Sockets;
 
 namespace ImageServiceCommunication
 {
-    class TcpClientChannel
+    public class TcpClientChannel
     {
 
         private TcpClient _client;
 
         private static TcpClientChannel _clientInstance;
+
+        public event EventHandler<CommandInfo> MessageReceived;
 
 
         public static TcpClientChannel Instance
@@ -51,7 +54,7 @@ namespace ImageServiceCommunication
                 return jobj;
             }
         }
-        public void SendCommand(int command)
+        public void SendCommand(CommandInfo info)
         {
             using (NetworkStream stream = _client.GetStream())
             using (BinaryWriter writer = new BinaryWriter(stream))

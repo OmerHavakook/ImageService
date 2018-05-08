@@ -80,3 +80,8 @@ C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\obj
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.exe
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.pdb
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\bin\Debug\Commands.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceCommunication.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceCommunication.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceCommunication.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceGUI\bin\Debug\Newtonsoft.Json.xml

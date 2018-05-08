@@ -2,7 +2,9 @@
 {
     public enum CommandEnum : int
     {
-        NewFileCommand ,
-        CloseCommand
+        NewFileCommand,
+        CloseCommand,
+        GetConfigCommand,
+        LogCommand
     }
 }
