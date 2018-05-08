@@ -60,8 +60,8 @@ namespace ImageServiceCommunication
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
                 // Send data to server
-                writer.Write(command);
-                Console.WriteLine($"Send {command} to Server");
+              //  writer.Write(command);
+              //  Console.WriteLine($"Send {command} to Server");
 
             }
         }

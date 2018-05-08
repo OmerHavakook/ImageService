@@ -33,6 +33,7 @@
 
             <Grid Background="BlanchedAlmond">
                 <StackPanel>
+                   
                     <Button Content="Remove" Command="{Binding RemoveCommand }" FontSize="20" Background="PeachPuff" />
                     <ListBox ItemsSource="{Binding VM_Handlers}" SelectedItem="{Binding SelectedItem}" Height="240" Background="BlanchedAlmond"/>
                 </StackPanel>

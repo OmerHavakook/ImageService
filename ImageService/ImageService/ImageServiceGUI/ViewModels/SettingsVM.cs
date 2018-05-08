@@ -16,6 +16,7 @@ namespace ImageServiceGUI.ViewModels
         private ISettingsModel model;
         public SettingsVM()
         {
+            /// CREATE OUTSIDE!!!!!!!!!!!!!!!
             this.model = new SettingsModel();
             model.PropertyChanged +=
                 delegate (Object sender, PropertyChangedEventArgs e)
@@ -23,8 +24,6 @@ namespace ImageServiceGUI.ViewModels
                     NotifyPropertyChanged("VM_" + e.PropertyName);
                 };
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove,this.CanRemove);
-
-
         }
 
         private void OnRemove(object obj)

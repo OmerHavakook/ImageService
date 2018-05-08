@@ -82,6 +82,8 @@
     <Compile Include="Models\ISettingsModel.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
+    <Compile Include="pickColor.cs" />
+    <Compile Include="ViewModels\LogsVM.cs" />
     <Compile Include="ViewModels\SettingsVM.cs" />
     <Compile Include="Views\Logs.xaml.cs">
       <DependentUpon>Logs.xaml</DependentUpon>

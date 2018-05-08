@@ -8,10 +8,26 @@
              d:DesignHeight="500" d:DesignWidth="600">
     <Grid>
         <StackPanel Background="WhiteSmoke">
-            <Grid Height="60">
                 <TextBlock HorizontalAlignment="Left" Margin="248,7,0,-1" TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" FontSize="40"/>
-            </Grid>
-            
+            <ScrollViewer Grid.Row="0" Grid.Column="3" VerticalAlignment="Stretch">
+                <DataGrid Grid.Row="10" ItemsSource="{Binding VM_Messages}" AutoGenerateColumns="False" CanUserAddRows="False"
+                              VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Width="Auto"
+                              Height="Auto" Margin="0,70,0,10">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding type}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Background"
+                                            Value="{Binding Path = type, Converter={StaticResource pickColor}}"></Setter>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding message}">
+
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </UserControl>

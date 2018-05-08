@@ -13,23 +13,15 @@ namespace ImageServiceGUI.Models
 {
     class SettingsModel : ISettingsModel
     {
-        delegate TOut ParamsFunc<TIn, TOut>(params TIn[] args);
-
         public event PropertyChangedEventHandler PropertyChanged;
-        private Dictionary<int, System.Action> functions;
-
-        //public ObservableCollection<string> Handlers { get; set; }
 
         public SettingsModel()
         {
             Handlers = new ObservableCollection<string>();
-        //    this.functions = new Dictionary<int, System.Action>()
-      //  {
-        //    { (int)CommandEnum.GetConfigCommand, initializeConfig }
-       // };
-            CommandInfo initializeConfig = new CommandInfo((int)CommandEnum.GetConfigCommand, null);
+            CommandInfo initializeConfigC = new CommandInfo((int)CommandEnum.GetConfigCommand, null);
             TcpClientChannel client = TcpClientChannel.Instance;
-            client.SendCommand(initializeConfig);
+            client.MessageReceived += getMessageFromUserS;
+           // client.SendCommand(initializeConfigC);
            
         }
 
@@ -89,14 +81,19 @@ namespace ImageServiceGUI.Models
         public ObservableCollection<string> Handlers { get; set; }
         public object SettingData { get; private set; }
 
-        public getMessageFromUser(object sender, CommandInfo info)
+        public void getMessageFromUserS(object sender, CommandInfo info)
         {
-            functions[info.CommandID].initializeConfig(info);
+            if (info.CommandID == (int)CommandEnum.GetConfigCommand)
+            {
+                initializeConfig(info);
+            } else if (info.CommandID == (int)CommandEnum.CloseCommand)
+            {
+                removeHandler(info);
+            }
         }
 
         public void initializeConfig(CommandInfo info)
         {
-            TcpClientChannel client = TcpClientChannel.Instance;
             try
             {
                 SettingsData settings = JsonConvert.DeserializeObject<SettingsData>(info.Args);
@@ -113,13 +110,29 @@ namespace ImageServiceGUI.Models
                     }
 
                 }));
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
         }
 
         public void removeHandler(CommandInfo info)
+        {
+            try
+            {
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    string handlerToRemove = info.Args;
+                    Handlers.Remove(handlerToRemove);
+                }));
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
 
     }
 
