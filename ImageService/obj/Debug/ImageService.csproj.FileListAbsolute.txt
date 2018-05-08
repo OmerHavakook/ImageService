@@ -1,0 +1,42 @@
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageService.exe.config
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageService.exe
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageService.pdb
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.exe
+c:\users\user\documents\visual studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\bin\Debug\ImageService.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\bin\Debug\ImageService.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
+C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Desktop\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\DELL\Desktop\ImageService\bin\Debug\ImageService.exe
+C:\Users\DELL\Desktop\ImageService\bin\Debug\ImageService.pdb
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.exe
+C:\Users\DELL\Desktop\ImageService\obj\Debug\ImageService.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\obj\Debug\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\obj\Debug\ImageService.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Debug\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Debug\ImageService.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Debug\ImageServiceInfrastructure.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Debug\ImageServiceLogging.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Debug\ImageServiceInfrastructure.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Debug\ImageServiceLogging.pdb
