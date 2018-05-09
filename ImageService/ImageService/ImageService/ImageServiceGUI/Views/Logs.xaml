@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="ImageServiceGUI.Views.Logs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ImageServiceGUI.Views"
+             xmlns:func ="clr-namespace:ImageServiceGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="600">
+    <UserControl.Resources>
+        <func:PickColor x:Key="PickColor">
+            
+        </func:PickColor>
+    </UserControl.Resources>
+    <Grid>
+
+            <TextBlock HorizontalAlignment="Left" Margin="248,7,0,-1" TextWrapping="Wrap" Text="Logs" VerticalAlignment="Top" FontSize="40"/>
+            <ScrollViewer Grid.Row="0" Grid.Column="3" VerticalAlignment="Stretch">
+                <DataGrid Grid.Row="10" ItemsSource="{Binding VM_Messages}" AutoGenerateColumns="False" CanUserAddRows="False"
+                              VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" Width="Auto"
+                              Height="262" >
+                    <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Status}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Background" 
+                                        Value="{Binding Path=Status, Converter={StaticResource PickColor}}">
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                    <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Message}">
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+    </Grid>
+</UserControl>
