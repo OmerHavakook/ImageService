@@ -20,6 +20,7 @@ namespace ImageService
         private int eventId = 1;
         private IImageServiceModal modal;
         private IImageController controller;
+        private ImageServer server;
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
@@ -72,8 +73,9 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            this.logger.Log("On Start..", MessageTypeEnum.INFO);
-            ImageServer server = new ImageServer(controller, logger);
+            this.server = new ImageServer(controller, logger);
+            logger.MessageRecieved += server.sendLog;
+            this.logger.Log("On Start.. ffffff", MessageTypeEnum.INFO);
         }
 
         /// <summary>

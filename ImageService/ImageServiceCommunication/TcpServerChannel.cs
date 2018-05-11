@@ -19,12 +19,12 @@ namespace ImageServiceCommunication
         private TcpListener _listener;
         private List<TcpClient> _clients;
 
-        public TcpServerChannel(int port, string ip)
+        public TcpServerChannel(int port, string ip, ILoggingService logger)
         {
             this._port = port;
             _ip = ip;
 
-            _logger = new LoggingService();
+            _logger = logger;
             _clients = new List<TcpClient>();
         }
 
@@ -72,15 +72,13 @@ namespace ImageServiceCommunication
             {
                 new Task(() =>
                 {
-                   using (NetworkStream stream = client.GetStream())
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.Write(data);
-                }
+                    using (NetworkStream stream = client.GetStream())
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.Write(data);
+                    }
                 }).Start();
             }
+        }
     }
-
-
-
-}
+    }

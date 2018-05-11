@@ -2,8 +2,10 @@
 using ImageServiceInfrastructure.Event;
 using ImageServiceLogging.Logging;
 using System;
+using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -50,6 +52,19 @@ namespace ImageService.Controller.Handlers
                 }
                 else
                 {
+                    /////////////////////////////////////////////
+
+
+
+
+
+                    // NOT TO DELETE IN CASE OF CLOSING THE SERVER
+
+                    
+
+
+
+                    //////////////////////////////////////////////
                     handleClose();
                 }
             }
@@ -64,6 +79,7 @@ namespace ImageService.Controller.Handlers
             string msg;
             try
             {
+                //ConfigurationManager.AppSettings.Get("Handler").Split(';'))
                 m_dirWatcher.EnableRaisingEvents = false;
                 msg = "Handler at path " + m_path + " was closed";
                 DirectoryCloseEventArgs dirArg = new DirectoryCloseEventArgs(m_path, msg);
@@ -77,7 +93,27 @@ namespace ImageService.Controller.Handlers
             finally
             {
                 m_dirWatcher.Created -= new FileSystemEventHandler(checkEvent);
+                removeFromConfig();
+
             }
+        }
+
+
+        public void removeFromConfig()
+        {
+            Configuration m_Configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            string[] handlers = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
+            m_Configuration.AppSettings.Settings.Remove("Handler");
+            StringBuilder allHandlers = new StringBuilder();
+            foreach (string handlerInArray in handlers)
+            {
+                if (string.Compare(m_path, handlerInArray) != 0)
+                {
+                    allHandlers.Append(handlerInArray);
+                    allHandlers.Append(";");
+                }
+            }
+            ConfigurationManager.AppSettings.Set("Handler", allHandlers.ToString());
         }
 
         /// <summary>

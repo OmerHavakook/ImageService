@@ -37,7 +37,20 @@ namespace ImageService.Server
                     m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.FAIL);
                 }
             }
-            this.serverChannel = new TcpServerChannel(8000, "127.0.0.1");
+            m_logging.Log("hjfjfjffgjfjgf:", MessageTypeEnum.FAIL);
+            this.serverChannel = new TcpServerChannel(8000, "127.0.0.1",m_logging);
+            start();
+
+        }
+
+
+        public void sendLog(Object sender, MessageRecievedEventArgs msg)
+        {
+
+            string[] info = { msg.Status.ToString(), msg.Message };
+            CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
+            serverChannel.SendToAll(msgC.ToJson());
+            //var msg = CommandMessage.
         }
 
         public void start()
