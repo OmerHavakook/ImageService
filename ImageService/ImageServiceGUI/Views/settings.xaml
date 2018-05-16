@@ -6,41 +6,36 @@
              xmlns:local="clr-namespace:ImageServiceGUI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600">
-    <Grid>
-        <StackPanel Background="WhiteSmoke">
-            <Grid Height="60" Background="BlanchedAlmond">
-                <TextBlock HorizontalAlignment="Left" Margin="218,7,0,0" TextWrapping="Wrap" Text="Settings" VerticalAlignment="Top" FontSize="40"/>
-            </Grid>
 
-            <Grid Height="180">
-                
-                <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="Output Directory:" VerticalAlignment="Top" FontSize="25"/>
-                <TextBlock HorizontalAlignment="Left" Margin="210,10,0,0" TextWrapping="Wrap" Text= "{Binding VM_OutputDirectory}" VerticalAlignment="Top" FontSize="25"/>
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
+        <Label Content="Settings" FontSize="35" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+        <Grid TextBlock.FontSize="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Padding="5" Grid.Row="0"  Margin="3">Output Directory:</TextBlock>
+            <TextBlock Padding="5" Grid.Row="0" Grid.Column="2" Text="{Binding VM_OutputDirectory}" Margin="3"></TextBlock>
+            <TextBlock Padding="5" Grid.Row="1"   Margin="3">Source Name:</TextBlock>
+            <TextBlock Padding="5" Grid.Row="1" Grid.Column="2" Text="{Binding VM_SourceName}" Margin="3"></TextBlock>
+            <TextBlock Padding="5" Grid.Row="2"  Margin="3">Log Name:</TextBlock>
+            <TextBlock Padding="5" Grid.Row="2" Grid.Column="2" Text="{Binding VM_LogName}" Margin="3"></TextBlock>
+            <TextBlock Padding="5" Grid.Row="3" Margin="3">Thumbnail size:</TextBlock>
+            <TextBlock Padding="5" Grid.Row="3" Grid.Column="2" Text="{Binding VM_TumbnailSize}" Margin="3"></TextBlock>
+            <Button Content="Remove" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding RemoveCommand }" FontSize="20" Background="PeachPuff" />
+            <ListBox Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"  
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
+                     SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding VM_Handlers}">
+            </ListBox>
 
-
-                <TextBlock HorizontalAlignment="Left" Margin="10,50,0,0" TextWrapping="Wrap" Text="Source Name:" VerticalAlignment="Top" FontSize="25"/>
-                <TextBlock HorizontalAlignment="Left" Margin="170,50,0,0" TextWrapping="Wrap" Text="{Binding VM_SourceName}" VerticalAlignment="Top" FontSize="25"/>
-
-                <TextBlock HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="Log Name:" VerticalAlignment="Top" FontSize="25"/>
-                <TextBlock HorizontalAlignment="Left" Margin="140,90,0,0" TextWrapping="Wrap" Text="{Binding VM_LogName}" VerticalAlignment="Top" FontSize="25"/>
-
-
-                <TextBlock HorizontalAlignment="Left" Margin="10,130,0,0" TextWrapping="Wrap" Text="Thumbnail Size:" VerticalAlignment="Top" FontSize="25"/>
-                <TextBlock HorizontalAlignment="Left" Margin="190,130,0,0" TextWrapping="Wrap" Text="{Binding VM_ThumbnailSize}" VerticalAlignment="Top" FontSize="25"/>
-
-
-            </Grid>
-
-            <Grid Background="BlanchedAlmond">
-                <StackPanel>
-                   
-                    <Button Content="Remove" Command="{Binding RemoveCommand }" FontSize="20" Background="PeachPuff" />
-                    <ListBox ItemsSource="{Binding VM_Handlers}" SelectedItem="{Binding SelectedItem}" Height="240" Background="BlanchedAlmond"/>
-                </StackPanel>
-
-
-            </Grid>
-            <TextBlock TextWrapping="Wrap" Text="TextBlock"/>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </DockPanel>
 </UserControl>

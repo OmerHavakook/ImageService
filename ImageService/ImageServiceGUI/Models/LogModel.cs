@@ -25,6 +25,11 @@ namespace ImageServiceGUI.Models
             Messages = new ObservableCollection<MessageRecievedEventArgs>();
             Connection instance = Connection.Instance;
             instance.Channel.MessageRecived += GetMessageFromUserL;
+            //_mMessages.Add(new MessageRecievedEventArgs(MessageTypeEnum.FAIL,"Lee"));
+            //_mMessages.Add(new MessageRecievedEventArgs(MessageTypeEnum.WARNING, "alima"));
+
+
+
             //CommandInfoEventArgs logRequest = new CommandInfoEventArgs((int)CommandEnum.LogCommand, null);
             /*TcpClientChannel client = TcpClientChannel.Instance;
             client.MessageReceived += getMessageFromUserL;*/

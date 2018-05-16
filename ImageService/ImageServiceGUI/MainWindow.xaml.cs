@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using ImageServiceGUI.ViewModels;
+using System.Windows;
 
 namespace ImageServiceGUI
 {
@@ -10,6 +11,7 @@ namespace ImageServiceGUI
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowVM();
         }
 
     }
