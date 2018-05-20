@@ -1,0 +1,22 @@
+﻿Uninstalling assembly 'C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.InstallLog
+   assemblypath = C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.exe
+Removing EventLog source ImageService.
+Warning: The source ImageService is not registered on the local machine.
+Service ImageService is being removed from the system...
+Service ImageService was successfully removed from the system.
+Installing assembly 'C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.InstallLog
+   assemblypath = C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.exe
+Installing service ImageService...
+Service ImageService has been successfully installed.
+Creating EventLog source ImageService in log Application...
+Committing assembly 'C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.InstallLog
+   assemblypath = C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\obj\Debug\imageservice.exe

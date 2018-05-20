@@ -38,9 +38,7 @@ namespace ImageServiceGUI.Models
 
                     Application.Current.Dispatcher.Invoke(new Action(() =>
                     {
-                        _mMessages.Add(log);
-
-
+                        _mMessages.Insert(0, log);
                     }));
 
                 }

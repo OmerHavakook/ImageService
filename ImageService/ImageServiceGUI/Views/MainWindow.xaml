@@ -4,27 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageServiceGUI"
-        xmlns:Views ="clr-namespace:ImageServiceGUI.Views"
+        xmlns:Views="clr-namespace:ImageServiceGUI.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="600">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="58*"/>
-            <ColumnDefinition Width="459*"/>
-        </Grid.ColumnDefinitions>
-        <TabControl Grid.ColumnSpan="2" Margin="0,0,0,0">
-            <TabItem Header="Settings">
-                <Views:settings>
+        <Button>
+            <Button.Style>
+                <Style TargetType="Button">
 
-                </Views:settings>
+                    <Setter Property="Background" Value="White" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding VM_Connect}"
+                             Value="False">
+                            <Setter Property="Background" Value="Gray" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+        <TabControl TabStripPlacement="Top" VerticalAlignment= "Stretch">
+            <TabItem Header="Settings">
+                <Views:settings/>
             </TabItem>
-            
-            
+
             <TabItem Header="Logs">
-                <Views:Logs>
-                    
-                </Views:Logs>
+                <Views:Logs/>
             </TabItem>
+            
         </TabControl>
+        
+        
     </Grid>
 </Window>

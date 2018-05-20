@@ -26,3 +26,13 @@ C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceLogging
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceLogging\obj\Debug\ImageServiceLogging.csproj.CoreCompileInputs.cache
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceLogging\obj\Debug\ImageServiceLogging.exe
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageServiceLogging\obj\Debug\ImageServiceLogging.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\bin\Debug\ImageServiceLogging.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\bin\Debug\ImageServiceLogging.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\bin\Debug\ImageServiceLogging.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\bin\Debug\ImageServiceInfrastructure.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\bin\Debug\ImageServiceInfrastructure.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\bin\Debug\ImageServiceInfrastructure.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\obj\Debug\ImageServiceLogging.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\obj\Debug\ImageServiceLogging.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\obj\Debug\ImageServiceLogging.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceLogging\obj\Debug\ImageServiceLogging.pdb

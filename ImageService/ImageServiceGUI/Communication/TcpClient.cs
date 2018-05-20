@@ -8,6 +8,8 @@ namespace ImageServiceGUI.Communication
     {
         private static TcpClient _instance;
 
+        private bool connected;
+
         public TcpClientChannel Channel { get; set; }
 
         public static TcpClient Instance
@@ -27,8 +29,17 @@ namespace ImageServiceGUI.Communication
         {
             string ip = ConfigurationManager.AppSettings.Get("Ip");
             int port = Int32.Parse(ConfigurationManager.AppSettings.Get("Port"));
-            Channel = new TcpClientChannel(port,ip);
-            Channel.Start();
+            Channel = new TcpClientChannel(port, ip);
+            Connected = Channel.Start();
+        }
+
+        public bool Connected
+        {
+            get { return this.connected; }
+            set
+            {
+                connected = value;
+            }
         }
     }
 }

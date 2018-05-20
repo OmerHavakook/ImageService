@@ -66,6 +66,7 @@ namespace ImageService
             }
             eventLog.Source = eventSourceName;
             eventLog.Log = logName;
+            
         }
 
         /// <summary>
@@ -88,8 +89,8 @@ namespace ImageService
             this.server = new ImageServer(controller, logger);
 
             logger.MessageRecieved += Logger_MessageRecieved;
-            logger.MessageRecieved += server.sendLog;
-            this.logger.Log("On Start.. ffffff", MessageTypeEnum.INFO);
+            logger.MessageRecieved += server.SendLog;
+            this.logger.Log("On Start...", MessageTypeEnum.INFO);
 
 
         }

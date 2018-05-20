@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageServiceGUI.Communication;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,8 +15,17 @@ namespace ImageServiceGUI.Models
 
         public MainWindowModel()
         {
-            ////////////// TRY TO MAKE AN INSTANCE!!!!!!!!!!!!!!!!!!
-            m_Connect = false;
+            /*try
+             {
+                 TcpClient client = TcpClient.Instance;
+
+             }
+             catch (Exception e)
+             {
+                 m_Connect = false;
+             }*/
+            TcpClient client = TcpClient.Instance;
+            m_Connect = client.Connected;
 
         }
         public bool Connect {

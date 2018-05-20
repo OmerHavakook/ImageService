@@ -29,7 +29,7 @@
             <TextBlock Padding="5" Grid.Row="2"  Margin="3">Log Name:</TextBlock>
             <TextBlock Padding="5" Grid.Row="2" Grid.Column="2" Text="{Binding VM_LogName}" Margin="3"></TextBlock>
             <TextBlock Padding="5" Grid.Row="3" Margin="3">Thumbnail size:</TextBlock>
-            <TextBlock Padding="5" Grid.Row="3" Grid.Column="2" Text="{Binding VM_TumbnailSize}" Margin="3"></TextBlock>
+            <TextBlock Padding="5" Grid.Row="3" Grid.Column="2" Text="{Binding VM_ThumbnailSize}" Margin="3"></TextBlock>
             <Button Content="Remove" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding RemoveCommand }" FontSize="20" Background="PeachPuff" />
             <ListBox Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"  
                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"

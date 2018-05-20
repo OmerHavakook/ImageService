@@ -55,15 +55,17 @@ namespace ImageService.Server
             bool result;
             string answer = m_controller.ExecuteCommand((int)CommandEnum.GetConfigCommand, null, out result);
             serverChannel.SendToAll(answer);
-
-            foreach (MessageRecievedEventArgs msg in logMsgs)
+            List<MessageRecievedEventArgs> logMsgsReversed = new List<MessageRecievedEventArgs>();
+            logMsgsReversed = logMsgs;
+            logMsgsReversed.Reverse();
+            foreach (MessageRecievedEventArgs msg in logMsgsReversed)
             {
                 string[] info = { msg.Status.ToString(), msg.Message };
                 CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
                 serverChannel.SendToAll(msgC.ToJson());
             }
+            
             System.Threading.Thread.Sleep(5000);
-            m_logging.Log("Check ",MessageTypeEnum.FAIL);
         }
 
         public void addLog(MessageRecievedEventArgs msg)
@@ -72,7 +74,7 @@ namespace ImageService.Server
         }
 
 
-        public void sendLog(Object sender, MessageRecievedEventArgs msg)
+        public void SendLog(Object sender, MessageRecievedEventArgs msg)
         {
             string[] info = { msg.Status.ToString(), msg.Message };
             CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
@@ -85,9 +87,9 @@ namespace ImageService.Server
             var msg = CommandMessage.FromJson(info.Data);
             if (msg.CommandId == (int)CommandEnum.CloseCommand)
             {
+
                 CommandRecieved?.Invoke(this, new CommandRecievedEventArgs((int)CommandEnum.CloseCommand,
                     null, msg.Args[0]));
-
                 serverChannel.SendToAll(msg.ToJson());
             } else
             {

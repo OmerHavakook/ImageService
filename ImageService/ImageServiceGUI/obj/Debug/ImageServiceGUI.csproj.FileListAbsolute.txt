@@ -108,3 +108,42 @@ C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceGUI
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.csproj.GenerateResource.Cache
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceGUI\obj\Debug\Views\MainWindow.g.cs
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceGUI\obj\Debug\Views\MainWindow.baml
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceGUI.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceGUI.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceGUI.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceCommunication.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceInfrastructure.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceLogging.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceLogging.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceLogging.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceCommunication.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceCommunication.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceInfrastructure.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\ImageServiceInfrastructure.exe.config
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.csprojResolveAssemblyReference.cache
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\Views\MainWindow.g.cs
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\Views\Logs.g.cs
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\Views\settings.g.cs
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\App.g.cs
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI_MarkupCompile.cache
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI_MarkupCompile.lref
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\Views\MainWindow.baml
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\Views\Logs.baml
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\Views\settings.baml
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.g.resources
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.Properties.Resources.resources
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.csproj.GenerateResource.Cache
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.csproj.CoreCompileInputs.cache
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.exe
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\obj\Debug\ImageServiceGUI.pdb
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Microsoft.Expression.Controls.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Microsoft.Expression.Drawing.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Microsoft.Expression.Effects.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Microsoft.Expression.Interactions.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Microsoft.Expression.Prototyping.Interactivity.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Microsoft.Expression.Prototyping.SketchControls.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\Microsoft.SDK.Expression.Blend.dll
+C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceGUI\bin\Debug\System.Windows.Interactivity.dll

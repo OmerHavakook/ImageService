@@ -20,7 +20,6 @@ namespace ImageService
                 ServiceBase[] ServicesToRun = new ServiceBase[] { new ImageService(args) };
                 ServiceBase.Run(ServicesToRun);
             }
-            ;
         }
     }
 }

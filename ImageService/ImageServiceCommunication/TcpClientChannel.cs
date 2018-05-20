@@ -44,6 +44,7 @@ namespace ImageServiceCommunication
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                _isConnect = false;
                 return false;
             }
 
