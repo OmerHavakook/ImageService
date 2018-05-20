@@ -15,6 +15,19 @@ namespace ImageService
 {
     public partial class ImageService : ServiceBase
     {
+
+        //DELETE AFTER DEBUGGING
+
+        internal void TestStartupAndStop(string[] args)
+        {
+            this.OnStart(args);
+            Console.ReadLine();
+            System.Threading.Thread.Sleep(100000);
+
+            //this.OnStop();
+        } // UNTIL HERE
+
+
         ILoggingService logger;
         //private System.Diagnostics.EventLog eventLog;
         private int eventId = 1;
@@ -61,21 +74,24 @@ namespace ImageService
         /// <param name="args"></param>
         protected override void OnStart(string[] args)
         {
+
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-
-            logger = new LoggingService();
-            logger.MessageRecieved += Logger_MessageRecieved;
-
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
+
+            logger = new LoggingService();
             this.server = new ImageServer(controller, logger);
+
+            logger.MessageRecieved += Logger_MessageRecieved;
             logger.MessageRecieved += server.sendLog;
             this.logger.Log("On Start.. ffffff", MessageTypeEnum.INFO);
+
+
         }
 
         /// <summary>
@@ -100,6 +116,8 @@ namespace ImageService
             }
             // write entry with the msg
             eventLog.WriteEntry(e.Message, msg, eventId++);
+            // change to EVENT
+            this.server.addLog(e);
         }
 
         /// <summary>

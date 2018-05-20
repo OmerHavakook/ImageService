@@ -1,9 +1,7 @@
 ﻿using ImageServiceCommunication;
 using ImageServiceGUI.Communication;
-using ImageServiceGUI.Convertors;
 using ImageServiceInfrastructure.Enums;
 using ImageServiceInfrastructure.Event;
-using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -18,25 +16,16 @@ namespace ImageServiceGUI.Models
         public SettingsModel()
         {
             Handlers = new ObservableCollection<string>();
-            //CommandInfoEventArgs initializeConfigC = new CommandInfoEventArgs((int)CommandEnum.GetConfigCommand, null);
-            Connection instance = Connection.Instance;
-            instance.Channel.MessageRecived += GetMessageFromUserS;
-            //instance.Channel.Send(initializeConfigC);
-            /*TcpClientChannel client = TcpClientChannel.Instance;
-            client.MessageReceived += getMessageFromUserS;*/
-            // client.SendCommand(initializeConfigC);
-
+            TcpClient client = TcpClient.Instance;
+            client.Channel.MessageRecived += GetMessageFromUser;
         }
 
-        // ADD ALL THE COMMUNICATION WITH THE SERVER!!!!!!!!!!!!
 
         public void NotifyPropertyChanged(string propName)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        // ADD C'TOR THAT COMMUNICATE WITH THE SERVER!!!!!!
 
         private string _mOutputDirectory;
         public string OutputDirectory
@@ -84,18 +73,13 @@ namespace ImageServiceGUI.Models
         public ObservableCollection<string> Handlers { get; set; }
         public object SettingData { get; private set; }
 
-        public string selectedItem;
         public string SelectedItem
         {
-            get { return this.SelectedItem; }
-
-            set
-            {
-                throw new NotImplementedException();
-            }
+            get { return SelectedItem; }
+            set { SelectedItem = value; }
         }
 
-        public void GetMessageFromUserS(object sender, DataCommandArgs info)
+        public void GetMessageFromUser(object sender, DataCommandArgs info)
         {
             var msg = CommandMessage.FromJson(info.Data);
             if (msg.CommandId == (int)CommandEnum.GetConfigCommand)
@@ -110,24 +94,22 @@ namespace ImageServiceGUI.Models
 
         public void InitializeConfig(string[] settings)
         {
-            this._mOutputDirectory = settings[0];
-            this._mSourceName = settings[1];
-            this._mLogName = settings[2];
-            this._mThumbnailSize = Int32.Parse(settings[3]);
-            int i = 4;
-            this.Handlers.Clear();
             try
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    while (settings[i] != null)
+                    this.OutputDirectory = settings[0];
+                    this.SourceName = settings[1];
+                    this.LogName = settings[2];
+                    this.ThumbnailSize = int.Parse(settings[3]);
+                    for (int i = 4; i < settings.Length; i++)
                     {
                         Handlers.Add(settings[i]);
-                        i++;
                     }
                 }));
 
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
 

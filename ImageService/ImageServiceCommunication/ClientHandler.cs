@@ -1,35 +1,36 @@
-﻿using ImageServiceCommunication.Interfaces;
-using ImageServiceInfrastructure.Enums;
+﻿
 using ImageServiceInfrastructure.Event;
-using ImageServiceLogging.Logging;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageServiceCommunication
 {
-    class ClientHandler : IClientChannel
+    public class ClientHandler
     {
-        public event EventHandler<DataCommandArgs> MessageRecived;
-
-        private readonly ILoggingService _logger;
-        private TcpClient _client;
-        private StreamReader _reader;
-        private StreamWriter _writer;
-        private NetworkStream _stream;
+        public static event EventHandler<DataCommandArgs> MessageRecived;
 
 
-        public ClientHandler(TcpClient client, ILoggingService logger)
+        private readonly TcpClient _client;
+        private readonly BinaryReader _reader;
+        private readonly BinaryWriter _writer;
+        private readonly NetworkStream _stream;
+        private readonly CancellationTokenSource _cancelToken;
+        private bool IsConnect;
+
+        public BinaryWriter Writer => this._writer;
+
+        public ClientHandler(TcpClient client)
         {
             _client = client;
             _stream = client.GetStream();
-            _logger = logger;
-            _reader = new StreamReader(_stream, Encoding.ASCII);
-            _writer = new StreamWriter(_stream, Encoding.ASCII);
-
+            _reader = new BinaryReader(_stream, Encoding.ASCII);
+            _writer = new BinaryWriter(_stream, Encoding.ASCII);
+            _cancelToken = new CancellationTokenSource();
+            this.IsConnect = true;
         }
 
         public void Close()
@@ -37,59 +38,43 @@ namespace ImageServiceCommunication
             throw new NotImplementedException();
         }
 
-        public bool Start()
+        public void Start()
         {
-            string commandLine;
             new Task(() =>
             {
-                try
+                while (true)
                 {
-                    while (true)
+                    try
                     {
-                        commandLine = _reader.ReadLine();
-                        //CommandInfoEventArgs info = JsonConvert.DeserializeObject<CommandInfoEventArgs>(commandLine);
+                        string data = _reader.ReadString();
+                        if (data != "")
+                        {
+                            MessageRecived?.Invoke(this, new DataCommandArgs(data));
+                        }
 
-                        MessageRecived?.Invoke(this, new DataCommandArgs(commandLine));
-                        _logger.Log("Got command:" + commandLine, MessageTypeEnum.INFO);
                     }
+                    catch (Exception e)
+                    {
 
+                        DisposeHandler();
+                    }
+                }
 
-                }
-                catch (Exception e)
-                {
-                    DisposeHandler();
-                }
-            }).Start();
-            return true;
+            }, _cancelToken.Token).Start();
         }
 
         private void DisposeHandler()
         {
-            _reader.Close();
+            if (_client.Connected)
+                _reader.Close();
             _writer.Close();
             _client.Close();
         }
 
-
-        public int Send(string data)
+        public TcpClient Client()
         {
-            new Task(() =>
-            {
-                try
-                {
-                    _writer.Write(data);
-                   // CommandInfoEventArgs info = JsonConvert.DeserializeObject<CommandInfoEventArgs>(data);
-
-                    //DataRecived?.Invoke(this, info);
-                    _logger.Log("Send command:" + data, MessageTypeEnum.INFO);
-                    
-                }
-                catch (Exception e)
-                {
-                    // ignored
-                }
-            }).Start();
-            return 1;
+            return this._client;
         }
+        
     }
 }

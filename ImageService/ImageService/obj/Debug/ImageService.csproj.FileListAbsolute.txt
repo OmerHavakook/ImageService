@@ -29,3 +29,17 @@ C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageService\bin\De
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageService\bin\Debug\ImageServiceCommunication.pdb
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageService\bin\Debug\ImageServiceCommunication.exe.config
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageService\ImageService\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageService.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageServiceCommunication.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageServiceInfrastructure.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageServiceLogging.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\Newtonsoft.Json.dll
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageServiceCommunication.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageServiceInfrastructure.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\ImageServiceLogging.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\obj\Debug\ImageService.pdb

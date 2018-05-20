@@ -1,4 +1,5 @@
-﻿using System.ServiceProcess;
+﻿using System;
+using System.ServiceProcess;
 
 namespace ImageService
 {
@@ -9,8 +10,17 @@ namespace ImageService
         /// </summary>
         static void Main(string[] args)
         {
-            ServiceBase[] ServicesToRun = new ServiceBase[] { new ImageService(args) };
-            ServiceBase.Run(ServicesToRun);
+            if (Environment.UserInteractive)
+            {
+                ImageService service1 = new ImageService(args);
+                service1.TestStartupAndStop(args);
+            }
+            else
+            {
+                ServiceBase[] ServicesToRun = new ServiceBase[] { new ImageService(args) };
+                ServiceBase.Run(ServicesToRun);
+            }
+            ;
         }
     }
 }

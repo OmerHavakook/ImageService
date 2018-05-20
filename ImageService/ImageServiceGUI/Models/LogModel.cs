@@ -1,14 +1,11 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using ImageServiceLogging;
-using ImageServiceCommunication;
-using ImageServiceInfrastructure.Event;
-using ImageServiceInfrastructure.Enums;
-using System;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Windows;
+﻿using ImageServiceCommunication;
 using ImageServiceGUI.Communication;
+using ImageServiceInfrastructure.Enums;
+using ImageServiceInfrastructure.Event;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows;
 
 namespace ImageServiceGUI.Models
 {
@@ -23,29 +20,20 @@ namespace ImageServiceGUI.Models
         public LogModel()
         {
             Messages = new ObservableCollection<MessageRecievedEventArgs>();
-            Connection instance = Connection.Instance;
-            instance.Channel.MessageRecived += GetMessageFromUserL;
-            //_mMessages.Add(new MessageRecievedEventArgs(MessageTypeEnum.FAIL,"Lee"));
-            //_mMessages.Add(new MessageRecievedEventArgs(MessageTypeEnum.WARNING, "alima"));
-
-
-
-            //CommandInfoEventArgs logRequest = new CommandInfoEventArgs((int)CommandEnum.LogCommand, null);
-            /*TcpClientChannel client = TcpClientChannel.Instance;
-            client.MessageReceived += getMessageFromUserL;*/
-            // client.SendCommand(logRequest);
+            TcpClient client = TcpClient.Instance;
+            client.Channel.MessageRecived += GetMessageFromUser;
         }
 
-        private void GetMessageFromUserL(object sender, DataCommandArgs info)
+        private void GetMessageFromUser(object sender, DataCommandArgs info)
         {
             var msg = CommandMessage.FromJson(info.Data);
             if (msg.CommandId == (int)CommandEnum.LogCommand)
             {
-               
+
                 try
                 {
-                    MessageRecievedEventArgs log = 
-                        new MessageRecievedEventArgs((MessageTypeEnum) Enum.Parse(typeof(MessageTypeEnum), msg.Args[0]), msg.Args[1]);
+                    MessageRecievedEventArgs log =
+                        new MessageRecievedEventArgs((MessageTypeEnum)Enum.Parse(typeof(MessageTypeEnum), msg.Args[0]), msg.Args[1]);
 
 
                     Application.Current.Dispatcher.Invoke(new Action(() =>
@@ -55,7 +43,8 @@ namespace ImageServiceGUI.Models
 
                     }));
 
-                } catch (Exception e)
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
                 }

@@ -50,6 +50,7 @@
     <Compile Include="Event\DataCommandArgs.cs" />
     <Compile Include="Event\DirectoryCloseEventArgs.cs" />
     <Compile Include="Event\MessageRecievedEventArgs.cs" />
+    <Compile Include="Event\NewClientEventArgs.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

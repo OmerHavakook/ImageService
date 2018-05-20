@@ -50,7 +50,7 @@ namespace ImageService.Controller.Handlers
                 {
                     handleAddingFile(e);
                 }
-                else
+                else if (e.CommandID == (int)CommandEnum.CloseCommand)
                 {
                     /////////////////////////////////////////////
 
@@ -60,7 +60,7 @@ namespace ImageService.Controller.Handlers
 
                     // NOT TO DELETE IN CASE OF CLOSING THE SERVER
 
-                    
+
 
 
 

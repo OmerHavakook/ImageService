@@ -1,12 +1,8 @@
-﻿using ImageServiceInfrastructure.Enums;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
+using ImageServiceInfrastructure.Enums;
 
 namespace ImageServiceGUI
 {
@@ -16,15 +12,17 @@ namespace ImageServiceGUI
         {
             if (targetType != typeof(System.Windows.Media.Brush))
                 throw new InvalidOperationException("Convert to brush");
-            
+
             MessageTypeEnum type = (MessageTypeEnum)value;
-            if(type == MessageTypeEnum.FAIL)
+            if (type == MessageTypeEnum.FAIL)
             {
                 return Brushes.Red;
-            } else if ( type == MessageTypeEnum.WARNING)
+            }
+            else if (type == MessageTypeEnum.WARNING)
             {
                 return Brushes.Yellow;
-            } else
+            }
+            else
             {
                 return Brushes.LawnGreen;
             }

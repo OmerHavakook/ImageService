@@ -1,64 +1,102 @@
-﻿using ImageServiceCommunication.Interfaces;
-using ImageServiceInfrastructure.Event;
+﻿using ImageServiceInfrastructure.Event;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using ImageServiceLogging;
-using ImageServiceLogging.Logging;
+using System.Threading.Tasks;
 
 namespace ImageServiceCommunication
 {
-    public class TcpClientChannel : IClientChannel
+    public class TcpClientChannel
     {
-        private int _port;
-        private string _ip;
-        private TcpClient _client;
-        private IClientChannel _cHandler;
         public event EventHandler<DataCommandArgs> MessageRecived;
-        public ILoggingService _logger; 
+
+        private TcpClient _client;
+        private NetworkStream _stream;
+        private BinaryReader _reader;
+        private BinaryWriter _writer;
+        private string _ip;
+        private int _port;
+
+        private bool _isConnect;
 
         public TcpClientChannel(int port, string ip)
         {
-            this._port = port;
-            this._ip = ip;
-            _cHandler = null;
-
-            ///////////////////////////////
-
-            // REMEMBER TO REMOVE IT!!!
-
-            ///////////////////////////////
-            _logger = new LoggingService();
+            _port = port;
+            _ip = ip;
         }
 
 
-        public void Close()
-        {
-            throw new NotImplementedException();
-        }
+        public bool Connect => this._isConnect;
+
 
         public bool Start()
         {
             try
             {
                 IPEndPoint ep = new IPEndPoint(IPAddress.Parse(_ip), _port);
-                _client = new TcpClient();
+                this._client = new TcpClient();
                 _client.Connect(ep);
-                _cHandler = new ClientHandler(_client, _logger);
-                _cHandler.Start();
-                Console.WriteLine("You are connected");
+                this._stream = _client.GetStream();
+                this._reader = new BinaryReader(_stream);
+                this._writer = new BinaryWriter(_stream);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine(e.Message);
+                return false;
             }
 
+            _isConnect = true;
+            Read();
             return true;
         }
 
-        public int Send(string data)
+        public void Write(string str)
         {
-            return _cHandler.Send(data);
+
+            try
+            {
+                Console.WriteLine("write to server...");
+                _writer.Write(str);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
+        }
+
+
+        private void Read()
+        {
+            new Task(() =>
+            {
+                while (_isConnect)
+                {
+                    try
+                    {
+                        string msg = _reader.ReadString();
+                        Console.WriteLine("reading from server: " + msg);
+                        MessageRecived?.Invoke(this, new DataCommandArgs(msg));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                        break;
+                    }
+                }
+            }).Start();
+        }
+
+
+        public void Close()
+        {
+            _isConnect = false;
+            this._writer.Close();
+            this._reader.Close();
+            this._stream.Close();
+            this._client.Close();
         }
     }
 }

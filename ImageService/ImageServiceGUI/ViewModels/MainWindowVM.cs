@@ -1,25 +1,19 @@
-﻿using ImageServiceCommunication;
-using ImageServiceGUI.Communication;
-using ImageServiceGUI.Models;
+﻿using ImageServiceGUI.Models;
 using Microsoft.Practices.Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ImageServiceGUI.ViewModels
 {
-    class MainWindowVM : INotifyPropertyChanged
+    class MainWindowVm : INotifyPropertyChanged
     {
         private IMainWindowModel model;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
 
-        public MainWindowVM()
+        public MainWindowVm()
         {
             this.model = new MainWindowModel();
             model.PropertyChanged +=
@@ -65,6 +59,6 @@ namespace ImageServiceGUI.ViewModels
         {
             get { return this.model.Connect; }
         }
-        
+
     }
 }

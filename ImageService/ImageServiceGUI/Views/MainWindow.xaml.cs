@@ -1,7 +1,7 @@
 ﻿using ImageServiceGUI.ViewModels;
 using System.Windows;
 
-namespace ImageServiceGUI
+namespace ImageServiceGUI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -11,7 +11,7 @@ namespace ImageServiceGUI
         public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainWindowVM();
+            this.DataContext = new MainWindowVm();
         }
 
     }

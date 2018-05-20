@@ -1,84 +1,92 @@
-﻿using ImageServiceCommunication.Interfaces;
-using ImageServiceInfrastructure.Enums;
-using ImageServiceLogging.Logging;
+﻿
+using ImageServiceInfrastructure.Event;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading.Tasks;
-using ImageServiceInfrastructure.Event;
-using System.Collections.Generic;
-using System.IO;
 
 namespace ImageServiceCommunication
 {
-    public class TcpServerChannel : IChannel
+    public class TcpServerChannel
     {
         private readonly int _port;
         private readonly string _ip;
-        private readonly ILoggingService _logger;
         private TcpListener _listener;
-        private List<TcpClient> _clients;
+        public static List<ClientHandler> Clients;
+        public event EventHandler<NewClientEventArgs> NewHandler;
+        private bool _running;
 
-        public TcpServerChannel(int port, string ip, ILoggingService logger)
+
+        public TcpServerChannel(int port, string ip)
         {
             this._port = port;
             _ip = ip;
-
-            _logger = logger;
-            _clients = new List<TcpClient>();
+            _running = true;
+            Clients = new List<ClientHandler>();
         }
 
         public void Close()
         {
-            ///SEND TO ALL CLIENTSSSS//
-            _listener.Stop();
+            //to dooo
         }
 
-        public bool Start()
+        public void Start()
         {
-            IPEndPoint ep = new
-                IPEndPoint(IPAddress.Parse(_ip), _port);
-            _listener = new TcpListener(ep);
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse(_ip), _port);
+            this._listener = new TcpListener(ep);
 
-            _listener.Start();
-            _logger.Log("Waiting for connections...", MessageTypeEnum.INFO);
+            this._listener.Start();
+
+            Console.WriteLine("Waiting for connections...");
 
             Task task = new Task(() =>
             {
-                while (true)
+
+                while (_running)
                 {
                     try
                     {
-                        TcpClient client = _listener.AcceptTcpClient();
-                        _logger.Log("Got new connection", MessageTypeEnum.INFO);
-                        _clients.Add(client);
+                        TcpClient client = this._listener.AcceptTcpClient();
+                        Console.WriteLine("Client Connected");
+                        ClientHandler newclient = new ClientHandler(client);
+                        newclient.Start();
+                        Clients.Add(newclient);
+                        System.Threading.Thread.Sleep(500);
+                        NewHandler?.Invoke(this, new NewClientEventArgs(client));
                     }
-                    catch (SocketException)
+                    catch (SocketException e)
                     {
-                        break;
+                        Console.WriteLine(e.Message);
+
                     }
                 }
-                Console.WriteLine("Server stopped");
             });
             task.Start();
-            return true;
         }
-
-        public event EventHandler<DataCommandArgs> MessageRecived;
 
         public void SendToAll(string data)
         {
-            foreach (TcpClient client in _clients)
+            Task task = new Task(() =>
             {
-                new Task(() =>
+                foreach (ClientHandler ch in Clients)
                 {
-                    using (NetworkStream stream = client.GetStream())
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    try
                     {
-                        writer.Write(data);
+                        //writerMut.WaitOne();
+                        ch.Writer.Write(data);
+                        //writerMut.ReleaseMutex();
                     }
-                }).Start();
-            }
+                    catch (Exception e)
+                    {
+                        Clients.Remove(ch);
+                        ch.Client().Close();
+                    }
+                }
+                Console.WriteLine("write " + data);
+            });
+            task.Start();
         }
+
     }
-    }
+}

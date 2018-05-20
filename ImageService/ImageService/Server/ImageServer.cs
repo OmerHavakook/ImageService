@@ -5,6 +5,7 @@ using ImageServiceInfrastructure.Event;
 using ImageServiceLogging.Logging;
 using ImageServiceCommunication;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 
@@ -17,6 +18,7 @@ namespace ImageService.Server
         private ILoggingService m_logging;
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         private TcpServerChannel serverChannel;
+        private List<MessageRecievedEventArgs> logMsgs;
 
 
 
@@ -37,27 +39,46 @@ namespace ImageService.Server
                     m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.FAIL);
                 }
             }
-            m_logging.Log("hjfjfjffgjfjgf:", MessageTypeEnum.FAIL);
-            this.serverChannel = new TcpServerChannel(8000, "127.0.0.1",m_logging);
-            start();
 
+            logMsgs = new List<MessageRecievedEventArgs>();
+
+            string ip = ConfigurationManager.AppSettings.Get("Ip");
+            int port = Int32.Parse(ConfigurationManager.AppSettings.Get("Port"));
+            serverChannel = new TcpServerChannel(port,ip);
+            serverChannel.NewHandler += OnNewClient;
+            ClientHandler.MessageRecived += GetMessageFromUser;
+            serverChannel.Start();
+        }
+
+        private void OnNewClient(object sender, NewClientEventArgs e)
+        {
+            bool result;
+            string answer = m_controller.ExecuteCommand((int)CommandEnum.GetConfigCommand, null, out result);
+            serverChannel.SendToAll(answer);
+
+            foreach (MessageRecievedEventArgs msg in logMsgs)
+            {
+                string[] info = { msg.Status.ToString(), msg.Message };
+                CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
+                serverChannel.SendToAll(msgC.ToJson());
+            }
+            System.Threading.Thread.Sleep(5000);
+            m_logging.Log("Check ",MessageTypeEnum.FAIL);
+        }
+
+        public void addLog(MessageRecievedEventArgs msg)
+        {
+            logMsgs.Add(msg);
         }
 
 
         public void sendLog(Object sender, MessageRecievedEventArgs msg)
         {
-
             string[] info = { msg.Status.ToString(), msg.Message };
             CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
             serverChannel.SendToAll(msgC.ToJson());
-            //var msg = CommandMessage.
         }
 
-        public void start()
-        {
-            serverChannel.Start();
-            serverChannel.MessageRecived += GetMessageFromUser;
-        }
 
         private void GetMessageFromUser(object sender, DataCommandArgs info)
         {

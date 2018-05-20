@@ -23,21 +23,21 @@ namespace ImageServiceGUI.ViewModels
                     NotifyPropertyChanged("VM_" + e.PropertyName);
                 };
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
+            
         }
 
         private void OnRemove(object obj)
         {
-            // REMOVE INTO EVENT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            string[] args = { selectedItem };
+            string[] args = { _selectedItem };
             CommandMessage msg = new CommandMessage((int)CommandEnum.CloseCommand, args);
-            Connection instance = Connection.Instance;
-            instance.Channel.Send(msg.ToJson());
+            TcpClient instance = TcpClient.Instance;
+            instance.Channel.Write(msg.ToJson());
 
         }
 
         private bool CanRemove(object obj)
         {
-            if (selectedItem != null)
+            if (_selectedItem != null)
             {
                 return true;
             }
@@ -56,40 +56,25 @@ namespace ImageServiceGUI.ViewModels
             command.RaiseCanExecuteChanged();
         }
 
-        public string VM_OutputDirectory
-        {
-            get { return model.OutputDirectory; }
-        }
+        public string VM_OutputDirectory => model.OutputDirectory;
 
-        public string VM_SourceName
-        {
-            get { return model.SourceName; }
-        }
+        public string VM_SourceName => model.SourceName;
 
-        public string VM_LogName
-        {
-            get { return model.LogName; }
-        }
+        public string VM_LogName => model.LogName;
 
-        public int VM_ThumbnailSize
-        {
-            get { return model.ThumbnailSize; }
-        }
+        public int VM_ThumbnailSize => model.ThumbnailSize;
 
-        public ObservableCollection<string> VM_Handlers
-        {
-            get { return model.Handlers; }
-        }
+        public ObservableCollection<string> VM_Handlers => model.Handlers;
 
-        private string selectedItem;
+        private string _selectedItem;
         public string SelectedItem
         {
             set
             {
-                this.selectedItem = value;
+                this._selectedItem = value;
                 this.NotifyPropertyChanged("SelectedItem");
             }
-            get { return this.selectedItem; }
+            get { return this._selectedItem; }
         }
 
     }
