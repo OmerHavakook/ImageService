@@ -82,8 +82,11 @@ namespace ImageService.Controller.Handlers
             finally
             {
                 m_dirWatcher.Created -= new FileSystemEventHandler(checkEvent);
-                removeFromConfig();
-
+                bool result;
+                string[] args = { m_path };
+                string answer = m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
+                //m_logging.Log(answer, MessageTypeEnum.INFO);
+                //removeFromConfig();
             }
         }
 

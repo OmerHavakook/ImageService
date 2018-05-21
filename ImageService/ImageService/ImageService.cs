@@ -3,6 +3,7 @@ using ImageService.Modal;
 using ImageService.Server;
 using ImageServiceInfrastructure.Enums;
 using ImageServiceInfrastructure.Event;
+using ImageServiceLogging;
 using ImageServiceLogging.Logging;
 using System;
 using System.Configuration;
@@ -87,12 +88,16 @@ namespace ImageService
 
 
             logger = new LoggingService();
-            this.server = new ImageServer(controller, logger);
+
             logger.MessageRecieved += Logger_MessageRecieved;
+            this.logger.Log("On Start...", MessageTypeEnum.INFO);
+
+
+            this.server = new ImageServer(controller, logger);
             logger.MessageRecieved += server.SendLog;
 
 
-            this.logger.Log("On Start...", MessageTypeEnum.INFO);
+
 
 
         }
@@ -122,8 +127,8 @@ namespace ImageService
                 // write entry with the msg
                 eventLog.WriteEntry(e.Message, msg, eventId++);
                 // change to EVENT
-                this.server.addLog(e);
-   
+                LogService.Instance.addLogToList(e);
+
             }
         }
 

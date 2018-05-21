@@ -24,8 +24,12 @@ namespace ImageService.Commands
                 int i = 4;
                 foreach (string handler in handlers)
                 {
-                    info[i] = handler;
-                    i++;
+                    if (handler != "")
+                    {
+                        info[i] = handler;
+                        i++;
+                    }
+                    
                 }
                 result = true;
                 return new CommandMessage((int)CommandEnum.GetConfigCommand, info).ToJson();

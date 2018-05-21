@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using ImageServiceLogging;
 
 namespace ImageService.Server
 {
@@ -18,7 +19,7 @@ namespace ImageService.Server
         private ILoggingService m_logging;
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         private TcpServerChannel serverChannel;
-        private List<MessageRecievedEventArgs> logMsgs;
+        //private List<MessageRecievedEventArgs> logMsgs;
         private Object thisLock = new Object();
 
 
@@ -38,11 +39,13 @@ namespace ImageService.Server
                 }
                 else
                 {
+                    bool result;
+                    string[] args= { dir };
+                    string answer = m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
                     m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.FAIL);
                 }
             }
 
-            logMsgs = new List<MessageRecievedEventArgs>();
 
             string ip = ConfigurationManager.AppSettings.Get("Ip");
             int port = Int32.Parse(ConfigurationManager.AppSettings.Get("Port"));
@@ -61,7 +64,7 @@ namespace ImageService.Server
             //serverChannel.SendToAll(answer);
             lock (thisLock)
             {
-                List<MessageRecievedEventArgs> logMsgsReversed = new List<MessageRecievedEventArgs>(logMsgs);
+                List<MessageRecievedEventArgs> logMsgsReversed = new List<MessageRecievedEventArgs>(LogService.Instance.LogMsgs);
 
                 //logMsgsReversed = logMsgs;
                 logMsgsReversed.Reverse();
@@ -79,11 +82,6 @@ namespace ImageService.Server
             System.Threading.Thread.Sleep(5000);
         }
 
-        public void addLog(MessageRecievedEventArgs msg)
-        {
-            logMsgs.Insert(0,msg);
-        }
-
 
         public void SendLog(Object sender, MessageRecievedEventArgs msg)
         {
@@ -97,16 +95,18 @@ namespace ImageService.Server
         {
             var msg = CommandMessage.FromJson(info.Data);
             m_logging.Log("Got msg from user, Command ID: " + msg.CommandId, MessageTypeEnum.INFO);
+            bool result;
 
             if (msg.CommandId == (int)CommandEnum.CloseCommand)
             {
 
                 CommandRecieved?.Invoke(this, new CommandRecievedEventArgs((int)CommandEnum.CloseCommand,
                     null, msg.Args[0]));
+                //string answer = m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, msg.Args, out result);
+
                 serverChannel.SendToAll(msg.ToJson());
             } else
             {
-                bool result;
                 string answer =m_controller.ExecuteCommand(msg.CommandId, null,out result);
                 serverChannel.SendToAll(answer);
             }
