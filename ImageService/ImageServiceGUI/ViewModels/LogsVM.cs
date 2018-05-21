@@ -14,9 +14,11 @@ namespace ImageServiceGUI.ViewModels
     public class LogsVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
         private ILogModel model;
 
+        /// <summary>
+        /// c'tor
+        /// </summary>
         public LogsVM()
         {
             this.model = new LogModel();
@@ -27,18 +29,21 @@ namespace ImageServiceGUI.ViewModels
             };
         }
 
+        /// <summary>
+        /// This method is being called when a property has changed
+        /// </summary>
+        /// <param name="propName"></param>
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
+        /// <summary>
+        /// Property for the msgs
+        /// </summary>
         public ObservableCollection<MessageRecievedEventArgs> VM_Messages
         {
             get { return model.Messages; }
         }
-
-
-
-
     }
 }

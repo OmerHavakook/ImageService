@@ -24,4 +24,3 @@ C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceInfrastructure\bin\D
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.csproj.CoreCompileInputs.cache
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.exe
 C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.pdb
-C:\Users\DELL\Desktop\ImageService\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.csprojResolveAssemblyReference.cache

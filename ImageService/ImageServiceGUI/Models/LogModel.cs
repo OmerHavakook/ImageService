@@ -11,27 +11,44 @@ namespace ImageServiceGUI.Models
 {
     class LogModel : ILogModel
     {
-        private Object thisLock = new Object();
+        private Object thisLock = new Object(); // lock
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        // list of log msgs
         private ObservableCollection<MessageRecievedEventArgs> _mMessages;
 
+        /// <summary>
+        /// c'tor
+        /// </summary>
         public LogModel()
         {
             Messages = new ObservableCollection<MessageRecievedEventArgs>();
             TcpClient client = TcpClient.Instance;
-            client.Channel.MessageRecived += GetMessageFromUser;
+            // send msg from the user
+            client.Channel.MessageRecived += GetMessageFromServer;
         }
 
-        private void GetMessageFromUser(object sender, DataCommandArgs info)
+
+        /// <summary>
+        /// This method is being called whenever a new msg received from the server
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="info"></param>
+        private void GetMessageFromServer(object sender, DataCommandArgs info)
         {
             
                 var msg = CommandMessage.FromJson(info.Data);
+                if (msg == null)
+                {
+                    return;
+                }
+                // if new log is being received
                 if (msg.CommandId == (int)CommandEnum.LogCommand)
                 {
                     try
                     {
+                        // try to parse it
                         MessageRecievedEventArgs log =
                             new MessageRecievedEventArgs((MessageTypeEnum)Enum.Parse(typeof(MessageTypeEnum), msg.Args[0]), msg.Args[1]);
 
@@ -39,6 +56,7 @@ namespace ImageServiceGUI.Models
                         {
                             lock (thisLock)
                             {
+                                // add msg to the list
                                 _mMessages.Insert(0, log);
                             }
                         }));
@@ -48,9 +66,11 @@ namespace ImageServiceGUI.Models
                         Console.WriteLine(e.Message);
                     }
                 }
-            
         }
 
+        /// <summary>
+        /// Property of Messages
+        /// </summary>
         public ObservableCollection<MessageRecievedEventArgs> Messages
         {
             get { return this._mMessages; }
@@ -61,6 +81,11 @@ namespace ImageServiceGUI.Models
             }
         }
 
+        /// <summary>
+        /// Method to make the code shorter (E.G the code we saw at the lecture about
+        /// thr robut)
+        /// </summary>
+        /// <param name="propName"></param> as the property that has changed
         public void NotifyPropertyChanged(string propName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));

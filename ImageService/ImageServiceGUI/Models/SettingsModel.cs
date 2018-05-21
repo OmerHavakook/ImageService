@@ -12,22 +12,34 @@ namespace ImageServiceGUI.Models
     class SettingsModel : ISettingsModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private Object thisLock = new Object();
 
+
+        /// <summary>
+        /// c'tor
+        /// </summary>
         public SettingsModel()
         {
             Handlers = new ObservableCollection<string>();
             TcpClient client = TcpClient.Instance;
-            client.Channel.MessageRecived += GetMessageFromUser;
+            client.Channel.MessageRecived += GetMessageFromServer;
         }
 
-
+        /// <summary>
+        /// Method to make the code shorter (E.G the code we saw at the lecture about
+        /// thr robut)
+        /// </summary>
+        /// <param name="propName"></param> as the property that has changed
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-
         private string _mOutputDirectory;
+
+        /// <summary>
+        /// Property for _mOutputDirectory
+        /// </summary>
         public string OutputDirectory
         {
             get { return this._mOutputDirectory; }
@@ -39,6 +51,10 @@ namespace ImageServiceGUI.Models
         }
 
         private string _mSourceName;
+
+        /// <summary>
+        /// Property for _mSourceName
+        /// </summary>
         public string SourceName
         {
             get { return this._mSourceName; }
@@ -50,6 +66,10 @@ namespace ImageServiceGUI.Models
         }
 
         private string _mLogName;
+
+        /// <summary>
+        /// Property for _mLogName
+        /// </summary>
         public string LogName
         {
             get { return this._mLogName; }
@@ -61,6 +81,10 @@ namespace ImageServiceGUI.Models
         }
 
         private int _mThumbnailSize;
+
+        /// <summary>
+        /// Property for _mThumbnailSize
+        /// </summary>
         public int ThumbnailSize
         {
             get { return this._mThumbnailSize; }
@@ -70,29 +94,48 @@ namespace ImageServiceGUI.Models
                 NotifyPropertyChanged("ThumbnailSize");
             }
         }
+
+        /// <summary>
+        /// Property for handlers
+        /// </summary>
         public ObservableCollection<string> Handlers { get; set; }
         public object SettingData { get; private set; }
 
+        /// <summary>
+        /// Property for SelectedItem
+        /// </summary>
         public string SelectedItem
         {
             get { return SelectedItem; }
             set { SelectedItem = value; }
         }
 
-        public void GetMessageFromUser(object sender, DataCommandArgs info)
+        /// <summary>
+        /// This method is being called whenever a message received from the server
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="info"></param>
+        public void GetMessageFromServer(object sender, DataCommandArgs info)
         {
             var msg = CommandMessage.FromJson(info.Data);
-            if (msg.CommandId == (int)CommandEnum.GetConfigCommand)
+            if (msg == null)
+            {
+                return;
+            }
+            if (msg.CommandId == (int)CommandEnum.GetConfigCommand) // config
             {
                 InitializeConfig(msg.Args);
-                System.Console.WriteLine("BLABLAAAAAAAAAAAAAAAAAAAAAAA");
             }
-            else if (msg.CommandId == (int)CommandEnum.CloseCommand)
+            else if (msg.CommandId == (int)CommandEnum.CloseCommand) // close
             {
                 removeHandler(msg.Args);
             }
         }
 
+        /// <summary>
+        /// This method initialize the config involves members
+        /// </summary>
+        /// <param name="settings"></param>
         public void InitializeConfig(string[] settings)
         {
             try
@@ -103,9 +146,12 @@ namespace ImageServiceGUI.Models
                     this.SourceName = settings[1];
                     this.LogName = settings[2];
                     this.ThumbnailSize = int.Parse(settings[3]);
-                    for (int i = 4; i < settings.Length; i++)
+                    lock (thisLock)
                     {
-                        Handlers.Add(settings[i]);
+                        for (int i = 4; i < settings.Length; i++)
+                        {
+                            Handlers.Add(settings[i]);
+                        }
                     }
                 }));
 
@@ -117,7 +163,11 @@ namespace ImageServiceGUI.Models
             }
 
         }
-
+        
+        /// <summary>
+        /// This method removes one handler from the list of handlers
+        /// </summary>
+        /// <param name="info"></param>
         public void removeHandler(string[] info)
         {
             try
@@ -125,7 +175,10 @@ namespace ImageServiceGUI.Models
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
                     string handlerToRemove = info[0];
-                    Handlers.Remove(handlerToRemove);
+                    lock (thisLock)
+                    {
+                        Handlers.Remove(handlerToRemove);
+                    }
                 }));
             }
             catch (Exception e)
@@ -133,7 +186,5 @@ namespace ImageServiceGUI.Models
                 Console.WriteLine(e.Message);
             }
         }
-
     }
-
 }

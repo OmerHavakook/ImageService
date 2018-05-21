@@ -13,21 +13,18 @@ namespace ImageServiceGUI.Models
 
         private bool m_Connect;
 
+        /// <summary>
+        /// c'tor
+        /// </summary>
         public MainWindowModel()
         {
-            /*try
-             {
-                 TcpClient client = TcpClient.Instance;
-
-             }
-             catch (Exception e)
-             {
-                 m_Connect = false;
-             }*/
             TcpClient client = TcpClient.Instance;
             m_Connect = client.Connected;
-
         }
+
+        /// <summary>
+        /// Property for connect
+        /// </summary>
         public bool Connect {
             get { return m_Connect; }
             set
@@ -39,6 +36,10 @@ namespace ImageServiceGUI.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// like NotifyPropertyChanged in LogModel
+        /// </summary>
+        /// <param name="propName"></param> - the name of the property that has changed
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)

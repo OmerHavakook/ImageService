@@ -9,9 +9,7 @@ namespace ImageServiceGUI.Models
         string SourceName { set; get; }
         string LogName { set; get; }
         int ThumbnailSize { set; get; }
-
         string SelectedItem { set; get; }
-
         ObservableCollection<string> Handlers { set; get; }
     }
 }

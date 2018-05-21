@@ -8,6 +8,14 @@ namespace ImageServiceGUI
 {
     class PickColor : IValueConverter
     {
+        /// <summary>
+        /// Convert function in order to set the backround color of the messageType
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (targetType != typeof(System.Windows.Media.Brush))
@@ -22,7 +30,7 @@ namespace ImageServiceGUI
             {
                 return Brushes.Yellow;
             }
-            else
+            else // if type is MessageTypeEnum.Info
             {
                 return Brushes.LawnGreen;
             }
