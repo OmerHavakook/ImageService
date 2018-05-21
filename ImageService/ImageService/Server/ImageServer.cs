@@ -19,6 +19,8 @@ namespace ImageService.Server
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         private TcpServerChannel serverChannel;
         private List<MessageRecievedEventArgs> logMsgs;
+        private Object thisLock = new Object();
+
 
 
 
@@ -54,23 +56,32 @@ namespace ImageService.Server
         {
             bool result;
             string answer = m_controller.ExecuteCommand((int)CommandEnum.GetConfigCommand, null, out result);
-            serverChannel.SendToAll(answer);
-            List<MessageRecievedEventArgs> logMsgsReversed = new List<MessageRecievedEventArgs>();
-            logMsgsReversed = logMsgs;
-            logMsgsReversed.Reverse();
-            foreach (MessageRecievedEventArgs msg in logMsgsReversed)
+            serverChannel.sendSpecificlly(e.Client, answer);
+           
+            //serverChannel.SendToAll(answer);
+            lock (thisLock)
             {
-                string[] info = { msg.Status.ToString(), msg.Message };
-                CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
-                serverChannel.SendToAll(msgC.ToJson());
+                List<MessageRecievedEventArgs> logMsgsReversed = new List<MessageRecievedEventArgs>(logMsgs);
+
+                //logMsgsReversed = logMsgs;
+                logMsgsReversed.Reverse();
+                foreach (MessageRecievedEventArgs msg in logMsgsReversed)
+                {
+                    string[] info = { msg.Status.ToString(), msg.Message };
+                    CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
+                    serverChannel.sendSpecificlly(e.Client, msgC.ToJson());
+                    //System.Console.WriteLine(msg.Message);
+                    System.Threading.Thread.Sleep(50);
+                }
             }
-            
+            m_logging.Log("New client is connected", MessageTypeEnum.INFO);
+            m_logging.Log("Send config: " + answer, MessageTypeEnum.INFO);
             System.Threading.Thread.Sleep(5000);
         }
 
         public void addLog(MessageRecievedEventArgs msg)
         {
-            logMsgs.Add(msg);
+            logMsgs.Insert(0,msg);
         }
 
 
@@ -85,6 +96,8 @@ namespace ImageService.Server
         private void GetMessageFromUser(object sender, DataCommandArgs info)
         {
             var msg = CommandMessage.FromJson(info.Data);
+            m_logging.Log("Got msg from user, Command ID: " + msg.CommandId, MessageTypeEnum.INFO);
+
             if (msg.CommandId == (int)CommandEnum.CloseCommand)
             {
 
@@ -143,6 +156,7 @@ namespace ImageService.Server
         /// </summary>
         ~ImageServer()
         {
+            m_logging.Log("Server is being shut down", MessageTypeEnum.INFO);
             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             foreach (string dir in directories)
             {

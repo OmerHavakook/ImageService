@@ -85,6 +85,7 @@ namespace ImageServiceGUI.Models
             if (msg.CommandId == (int)CommandEnum.GetConfigCommand)
             {
                 InitializeConfig(msg.Args);
+                System.Console.WriteLine("BLABLAAAAAAAAAAAAAAAAAAAAAAA");
             }
             else if (msg.CommandId == (int)CommandEnum.CloseCommand)
             {

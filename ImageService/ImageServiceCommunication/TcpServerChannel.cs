@@ -16,6 +16,8 @@ namespace ImageServiceCommunication
         public static List<ClientHandler> Clients;
         public event EventHandler<NewClientEventArgs> NewHandler;
         private bool _running;
+        private Object thisLock = new Object();
+
 
 
         public TcpServerChannel(int port, string ip)
@@ -80,7 +82,7 @@ namespace ImageServiceCommunication
                     catch (Exception e)
                     {
                         Clients.Remove(ch);
-                        ch.Client().Close();
+                        ch.Client.Close();
                     }
                 }
                 Console.WriteLine("write " + data);
@@ -88,5 +90,34 @@ namespace ImageServiceCommunication
             task.Start();
         }
 
+        public void sendSpecificlly(TcpClient clientSpecific,string data)
+        {
+            Task task = new Task(() =>
+            {
+                lock (thisLock)
+                {
+                    foreach (ClientHandler ch in Clients)
+                    {
+                        if (ch.Client.Equals(clientSpecific))
+                        {
+                            try
+                            {
+                                //writerMut.WaitOne();
+                                ch.Writer.Write(data);
+                                //writerMut.ReleaseMutex();
+                            }
+                            catch (Exception e)
+                            {
+                                Clients.Remove(ch);
+                                ch.Client.Close();
+                            }
+                        }
+
+                    }
+                }
+               
+            });
+            task.Start();
+        }
     }
 }

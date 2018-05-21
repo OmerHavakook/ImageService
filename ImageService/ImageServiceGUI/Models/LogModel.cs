@@ -11,7 +11,7 @@ namespace ImageServiceGUI.Models
 {
     class LogModel : ILogModel
     {
-
+        private Object thisLock = new Object();
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -26,27 +26,29 @@ namespace ImageServiceGUI.Models
 
         private void GetMessageFromUser(object sender, DataCommandArgs info)
         {
-            var msg = CommandMessage.FromJson(info.Data);
-            if (msg.CommandId == (int)CommandEnum.LogCommand)
-            {
-
-                try
+            
+                var msg = CommandMessage.FromJson(info.Data);
+                if (msg.CommandId == (int)CommandEnum.LogCommand)
                 {
-                    MessageRecievedEventArgs log =
-                        new MessageRecievedEventArgs((MessageTypeEnum)Enum.Parse(typeof(MessageTypeEnum), msg.Args[0]), msg.Args[1]);
-
-
-                    Application.Current.Dispatcher.Invoke(new Action(() =>
+                    try
                     {
-                        _mMessages.Insert(0, log);
-                    }));
+                        MessageRecievedEventArgs log =
+                            new MessageRecievedEventArgs((MessageTypeEnum)Enum.Parse(typeof(MessageTypeEnum), msg.Args[0]), msg.Args[1]);
 
+                        Application.Current.Dispatcher.Invoke(new Action(() =>
+                        {
+                            lock (thisLock)
+                            {
+                                _mMessages.Insert(0, log);
+                            }
+                        }));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-            }
+            
         }
 
         public ObservableCollection<MessageRecievedEventArgs> Messages

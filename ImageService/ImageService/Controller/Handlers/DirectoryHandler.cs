@@ -48,23 +48,12 @@ namespace ImageService.Controller.Handlers
             {
                 if (e.CommandID == (int)CommandEnum.NewFileCommand)
                 {
+                    m_logging.Log("New file command received for path: " + m_path, MessageTypeEnum.INFO);
                     handleAddingFile(e);
                 }
                 else if (e.CommandID == (int)CommandEnum.CloseCommand)
                 {
-                    /////////////////////////////////////////////
-
-
-
-
-
-                    // NOT TO DELETE IN CASE OF CLOSING THE SERVER
-
-
-
-
-
-                    //////////////////////////////////////////////
+                    m_logging.Log("Close command received for path: " + m_path, MessageTypeEnum.INFO);
                     handleClose();
                 }
             }

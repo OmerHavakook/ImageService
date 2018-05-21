@@ -71,9 +71,9 @@ namespace ImageServiceCommunication
             _client.Close();
         }
 
-        public TcpClient Client()
+        public TcpClient Client
         {
-            return this._client;
+            get { return _client; }
         }
         
     }

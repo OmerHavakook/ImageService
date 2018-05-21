@@ -17,6 +17,7 @@ namespace ImageService
     {
 
         //DELETE AFTER DEBUGGING
+        private Object thisLock = new Object();
 
         internal void TestStartupAndStop(string[] args)
         {
@@ -87,9 +88,10 @@ namespace ImageService
 
             logger = new LoggingService();
             this.server = new ImageServer(controller, logger);
-
             logger.MessageRecieved += Logger_MessageRecieved;
             logger.MessageRecieved += server.SendLog;
+
+
             this.logger.Log("On Start...", MessageTypeEnum.INFO);
 
 
@@ -103,22 +105,26 @@ namespace ImageService
         /// <param name="e"></param>
         private void Logger_MessageRecieved(object sender, MessageRecievedEventArgs e)
         {
-            EventLogEntryType msg = EventLogEntryType.Information; // default
-            // for error or warning msg
-            switch (e.Status)
+            lock (thisLock)
             {
-                case MessageTypeEnum.FAIL:
-                    msg = EventLogEntryType.Error;
-                    break;
-                case MessageTypeEnum.WARNING:
-                    msg = EventLogEntryType.Warning;
-                    break;
+                EventLogEntryType msg = EventLogEntryType.Information; // default
+                                                                       // for error or warning msg
+                switch (e.Status)
+                {
+                    case MessageTypeEnum.FAIL:
+                        msg = EventLogEntryType.Error;
+                        break;
+                    case MessageTypeEnum.WARNING:
+                        msg = EventLogEntryType.Warning;
+                        break;
 
+                }
+                // write entry with the msg
+                eventLog.WriteEntry(e.Message, msg, eventId++);
+                // change to EVENT
+                this.server.addLog(e);
+   
             }
-            // write entry with the msg
-            eventLog.WriteEntry(e.Message, msg, eventId++);
-            // change to EVENT
-            this.server.addLog(e);
         }
 
         /// <summary>
