@@ -13,14 +13,19 @@ namespace ImageService.Commands
         {
             try
             {
-                Configuration m_Configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+                Configuration m_Configuration = System.Configuration.ConfigurationManager.
+                    OpenExeConfiguration(ConfigurationUserLevel.None);
+                // get all the handlers from the config settings
                 string[] handlers = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
                 m_Configuration.AppSettings.Settings.Remove("Handler");
                 StringBuilder allHandlers = new StringBuilder();
+                // search for an handler to close in the app config list of handlers
+                // goes over the list of handlers, if it's not the asked one, than add
+                // it to the new list of handlers
                 foreach (string handlerInArray in handlers)
                 {
                     if (string.Compare(args[0], handlerInArray) != 0 &&
-                        string.Compare("",handlerInArray)!=0)
+                        string.Compare("", handlerInArray) != 0)
                     {
                         allHandlers.Append(handlerInArray);
                         allHandlers.Append(";");
@@ -29,7 +34,8 @@ namespace ImageService.Commands
                 ConfigurationManager.AppSettings.Set("Handler", allHandlers.ToString());
                 result = true;
                 return "Fixed config file";
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 result = false;
                 return e.ToString();

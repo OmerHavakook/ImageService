@@ -11,18 +11,22 @@ namespace ImageServiceCommunication
 {
     public class ClientHandler
     {
+        // static event!!!
         public static event EventHandler<DataCommandArgs> MessageRecived;
 
-
         private readonly TcpClient _client;
-        private readonly BinaryReader _reader;
-        private readonly BinaryWriter _writer;
+        private readonly BinaryReader _reader; // read
+        private readonly BinaryWriter _writer; // write
         private readonly NetworkStream _stream;
         private readonly CancellationTokenSource _cancelToken;
         private bool IsConnect;
 
         public BinaryWriter Writer => this._writer;
 
+        /// <summary>
+        /// c'tor
+        /// </summary>
+        /// <param name="client"></param>
         public ClientHandler(TcpClient client)
         {
             _client = client;
@@ -33,11 +37,17 @@ namespace ImageServiceCommunication
             this.IsConnect = true;
         }
 
+        /// <summary>
+        /// closing the client handler
+        /// </summary>
         public void Close()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// This function starts handling reading msg from the clients
+        /// </summary>
         public void Start()
         {
             new Task(() =>
@@ -47,15 +57,15 @@ namespace ImageServiceCommunication
                     try
                     {
                         string data = _reader.ReadString();
-                        if (data != "")
+                        if (data != "") // check if not an empty string
                         {
+                            // raise the event
                             MessageRecived?.Invoke(this, new DataCommandArgs(data));
                         }
-
                     }
                     catch (Exception e)
                     {
-
+                        // close reader, writer and client connection
                         DisposeHandler();
                     }
                 }
@@ -63,6 +73,9 @@ namespace ImageServiceCommunication
             }, _cancelToken.Token).Start();
         }
 
+        /// <summary>
+        /// This function closed the reader, writer and client connection
+        /// </summary>
         private void DisposeHandler()
         {
             if (_client.Connected)
@@ -71,10 +84,13 @@ namespace ImageServiceCommunication
             _client.Close();
         }
 
+        /// <summary>
+        /// Property for TcpClient member
+        /// </summary>
         public TcpClient Client
         {
             get { return _client; }
         }
-        
+
     }
 }

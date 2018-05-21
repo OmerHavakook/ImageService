@@ -19,15 +19,15 @@ namespace ImageService.Server
         private ILoggingService m_logging;
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         private TcpServerChannel serverChannel;
-        //private List<MessageRecievedEventArgs> logMsgs;
         private Object thisLock = new Object();
 
-
-
-
+        /// <summary>
+        /// c'tor
+        /// </summary>
+        /// <param name="m_controller"></param> to execute commands from its dictionary
+        /// <param name="m_logging"></param> to send logs
         public ImageServer(IImageController m_controller, ILoggingService m_logging)
         {
-
             this.m_controller = m_controller;
             this.m_logging = m_logging;
             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
@@ -38,43 +38,50 @@ namespace ImageService.Server
                     createHandler(dir);
                 }
                 else
-                {
+                {   // if dir is not exists
                     bool result;
-                    string[] args= { dir };
+                    string[] args = { dir };
                     string answer = m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
                     m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.FAIL);
                 }
             }
 
-
+            // get comunication details to connect the server
             string ip = ConfigurationManager.AppSettings.Get("Ip");
             int port = Int32.Parse(ConfigurationManager.AppSettings.Get("Port"));
-            serverChannel = new TcpServerChannel(port,ip);
-            serverChannel.NewHandler += OnNewClient;
-            ClientHandler.MessageRecived += GetMessageFromUser;
+            serverChannel = new TcpServerChannel(port, ip);
+            serverChannel.NewHandler += OnNewClient; // for new client
+            ClientHandler.MessageRecived += GetMessageFromUser; // for msg from the user
             serverChannel.Start();
         }
 
+        /// <summary>
+        /// This function is being called whenever a new client is connected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnNewClient(object sender, NewClientEventArgs e)
         {
             bool result;
             string answer = m_controller.ExecuteCommand((int)CommandEnum.GetConfigCommand, null, out result);
-            serverChannel.sendSpecificlly(e.Client, answer);
-           
-            //serverChannel.SendToAll(answer);
+            if (answer != "")
+            {
+                serverChannel.sendSpecificlly(e.Client, answer);
+            }
             lock (thisLock)
             {
-                List<MessageRecievedEventArgs> logMsgsReversed = new List<MessageRecievedEventArgs>(LogService.Instance.LogMsgs);
-
-                //logMsgsReversed = logMsgs;
+                // get the list of logs 
+                List<MessageRecievedEventArgs> logMsgsReversed =
+                    new List<MessageRecievedEventArgs>(LogService.Instance.LogMsgs);
+                // reverse the list
                 logMsgsReversed.Reverse();
+                // go over the list of logs ans send them to the specific client
                 foreach (MessageRecievedEventArgs msg in logMsgsReversed)
                 {
                     string[] info = { msg.Status.ToString(), msg.Message };
                     CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
                     serverChannel.sendSpecificlly(e.Client, msgC.ToJson());
-                    //System.Console.WriteLine(msg.Message);
-                    System.Threading.Thread.Sleep(50);
+                    System.Threading.Thread.Sleep(100);
                 }
             }
             m_logging.Log("New client is connected", MessageTypeEnum.INFO);
@@ -82,7 +89,12 @@ namespace ImageService.Server
             System.Threading.Thread.Sleep(5000);
         }
 
-
+        /// <summary>
+        /// This function is being called whenever a new log is being written,
+        /// This function is responsible of senting the new log to all the clients
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="msg"></param>
         public void SendLog(Object sender, MessageRecievedEventArgs msg)
         {
             string[] info = { msg.Status.ToString(), msg.Message };
@@ -90,24 +102,34 @@ namespace ImageService.Server
             serverChannel.SendToAll(msgC.ToJson());
         }
 
-
+        /// <summary>
+        /// This function is being called when a client wrote a new msg
+        /// It transfer the object into CommandMessage and execute the
+        /// right command
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="info"></param>
         private void GetMessageFromUser(object sender, DataCommandArgs info)
         {
             var msg = CommandMessage.FromJson(info.Data);
+            if (msg == null)
+            {
+                m_logging.Log("Can't convert " + info.Data + " to JSON", MessageTypeEnum.FAIL);
+                return;
+            }
             m_logging.Log("Got msg from user, Command ID: " + msg.CommandId, MessageTypeEnum.INFO);
             bool result;
-
+            // close command
             if (msg.CommandId == (int)CommandEnum.CloseCommand)
             {
-
                 CommandRecieved?.Invoke(this, new CommandRecievedEventArgs((int)CommandEnum.CloseCommand,
                     null, msg.Args[0]));
-                //string answer = m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, msg.Args, out result);
-
+                // send the msg to all the clients
                 serverChannel.SendToAll(msg.ToJson());
-            } else
+            }
+            else
             {
-                string answer =m_controller.ExecuteCommand(msg.CommandId, null,out result);
+                string answer = m_controller.ExecuteCommand(msg.CommandId, null, out result);
                 serverChannel.SendToAll(answer);
             }
         }
@@ -164,12 +186,8 @@ namespace ImageService.Server
                 {
                     createCommand((int)CommandEnum.CloseCommand, null, dir);
                 }
-
             }
         }
-
-        #region Properties
-        #endregion
     }
     #endregion
 }

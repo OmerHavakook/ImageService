@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace ImageService.Controller.Handlers
 {
+
     class DirectoryHandler : IDirectoryHandler
     {
         #region Members
@@ -18,6 +19,8 @@ namespace ImageService.Controller.Handlers
         private ILoggingService m_logging;
         private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
         private string m_path;                              // The Path of directory
+        private Object thisLock = new Object();
+
         #endregion
 
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;              // The Event That Notifies that the Directory is being closed
@@ -68,44 +71,23 @@ namespace ImageService.Controller.Handlers
             string msg;
             try
             {
-                //ConfigurationManager.AppSettings.Get("Handler").Split(';'))
-                m_dirWatcher.EnableRaisingEvents = false;
+                m_dirWatcher.EnableRaisingEvents = false; // stop raising events
                 msg = "Handler at path " + m_path + " was closed";
                 DirectoryCloseEventArgs dirArg = new DirectoryCloseEventArgs(m_path, msg);
                 DirectoryClose?.Invoke(this, dirArg);
             }
             catch (Exception e)
             {
-                msg = "Handler at path " + m_path + " failed closing";
-                m_logging.Log(msg, MessageTypeEnum.INFO);
+                m_logging.Log(e.ToString(), MessageTypeEnum.FAIL);
             }
             finally
             {
                 m_dirWatcher.Created -= new FileSystemEventHandler(checkEvent);
                 bool result;
                 string[] args = { m_path };
-                string answer = m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
-                //m_logging.Log(answer, MessageTypeEnum.INFO);
-                //removeFromConfig();
+                // remove handler from the config
+                m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
             }
-        }
-
-
-        public void removeFromConfig()
-        {
-            Configuration m_Configuration = System.Configuration.ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            string[] handlers = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
-            m_Configuration.AppSettings.Settings.Remove("Handler");
-            StringBuilder allHandlers = new StringBuilder();
-            foreach (string handlerInArray in handlers)
-            {
-                if (string.Compare(m_path, handlerInArray) != 0)
-                {
-                    allHandlers.Append(handlerInArray);
-                    allHandlers.Append(";");
-                }
-            }
-            ConfigurationManager.AppSettings.Set("Handler", allHandlers.ToString());
         }
 
         /// <summary>

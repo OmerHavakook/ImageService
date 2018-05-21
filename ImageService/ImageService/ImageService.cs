@@ -68,7 +68,6 @@ namespace ImageService
             }
             eventLog.Source = eventSourceName;
             eventLog.Log = logName;
-            
         }
 
         /// <summary>
@@ -77,7 +76,6 @@ namespace ImageService
         /// <param name="args"></param>
         protected override void OnStart(string[] args)
         {
-
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -85,21 +83,16 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-
-
             logger = new LoggingService();
 
+            // responsible of write logs
             logger.MessageRecieved += Logger_MessageRecieved;
             this.logger.Log("On Start...", MessageTypeEnum.INFO);
 
-
+            // creating the server
             this.server = new ImageServer(controller, logger);
+            // responsible of sending log
             logger.MessageRecieved += server.SendLog;
-
-
-
-
-
         }
 
         /// <summary>
@@ -126,9 +119,8 @@ namespace ImageService
                 }
                 // write entry with the msg
                 eventLog.WriteEntry(e.Message, msg, eventId++);
-                // change to EVENT
+                // add this log msg to the list of msgs
                 LogService.Instance.addLogToList(e);
-
             }
         }
 
