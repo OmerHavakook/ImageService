@@ -17,9 +17,6 @@ namespace ImageService
     public partial class ImageService : ServiceBase
     {
 
-        //DELETE AFTER DEBUGGING
-        private Object thisLock = new Object();
-
         internal void TestStartupAndStop(string[] args)
         {
             this.OnStart(args);
@@ -103,25 +100,22 @@ namespace ImageService
         /// <param name="e"></param>
         private void Logger_MessageRecieved(object sender, MessageRecievedEventArgs e)
         {
-            lock (thisLock)
+            EventLogEntryType msg = EventLogEntryType.Information; // default
+                                                                   // for error or warning msg
+            switch (e.Status)
             {
-                EventLogEntryType msg = EventLogEntryType.Information; // default
-                                                                       // for error or warning msg
-                switch (e.Status)
-                {
-                    case MessageTypeEnum.FAIL:
-                        msg = EventLogEntryType.Error;
-                        break;
-                    case MessageTypeEnum.WARNING:
-                        msg = EventLogEntryType.Warning;
-                        break;
+                case MessageTypeEnum.FAIL:
+                    msg = EventLogEntryType.Error;
+                    break;
+                case MessageTypeEnum.WARNING:
+                    msg = EventLogEntryType.Warning;
+                    break;
 
-                }
-                // write entry with the msg
-                eventLog.WriteEntry(e.Message, msg, eventId++);
-                // add this log msg to the list of msgs
-                LogService.Instance.addLogToList(e);
             }
+            // write entry with the msg
+            eventLog.WriteEntry(e.Message, msg, eventId++);
+            // add this log msg to the list of msgs
+            LogService.Instance.addLogToList(e);
         }
 
         /// <summary>

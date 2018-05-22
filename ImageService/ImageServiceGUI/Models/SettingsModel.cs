@@ -12,7 +12,7 @@ namespace ImageServiceGUI.Models
     class SettingsModel : ISettingsModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private Object thisLock = new Object();
+
 
 
         /// <summary>
@@ -142,17 +142,16 @@ namespace ImageServiceGUI.Models
             {
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
-                    this.OutputDirectory = settings[0];
-                    this.SourceName = settings[1];
-                    this.LogName = settings[2];
-                    this.ThumbnailSize = int.Parse(settings[3]);
-                    lock (thisLock)
+                    OutputDirectory = settings[0];
+                    SourceName = settings[1];
+                    LogName = settings[2];
+                    ThumbnailSize = int.Parse(settings[3]);
+
+                    for (int i = 4; i < settings.Length; i++)
                     {
-                        for (int i = 4; i < settings.Length; i++)
-                        {
-                            Handlers.Add(settings[i]);
-                        }
+                        Handlers.Add(settings[i]);
                     }
+
                 }));
 
             }
@@ -163,7 +162,7 @@ namespace ImageServiceGUI.Models
             }
 
         }
-        
+
         /// <summary>
         /// This method removes one handler from the list of handlers
         /// </summary>
@@ -175,10 +174,8 @@ namespace ImageServiceGUI.Models
                 Application.Current.Dispatcher.Invoke(new Action(() =>
                 {
                     string handlerToRemove = info[0];
-                    lock (thisLock)
-                    {
-                        Handlers.Remove(handlerToRemove);
-                    }
+                    Handlers.Remove(handlerToRemove);
+
                 }));
             }
             catch (Exception e)

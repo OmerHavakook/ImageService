@@ -6,6 +6,7 @@ using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Forms;
 using System.Windows.Input;
 
 namespace ImageServiceGUI.ViewModels
@@ -21,6 +22,8 @@ namespace ImageServiceGUI.ViewModels
         {
             /// CREATE OUTSIDE!!!!!!!!!!!!!!!
             this.model = new SettingsModel();
+   
+
             model.PropertyChanged +=
                 delegate (Object sender, PropertyChangedEventArgs e)
                 {
@@ -54,6 +57,11 @@ namespace ImageServiceGUI.ViewModels
                 return true;
             }
             return false;
+        }
+
+        public void ChangeSelected()
+        {
+            this.SelectedItem = null;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -113,5 +121,8 @@ namespace ImageServiceGUI.ViewModels
             }
             get { return this._selectedItem; }
         }
+
+        
+
     }
 }

@@ -5,27 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:ImageServiceGUI.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="600">
-    <Grid>
-        <TextBlock Padding="200">
-            <TextBlock.Style>
-                <Style TargetType="TextBlock">
-
-                    <Setter Property="Background" Value="White" />
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding VM_Connect}"
+         Height="500" Width="600" Icon="C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\icon.png">
+    <Window.Style>
+        <Style TargetType="Window">
+            <Style.Triggers>
+                    <DataTrigger Binding="{Binding VM_Connect}"
                              Value="False">
-                            <Setter Property="Background" Value="Gray" />
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </TextBlock.Style>
-        </TextBlock>
+                    <Setter Property="Title" Value="MainWindow  Cannot Connect With Server " />
+                    <Setter Property="Background" Value="Gray" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding VM_Connect}"
+                             Value="True">
+                    <Setter Property="Title" Value="MainWindow" />
+                </DataTrigger>
+            </Style.Triggers>
+            </Style>
+        </Window.Style>
+    <Grid>
         <TabControl TabStripPlacement="Top" VerticalAlignment= "Stretch">
             <TabItem Header="Settings">
                 <views:Settings/>
             </TabItem>
-
             <TabItem Header="Logs">
                 <views:Logs/>
             </TabItem>

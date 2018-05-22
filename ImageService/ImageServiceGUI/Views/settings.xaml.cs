@@ -1,5 +1,6 @@
 ﻿using ImageServiceGUI.ViewModels;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace ImageServiceGUI.Views
 {

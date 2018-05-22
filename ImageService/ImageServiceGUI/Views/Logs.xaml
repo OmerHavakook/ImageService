@@ -7,13 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600">
     <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
-        <Label Content="Logs" FontSize="35" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+        <Label Content="Logs" FontStyle="Italic" FontSize="40" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
         <DataGrid ItemsSource="{Binding VM_Messages}" AutoGenerateColumns="False" CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" >
             <DataGrid.Resources>
                 <convertors:PickColor x:Key="PickColor"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Type" IsReadOnly="True" Binding="{Binding Path=Status}" >
+                <DataGridTextColumn Header="Type" FontStyle="Italic" IsReadOnly="True" Binding="{Binding Path=Status}" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource PickColor}}">
@@ -21,7 +21,7 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Message}" />
+                <DataGridTextColumn Header="Message" FontStyle="Italic" Width="*" IsReadOnly="True" Binding="{Binding Message}" />
             </DataGrid.Columns>
 
         </DataGrid>

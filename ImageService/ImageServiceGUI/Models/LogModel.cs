@@ -11,7 +11,6 @@ namespace ImageServiceGUI.Models
 {
     class LogModel : ILogModel
     {
-        private Object thisLock = new Object(); // lock
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -54,11 +53,10 @@ namespace ImageServiceGUI.Models
 
                         Application.Current.Dispatcher.Invoke(new Action(() =>
                         {
-                            lock (thisLock)
-                            {
+                           
                                 // add msg to the list
                                 _mMessages.Insert(0, log);
-                            }
+                            
                         }));
                     }
                     catch (Exception e)

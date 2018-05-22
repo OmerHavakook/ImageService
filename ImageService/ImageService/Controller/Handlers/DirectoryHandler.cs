@@ -19,7 +19,6 @@ namespace ImageService.Controller.Handlers
         private ILoggingService m_logging;
         private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
         private string m_path;                              // The Path of directory
-        private Object thisLock = new Object();
 
         #endregion
 
