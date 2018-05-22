@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageServiceCommunication
@@ -16,7 +17,7 @@ namespace ImageServiceCommunication
         public static List<ClientHandler> Clients;
         public event EventHandler<NewClientEventArgs> NewHandler;
         private bool _running;
-        private Object thisLock = new Object();
+        private static readonly Mutex WriterMut = new Mutex();
 
 
 
@@ -30,7 +31,8 @@ namespace ImageServiceCommunication
 
         public void Close()
         {
-            //to dooo
+            _running = false;
+            _listener.Stop();
         }
 
         public void Start()
@@ -40,8 +42,6 @@ namespace ImageServiceCommunication
 
             this._listener.Start();
 
-            Console.WriteLine("Waiting for connections...");
-
             Task task = new Task(() =>
             {
 
@@ -50,7 +50,6 @@ namespace ImageServiceCommunication
                     try
                     {
                         TcpClient client = this._listener.AcceptTcpClient();
-                        Console.WriteLine("Client Connected");
                         ClientHandler newclient = new ClientHandler(client);
                         newclient.Start();
                         Clients.Add(newclient);
@@ -60,6 +59,7 @@ namespace ImageServiceCommunication
                     catch (SocketException e)
                     {
                         Console.WriteLine(e.Message);
+                        Close();
 
                     }
                 }
@@ -75,9 +75,9 @@ namespace ImageServiceCommunication
                 {
                     try
                     {
-                        //writerMut.WaitOne();
+                        WriterMut.WaitOne();
                         ch.Writer.Write(data);
-                        //writerMut.ReleaseMutex();
+                        WriterMut.ReleaseMutex();
                     }
                     catch (Exception e)
                     {
@@ -90,32 +90,28 @@ namespace ImageServiceCommunication
             task.Start();
         }
 
-        public void sendSpecificlly(TcpClient clientSpecific,string data)
+        public void SendSpecificlly(TcpClient clientSpecific, string data)
         {
             Task task = new Task(() =>
             {
-                lock (thisLock)
+                foreach (ClientHandler ch in Clients)
                 {
-                    foreach (ClientHandler ch in Clients)
+                    if (ch.Client.Equals(clientSpecific))
                     {
-                        if (ch.Client.Equals(clientSpecific))
+                        try
                         {
-                            try
-                            {
-                                //writerMut.WaitOne();
-                                ch.Writer.Write(data);
-                                //writerMut.ReleaseMutex();
-                            }
-                            catch (Exception e)
-                            {
-                                Clients.Remove(ch);
-                                ch.Client.Close();
-                            }
+                            WriterMut.WaitOne();
+                            ch.Writer.Write(data);
+                            WriterMut.ReleaseMutex();
                         }
-
+                        catch (Exception e)
+                        {
+                            Clients.Remove(ch);
+                            ch.Client.Close();
+                        }
                     }
+
                 }
-               
             });
             task.Start();
         }

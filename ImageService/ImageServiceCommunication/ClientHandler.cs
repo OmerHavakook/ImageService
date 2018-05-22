@@ -19,7 +19,8 @@ namespace ImageServiceCommunication
         private readonly BinaryWriter _writer; // write
         private readonly NetworkStream _stream;
         private readonly CancellationTokenSource _cancelToken;
-        private bool IsConnect;
+        private bool _isConnect;
+
 
         public BinaryWriter Writer => this._writer;
 
@@ -34,7 +35,7 @@ namespace ImageServiceCommunication
             _reader = new BinaryReader(_stream, Encoding.ASCII);
             _writer = new BinaryWriter(_stream, Encoding.ASCII);
             _cancelToken = new CancellationTokenSource();
-            this.IsConnect = true;
+            this._isConnect = true;
         }
 
         /// <summary>
@@ -42,7 +43,11 @@ namespace ImageServiceCommunication
         /// </summary>
         public void Close()
         {
-            throw new NotImplementedException();
+            _isConnect = false;
+            if (_client.Connected)
+                _reader.Close();
+            _writer.Close();
+            _client.Close();
         }
 
         /// <summary>
@@ -52,7 +57,7 @@ namespace ImageServiceCommunication
         {
             new Task(() =>
             {
-                while (true)
+                while (_isConnect)
                 {
                     try
                     {
@@ -66,7 +71,7 @@ namespace ImageServiceCommunication
                     catch (Exception e)
                     {
                         // close reader, writer and client connection
-                        DisposeHandler();
+                        Close();
                     }
                 }
 
@@ -74,23 +79,8 @@ namespace ImageServiceCommunication
         }
 
         /// <summary>
-        /// This function closed the reader, writer and client connection
-        /// </summary>
-        private void DisposeHandler()
-        {
-            if (_client.Connected)
-                _reader.Close();
-            _writer.Close();
-            _client.Close();
-        }
-
-        /// <summary>
         /// Property for TcpClient member
         /// </summary>
-        public TcpClient Client
-        {
-            get { return _client; }
-        }
-
+        public TcpClient Client => _client;
     }
 }

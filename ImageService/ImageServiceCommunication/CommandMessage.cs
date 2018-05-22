@@ -10,7 +10,7 @@ namespace ImageServiceCommunication
 {
     public class CommandMessage
     {
-        private int _commandID;
+        private int _commandId;
         public string[] _args;
 
         /// <summary>
@@ -20,11 +20,11 @@ namespace ImageServiceCommunication
         {
             get
             {
-                return this._commandID;
+                return this._commandId;
             }
             set
             {
-                this._commandID = value;
+                this._commandId = value;
             }
         }      // The Command ID
 
@@ -50,7 +50,7 @@ namespace ImageServiceCommunication
         /// <param name="args"></param> for args
         public CommandMessage(int id, string[] args)
         {
-            _commandID = id;
+            _commandId = id;
             _args = args;
         }
 
@@ -64,7 +64,7 @@ namespace ImageServiceCommunication
             try
             {
                 JObject cmdobj = new JObject();
-                cmdobj["CommandId"] = this._commandID;
+                cmdobj["CommandId"] = this._commandId;
                 JArray args = new JArray(this._args);
                 cmdobj["Args"] = args;
                 return cmdobj.ToString();

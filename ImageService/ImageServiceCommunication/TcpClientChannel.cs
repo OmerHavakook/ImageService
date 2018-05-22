@@ -3,6 +3,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageServiceCommunication
@@ -15,10 +16,12 @@ namespace ImageServiceCommunication
         private NetworkStream _stream;
         private BinaryReader _reader;
         private BinaryWriter _writer;
-        private string _ip;
-        private int _port;
+        private readonly string _ip;
+        private readonly int _port;
 
         private bool _isConnect;
+
+        private static readonly Mutex WriterMut = new Mutex();
 
         public TcpClientChannel(int port, string ip)
         {
@@ -58,12 +61,15 @@ namespace ImageServiceCommunication
 
             try
             {
-                Console.WriteLine("write to server...");
+                Console.WriteLine("write to server...");           
+                WriterMut.WaitOne();
                 _writer.Write(str);
+                WriterMut.ReleaseMutex();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Close();
             }
 
         }
@@ -84,7 +90,7 @@ namespace ImageServiceCommunication
                     catch (Exception e)
                     {
                         Console.WriteLine(e.Message);
-                        break;
+                        Close();
                     }
                 }
             }).Start();

@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ImageServiceGUI"
-        xmlns:Views="clr-namespace:ImageServiceGUI.Views"
+        xmlns:views="clr-namespace:ImageServiceGUI.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="600">
     <Grid>
-        <Button>
-            <Button.Style>
-                <Style TargetType="Button">
+        <TextBlock Padding="200">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
 
                     <Setter Property="Background" Value="White" />
                     <Style.Triggers>
@@ -20,15 +19,15 @@
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
-            </Button.Style>
-        </Button>
+            </TextBlock.Style>
+        </TextBlock>
         <TabControl TabStripPlacement="Top" VerticalAlignment= "Stretch">
             <TabItem Header="Settings">
-                <Views:settings/>
+                <views:Settings/>
             </TabItem>
 
             <TabItem Header="Logs">
-                <Views:Logs/>
+                <views:Logs/>
             </TabItem>
             
         </TabControl>

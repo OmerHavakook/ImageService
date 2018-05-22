@@ -15,8 +15,8 @@ namespace ImageService.Server
     class ImageServer
     {
         #region Members
-        private IImageController m_controller;
-        private ILoggingService m_logging;
+        private readonly IImageController _mController;
+        private readonly ILoggingService _mLogging;
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         private TcpServerChannel serverChannel;
         private Object thisLock = new Object();
@@ -28,8 +28,8 @@ namespace ImageService.Server
         /// <param name="m_logging"></param> to send logs
         public ImageServer(IImageController m_controller, ILoggingService m_logging)
         {
-            this.m_controller = m_controller;
-            this.m_logging = m_logging;
+            this._mController = m_controller;
+            this._mLogging = m_logging;
             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             foreach (string dir in directories)
             {
@@ -41,7 +41,7 @@ namespace ImageService.Server
                 {   // if dir is not exists
                     bool result;
                     string[] args = { dir };
-                    string answer = m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
+                    m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
                     m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.FAIL);
                 }
             }
@@ -63,10 +63,10 @@ namespace ImageService.Server
         private void OnNewClient(object sender, NewClientEventArgs e)
         {
             bool result;
-            string answer = m_controller.ExecuteCommand((int)CommandEnum.GetConfigCommand, null, out result);
+            string answer = _mController.ExecuteCommand((int)CommandEnum.GetConfigCommand, null, out result);
             if (answer != "")
             {
-                serverChannel.sendSpecificlly(e.Client, answer);
+                serverChannel.SendSpecificlly(e.Client, answer);
             }
             lock (thisLock)
             {
@@ -80,13 +80,12 @@ namespace ImageService.Server
                 {
                     string[] info = { msg.Status.ToString(), msg.Message };
                     CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
-                    serverChannel.sendSpecificlly(e.Client, msgC.ToJson());
+                    serverChannel.SendSpecificlly(e.Client, msgC.ToJson());
                     System.Threading.Thread.Sleep(100);
                 }
             }
-            m_logging.Log("New client is connected", MessageTypeEnum.INFO);
-            m_logging.Log("Send config: " + answer, MessageTypeEnum.INFO);
-            System.Threading.Thread.Sleep(5000);
+            _mLogging.Log("New client is connected", MessageTypeEnum.INFO);
+            _mLogging.Log("Send config: " + answer, MessageTypeEnum.INFO);
         }
 
         /// <summary>
@@ -114,10 +113,10 @@ namespace ImageService.Server
             var msg = CommandMessage.FromJson(info.Data);
             if (msg == null)
             {
-                m_logging.Log("Can't convert " + info.Data + " to JSON", MessageTypeEnum.FAIL);
+                _mLogging.Log("Can't convert " + info.Data + " to JSON", MessageTypeEnum.FAIL);
                 return;
             }
-            m_logging.Log("Got msg from user, Command ID: " + msg.CommandId, MessageTypeEnum.INFO);
+            _mLogging.Log("Got msg from user, Command ID: " + msg.CommandId, MessageTypeEnum.INFO);
             bool result;
             // close command
             if (msg.CommandId == (int)CommandEnum.CloseCommand)
@@ -129,7 +128,7 @@ namespace ImageService.Server
             }
             else
             {
-                string answer = m_controller.ExecuteCommand(msg.CommandId, null, out result);
+                string answer = _mController.ExecuteCommand(msg.CommandId, null, out result);
                 serverChannel.SendToAll(answer);
             }
         }
@@ -140,7 +139,7 @@ namespace ImageService.Server
         /// <param name="directory"></param>
         private void createHandler(string directory)
         {
-            IDirectoryHandler handler = new DirectoryHandler(directory, m_controller, m_logging);
+            IDirectoryHandler handler = new DirectoryHandler(directory, _mController, _mLogging);
             // notify command
             CommandRecieved += handler.OnCommandRecieved;
             handler.DirectoryClose += closeServer;
@@ -153,7 +152,7 @@ namespace ImageService.Server
         /// <param name="args"></param>
         public void closeServer(object sender, DirectoryCloseEventArgs args)
         {
-            m_logging.Log(args.Message, MessageTypeEnum.INFO);
+            _mLogging.Log(args.Message, MessageTypeEnum.INFO);
             IDirectoryHandler handler = (IDirectoryHandler)sender;
             CommandRecieved -= handler.OnCommandRecieved;
             handler.DirectoryClose -= closeServer;
@@ -178,7 +177,7 @@ namespace ImageService.Server
         /// </summary>
         ~ImageServer()
         {
-            m_logging.Log("Server is being shut down", MessageTypeEnum.INFO);
+            _mLogging.Log("Server is being shut down", MessageTypeEnum.INFO);
             string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             foreach (string dir in directories)
             {
