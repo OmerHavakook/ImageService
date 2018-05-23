@@ -6,10 +6,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600">
 
-    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
-
-
-        <Label Content="Settings" FontSize="40" FontStyle="Italic" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" 
+               ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
+        <Label Content="Settings" FontSize="40" FontWeight="Bold" Foreground="Teal" 
+               FontStyle="Italic" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
         <Grid TextBlock.FontSize="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -31,10 +31,10 @@
             <TextBlock FontStyle="Italic" Padding="5" Grid.Row="2" Grid.Column="2" Text="{Binding VM_LogName}" Margin="3"></TextBlock>
             <TextBlock FontStyle="Italic" Padding="5" Grid.Row="3" Margin="3">Thumbnail size:</TextBlock>
             <TextBlock FontStyle="Italic" Padding="5" Grid.Row="3" Grid.Column="2" Text="{Binding VM_ThumbnailSize}" Margin="3"></TextBlock>
-            <Button Content="Remove" FontStyle="Italic" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding RemoveCommand }" FontSize="20" Background="PeachPuff" />
+            <Button Content="Remove" FontStyle="Italic" Grid.Row="4" Grid.ColumnSpan="2" Command="{Binding RemoveCommand }" FontSize="20" Background="Teal" />
             <ListBox FontStyle="Italic" Grid.Row="5" Grid.ColumnSpan="2" HorizontalContentAlignment="Stretch"  
                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True"
-                     SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding VM_Handlers}">
+                     SelectedItem="{Binding SelectedItem}" ItemsSource="{Binding VM_Handlers}" IsTabStop="False">
             </ListBox>
 
         </Grid>

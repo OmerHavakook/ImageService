@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600">
     <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
-        <Label Content="Logs" FontStyle="Italic" FontSize="40" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+        <Label Content="Logs" FontStyle="Italic" FontWeight="Bold" Foreground="Teal" FontSize="40" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
         <DataGrid ItemsSource="{Binding VM_Messages}" AutoGenerateColumns="False" CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" >
             <DataGrid.Resources>
                 <convertors:PickColor x:Key="PickColor"/>
