@@ -23,6 +23,7 @@ namespace ImageServiceGUI.Models
             Handlers = new ObservableCollection<string>();
             TcpClient client = TcpClient.Instance;
             client.Channel.MessageRecived += GetMessageFromServer;
+            this.ThumbnailSize = null;
         }
 
         /// <summary>
@@ -80,12 +81,12 @@ namespace ImageServiceGUI.Models
             }
         }
 
-        private int _mThumbnailSize;
+        private int? _mThumbnailSize;
 
         /// <summary>
         /// Property for _mThumbnailSize
         /// </summary>
-        public int ThumbnailSize
+        public int? ThumbnailSize
         {
             get { return this._mThumbnailSize; }
             set

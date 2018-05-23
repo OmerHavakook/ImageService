@@ -5,6 +5,11 @@ namespace ImageServiceInfrastructure.Event
 {
     public class MessageRecievedEventArgs : EventArgs
     {
+        /// <summary>
+        /// c'tor
+        /// </summary>
+        /// <param name="status"></param> type MessageTypeEnum
+        /// <param name="message"></param> type string
         public MessageRecievedEventArgs(MessageTypeEnum status, string message)
         {
             Status = status;

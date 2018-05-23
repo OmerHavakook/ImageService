@@ -100,7 +100,7 @@ namespace ImageServiceGUI.ViewModels
         /// <summary>
         /// Property for ThumbnailSize
         /// </summary>
-        public int VM_ThumbnailSize => model.ThumbnailSize;
+        public int? VM_ThumbnailSize => model.ThumbnailSize;
 
         /// <summary>
         /// Property for Handlers

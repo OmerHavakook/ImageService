@@ -11,19 +11,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
+using System.Threading;
 
 namespace ImageService
 {
     public partial class ImageService : ServiceBase
     {
+        private static readonly Mutex WriterMut = new Mutex();
 
         internal void TestStartupAndStop(string[] args)
         {
             this.OnStart(args);
             Console.ReadLine();
             System.Threading.Thread.Sleep(100000);
-
-            //this.OnStop();
         } // UNTIL HERE
 
 
@@ -112,10 +112,12 @@ namespace ImageService
                     break;
 
             }
+            // add this log msg to the list of msgs
+            WriterMut.WaitOne();
+            LogService.Instance.addLogToList(e);
             // write entry with the msg
             eventLog.WriteEntry(e.Message, msg, eventId++);
-            // add this log msg to the list of msgs
-            LogService.Instance.addLogToList(e);
+            WriterMut.ReleaseMutex();
         }
 
         /// <summary>

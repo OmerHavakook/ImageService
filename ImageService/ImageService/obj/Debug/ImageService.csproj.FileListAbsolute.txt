@@ -51,3 +51,6 @@ C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageService\ob
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Release\ImageService.exe.config
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Release\ImageService.exe
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Release\ImageService.pdb
+C:\Users\DELL\Desktop\ImageService\bin\Release\ImageService.exe.config
+C:\Users\DELL\Desktop\ImageService\bin\Release\ImageService.exe
+C:\Users\DELL\Desktop\ImageService\bin\Release\ImageService.pdb

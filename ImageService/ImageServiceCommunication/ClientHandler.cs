@@ -82,5 +82,7 @@ namespace ImageServiceCommunication
         /// Property for TcpClient member
         /// </summary>
         public TcpClient Client => _client;
+
+        public bool IsConnect => _isConnect;
     }
 }

@@ -42,7 +42,7 @@ namespace ImageService.Server
                     bool result;
                     string[] args = { dir };
                     m_controller.ExecuteCommand((int)CommandEnum.CloseCommand, args, out result);
-                    m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.FAIL);
+                    m_logging.Log("Not such file or directory: " + dir, MessageTypeEnum.WARNING);
                 }
             }
 
@@ -99,6 +99,7 @@ namespace ImageService.Server
             string[] info = { msg.Status.ToString(), msg.Message };
             CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
             serverChannel.SendToAll(msgC.ToJson());
+            System.Threading.Thread.Sleep(100);
         }
 
         /// <summary>

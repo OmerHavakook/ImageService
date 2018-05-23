@@ -11,6 +11,11 @@ namespace ImageServiceInfrastructure.Event
     public class NewClientEventArgs:EventArgs
     {
         private TcpClient _client;
+        
+        /// <summary>
+        /// c'tor
+        /// </summary>
+        /// <param name="client"></param> TcpClient
         public NewClientEventArgs(TcpClient client)
         {
             _client = client;

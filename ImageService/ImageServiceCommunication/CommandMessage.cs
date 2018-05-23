@@ -86,7 +86,6 @@ namespace ImageServiceCommunication
         {
             try
             {
-                System.Console.WriteLine(str);
                 JObject cmdObj = JObject.Parse(str);
                 JArray cmdArg = (JArray)cmdObj["Args"];
                 string[] args = cmdArg.Select(c => (string)c).ToArray();
