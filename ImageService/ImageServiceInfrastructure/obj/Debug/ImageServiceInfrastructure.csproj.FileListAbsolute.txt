@@ -30,3 +30,4 @@ C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\obj\Debug\ImageSer
 C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.exe
 C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.pdb
 C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.csprojResolveAssemblyReference.cache
