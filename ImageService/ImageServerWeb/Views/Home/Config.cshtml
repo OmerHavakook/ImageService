@@ -1,0 +1,18 @@
+﻿@model ImageServerWeb.Models.ConfigModel
+@{
+    ViewBag.Title = "Config";
+}
+
+<h2>@Model.Connected</h2>
+<h2>@Model.OutputDirectory</h2>
+<h2>@Model.LogName</h2>
+<h2>@Model.SourceName</h2>
+<h2>@Model.ThumbnailSize</h2>
+@if(@Model.Handlers.Count != 0)
+{
+    for (int i=0; i<@Model.Handlers.Count;i++)
+    {
+
+   <h2>@Html.ActionLink(@Model.Handlers[i], "RemoveHandler",new { id = i }) </h2>
+    }
+}

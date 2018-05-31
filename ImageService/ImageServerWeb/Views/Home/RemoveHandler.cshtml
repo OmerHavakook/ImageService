@@ -1,0 +1,15 @@
+﻿@model ImageServerWeb.Models.ConfigModel
+@{
+    ViewBag.Title = "RemoveHandler";
+}
+
+<h2>RemoveHandler</h2>
+<button type="button"  id="ok" style="margin:10px">ok </button>
+<button type="button" id="cancel" style="margin:10px">cancel </button>
+
+
+<script>
+    $("#ok").click(function () {
+        @{ Model.OnRemove();}
+    });
+</script>
