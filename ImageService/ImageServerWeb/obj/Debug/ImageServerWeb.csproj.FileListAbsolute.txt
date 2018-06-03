@@ -45,8 +45,8 @@ C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\obj\Debug\ImageServerWeb.dll
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\obj\Debug\ImageServerWeb.pdb
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\ImageServiceCommunication.exe
-C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\ImageServiceInfrastructure.exe
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\Newtonsoft.Json.dll
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\ImageServiceCommunication.pdb
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\ImageServiceInfrastructure.pdb
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\Newtonsoft.Json.xml
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\ImageServiceInfrastructure.dll

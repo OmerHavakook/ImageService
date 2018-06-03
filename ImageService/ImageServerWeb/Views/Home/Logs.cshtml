@@ -1,0 +1,71 @@
+﻿@model ImageServerWeb.Models.LogModel
+@{
+    ViewBag.Title = "Logs";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<h2>Logs</h2>
+<input id="myInput" type="text" placeholder="choose type..">
+
+<br><br>
+
+<table>
+    <thead>
+        <tr>
+            <th> Type </th>
+            <th> Log </th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+    @if (Model.Messages.Count != 0)
+    {
+        for (int i = 0; i < Model.Messages.Count; i++)
+        {
+            <tr>
+                <td class="depCode">@Model.Messages[i].Status.ToString()</td>
+                <td>@Model.Messages[i].Message</td>
+            </tr>
+        }
+    }
+    </tbody>
+   
+</table>
+
+
+
+<script>
+    $(document).ready(function() {
+        $("input").keyup(function () {
+            var data = this.value;
+            var rows = $("tbody").find("tr");
+            if (data == '') {
+                rows.show();
+            } else {
+                rows.hide();
+                rows.filter(function() {
+                    var columnValue = $(this).find('.depCode').text().toLowerCase();
+                    var other = data.toLowerCase();
+                    return columnValue.indexOf(other) == 0;
+                }).show();
+            }
+        });
+    });
+</script>

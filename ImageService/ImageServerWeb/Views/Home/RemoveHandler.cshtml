@@ -19,11 +19,9 @@
                 Model.OnRemove();
                 while (!Model.IsRemoved)
                 {}
-                
-
             }
-            var varURL = '@Url.Action("Config","Home")';
-            window.location.href = varURL;
+            var varUrl = '@Url.Action("Config","Home")';
+            window.location.href = varUrl;
 
         });
     });

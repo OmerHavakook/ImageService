@@ -8,6 +8,8 @@ namespace ImageServerWeb.Controllers
 
         static HomePageModel mainModel = new HomePageModel();
         static ConfigModel configModel = new ConfigModel();
+        static LogModel logModel = new LogModel();
+
 
         // GET: Home
         public ActionResult Index()
@@ -27,6 +29,12 @@ namespace ImageServerWeb.Controllers
         {
             configModel.SelectedItem = configModel.Handlers[id];
             return View(configModel);
+        }
+
+        public ActionResult Logs()
+        {
+            logModel.Initialize();
+            return View(logModel);
         }
     }
 }
