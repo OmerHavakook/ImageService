@@ -3,13 +3,29 @@
     ViewBag.Title = "RemoveHandler";
 }
 
-<h2>RemoveHandler</h2>
+<h2 id="remove">RemoveHandler</h2>
 <button type="button"  id="ok" style="margin:10px">ok </button>
 <button type="button" id="cancel" style="margin:10px">cancel </button>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 <script>
-    $("#ok").click(function () {
-        @{ Model.OnRemove();}
+    $(document).ready(function() {
+
+        $("#ok").click(function (e) {
+            e.preventDefault();
+            $("#ok").attr("disabled", true);
+            $("#cancel").attr("disabled", true);
+            @{
+                Model.OnRemove();
+                while (!Model.IsRemoved)
+                {}
+                
+
+            }
+            var varURL = '@Url.Action("Config","Home")';
+            window.location.href = varURL;
+
+        });
     });
+
 </script>

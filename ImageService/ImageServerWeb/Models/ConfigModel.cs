@@ -17,6 +17,8 @@ namespace ImageServerWeb.Models
             Handlers = new List<string>();
         }
 
+        public bool IsRemoved { get; set; }
+
         public void Initialize()
         {
             TcpClient client = TcpClient.Instance;
@@ -77,6 +79,7 @@ namespace ImageServerWeb.Models
         public void removeHandler(string handler)
         {
             this.Handlers.Remove(handler);
+           IsRemoved = true;
         }
 
         public void InitializeConfig(string[] settings)
@@ -104,11 +107,12 @@ namespace ImageServerWeb.Models
 
         public void OnRemove()
         {
+            IsRemoved = false;
             string[] args = { SelectedItem };
             CommandMessage msg = new CommandMessage((int)CommandEnum.CloseCommand, args);
             TcpClient instance = TcpClient.Instance;
             instance.Channel.Write(msg.ToJson());
-            System.Threading.Thread.Sleep(1000);
+            
         }
 
         public List<string> Handlers { get; set; }
