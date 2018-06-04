@@ -1,0 +1,32 @@
+﻿@model ImageServerWeb.Models.ImagesModel
+@{
+    ViewBag.Title = "Images";
+}
+
+@for(int i=0;i<@Model.Images.Count;i++){
+<div class="card mb-3" >
+	<h3 class="card-header">@Model.Images[i].Name</h3>
+	<div class="card-body">
+	</div>
+	
+	<img src="data:image/gif;base64,@Model.Base64(@Model.Images[i].Path)" alt=@Model.Images[i].Name height="120" width="120">	<canvas id="myCanvas">
+		</canvas>
+	<div class="card-body">
+		<p class="card-text">@Model.Images[i].Date</p>
+	</div>
+	<div class="card-body">
+		<button type="button"  id="View" style="margin:10px">View </button>
+		<button type="button" id="Remove" style="margin:10px">Remove </button>
+	</div>
+</div>
+
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+var img = document.getElementById("preview");
+ctx.drawImage(img, 10, 10);
+alert(c.toDataURL());
+</script>
+
+										 }

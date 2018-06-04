@@ -19,3 +19,16 @@ Affected parameters are:
    logtoconsole = 
    logfile = C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Release\imageService.InstallLog
    assemblypath = C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\bin\Release\imageService.exe
+Installing assembly 'C:\Users\DELL\Desktop\ImageService\bin\Release\imageService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\DELL\Desktop\ImageService\bin\Release\imageService.InstallLog
+   assemblypath = C:\Users\DELL\Desktop\ImageService\bin\Release\imageService.exe
+Installing service ImageService...
+Service ImageService has been successfully installed.
+Creating EventLog source ImageService in log Application...
+Committing assembly 'C:\Users\DELL\Desktop\ImageService\bin\Release\imageService.exe'.
+Affected parameters are:
+   logtoconsole = 
+   logfile = C:\Users\DELL\Desktop\ImageService\bin\Release\imageService.InstallLog
+   assemblypath = C:\Users\DELL\Desktop\ImageService\bin\Release\imageService.exe

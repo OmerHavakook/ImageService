@@ -15,6 +15,7 @@ namespace ImageServerWeb.Models
             TcpClient client = TcpClient.Instance;
             client.Channel.MessageRecived += GetMessageFromServer;
             Handlers = new List<string>();
+            OutputDirectory = null;
         }
 
         public bool IsRemoved { get; set; }
@@ -93,7 +94,8 @@ namespace ImageServerWeb.Models
 
                 for (int i = 4; i < settings.Length; i++)
                 {
-                    Handlers.Add(settings[i]);
+                    if (settings[i] != null)
+                        Handlers.Add(settings[i]);
                 }
 
             }
