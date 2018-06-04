@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="ImageServiceGUI.Views.Logs"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:convertors="clr-namespace:ImageServiceGUI"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="600">
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
+        <Label Content="Logs" FontStyle="Italic" FontWeight="Bold" Foreground="Teal" FontSize="40" HorizontalAlignment="Center" DockPanel.Dock="Top"/>
+        <DataGrid ItemsSource="{Binding VM_Messages}" AutoGenerateColumns="False" CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" ScrollViewer.CanContentScroll="True" >
+            <DataGrid.Resources>
+                <convertors:PickColor x:Key="PickColor"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type" FontStyle="Italic" IsReadOnly="True" Binding="{Binding Path=Status}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Background" Value="{Binding Path=Status, Converter={StaticResource PickColor}}">
+                            </Setter>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Message" FontStyle="Italic" Width="*" IsReadOnly="True" Binding="{Binding Message}" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </DockPanel>
+
+
+
+</UserControl>
