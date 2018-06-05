@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using ImageServiceInfrastructure.Enums;
 using ImageServiceInfrastructure.Event;
+using System.ComponentModel.DataAnnotations;
 
 namespace ImageServerWeb.Models
 {
@@ -17,6 +18,8 @@ namespace ImageServerWeb.Models
             Messages = new List<MessageRecievedEventArgs>();
         }
 
+        [Required]
+        [Display(Name = "Messages")]
         public List<MessageRecievedEventArgs> Messages { get; set; }
 
         private void GetMessageFromServer(object sender, DataCommandArgs info)
@@ -59,9 +62,6 @@ namespace ImageServerWeb.Models
                 return TcpClient.Instance.Connected;
             }
         }
-
-
-
 
     }
 }

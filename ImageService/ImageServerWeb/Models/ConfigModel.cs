@@ -4,6 +4,7 @@ using ImageServiceInfrastructure.Enums;
 using ImageServiceInfrastructure.Event;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Configuration;
 
 namespace ImageServerWeb.Models
@@ -18,6 +19,8 @@ namespace ImageServerWeb.Models
             OutputDirectory = null;
         }
 
+        [Required]
+        [Display(Name = "IsRemoved")]
         public bool IsRemoved { get; set; }
 
         public void Initialize()
@@ -27,6 +30,8 @@ namespace ImageServerWeb.Models
             System.Threading.Thread.Sleep(300); 
         }
 
+        [Required]
+        [Display(Name = "SelectedItem")]
         public string SelectedItem { get; set; }
 
         public bool Connected
@@ -37,24 +42,29 @@ namespace ImageServerWeb.Models
             }
         }
 
+        [Required]
+        [Display(Name = "OutputDirectory")]
         /// <summary>
         /// Property for _mOutputDirectory
         /// </summary>
         public string OutputDirectory { get; set; }
 
-
+        [Required]
+        [Display(Name = "SourceName")]
         /// <summary>
         /// Property for _mSourceName
         /// </summary>
         public string SourceName { get; set; }
 
-
+        [Required]
+        [Display(Name = "LogName")]
         /// <summary>
         /// Property for _mLogName
         /// </summary>
         public string LogName { get; set; }
 
-
+        [Required]
+        [Display(Name = "ThumbnailSize")]
         /// <summary>
         /// Property for _mThumbnailSize
         /// </summary>
@@ -117,6 +127,8 @@ namespace ImageServerWeb.Models
             
         }
 
+        [Required]
+        [Display(Name = "Handlers")]
         public List<string> Handlers { get; set; }
     }
 }

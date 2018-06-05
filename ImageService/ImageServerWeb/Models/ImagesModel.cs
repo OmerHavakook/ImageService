@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -76,8 +77,12 @@ namespace ImageServerWeb.Models
             }
         }
 
+        [Required]
+        [Display(Name = "OutputDirectory")]
         public string OutputDirectory { get; set; }
 
+        [Required]
+        [Display(Name = "Images")]
         public List<SavedImages> Images { get; set; }
     }
 }

@@ -11,7 +11,6 @@ namespace ImageServerWeb.Controllers
         static LogModel logModel = new LogModel();
         static ImagesModel imagesModel = new ImagesModel();
 
-
         // GET: Home
         public ActionResult Index()
         {

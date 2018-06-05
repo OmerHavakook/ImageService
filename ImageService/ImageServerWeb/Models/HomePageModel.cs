@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.ServiceProcess;
 using System.Text;
@@ -43,8 +44,13 @@ namespace ImageServerWeb.Models
             get;
             set;
         }
+
+        [Required]
+        [Display(Name = "NumOfImages")]
         public int NumOfImages { get; set; }
 
+        [Required]
+        [Display(Name = "Status")]
         public string Status { get; set; }
 
         public List<List<String>> ReadInfo()
