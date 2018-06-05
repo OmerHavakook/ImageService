@@ -5,27 +5,50 @@
 
 <link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
 
-<div  class="card text-white bg-primary mb-3" style="max-width: 20rem;float: left">
-    <div class="card-header">Header</div>
-    <div class="card-body">
-        <h4 class="card-title">Etc :</h4>
-        <p class="card-text" style="white-space: pre-line">@Model.Etc</p>
-    </div>
+<div class="card border-secondary mb-3" style="max-width: 20rem;margin-left: 45px;margin-top:auto ;float: left"" >
+	<div class="card-header">Etc:</div>
+	<div class="card-body">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>First Name </th>
+					<th>Family Name </th>
+					<th>ID </th>
+
+				</tr>
+			</thead>
+			<tbody id="myTable">
+				@if (Model.Students.Count != 0)
+				{
+				for (int i = 0; i < Model.Students.Count; i++)
+				{
+				{
+				<tr class="table-light">
+					<td>@Model.Students[i][0]</td>
+					<td>@Model.Students[i][1]</td>
+					<td>@Model.Students[i][2]</td>
+
+				</tr>
+				}
+
+				}
+				}
+			</tbody>
+
+		</table>
+	</div>
 </div>
 
-<div class="card text-white bg-info mb-3" style="max-width: 20rem; margin-left: 45px; float: left">
-    <div class="card-header">Header</div>
+<div class="card border-secondary mb-3" style="max-width: 20rem; margin-left: 45px;">
+	<div class="card-header">Number Of Photos:</div>
+	<div class="card-body">
+		<p class="card-text">@Model.NumOfImages</p>
+	</div>
+</div>
+
+<div class="card border-secondary mb-3" style="max-width: 20rem; margin-left: 45px;">
+    <div class="card-header">Image Service Status:</div>
     <div class="card-body">
-        <h4 class="card-title">Image Service Status:</h4>
         <p class="card-text">@Model.Status</p>
     </div>
 </div>
-
-<div class="card text-white bg-warning mb-3" style = "max-width: 20rem; margin-left: 45px;">
-    <div class="card-header">Header</div>
-    <div class="card-body">
-        <h4 class="card-title">Number Of Photos:</h4>
-        <p class="card-text">@Model.NumOfImages</p>
-    </div>
-</div>
-

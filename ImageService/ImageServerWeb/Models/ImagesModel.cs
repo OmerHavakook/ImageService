@@ -38,6 +38,7 @@ namespace ImageServerWeb.Models
             string name;
             string path;
             DateTime imageDate;
+            Images.Clear();
             if (Directory.Exists(OutputDirectory))
             {
                 paths = Directory.GetFiles(OutputDirectory, "*", SearchOption.AllDirectories);

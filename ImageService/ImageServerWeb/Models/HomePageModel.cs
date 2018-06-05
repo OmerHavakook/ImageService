@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.ServiceProcess;
 using System.Text;
@@ -17,9 +18,14 @@ namespace ImageServerWeb.Models
 
         public void Initialize()
         {
-
-            Status = new ServiceController("ImageService").Status == ServiceControllerStatus.Running;
-            Etc = ReadInfo();
+            if (new ServiceController("ImageService").Status == ServiceControllerStatus.Running)
+            {
+                Status = "Active";
+            } else
+            {
+                Status = "Not active";
+            }
+            Students = ReadInfo();
         }
 
         public void countImages(string path)
@@ -31,7 +37,7 @@ namespace ImageServerWeb.Models
             }
         }
 
-        public string Etc
+        public List<List<String>> Students
         {
             
             get;
@@ -39,26 +45,25 @@ namespace ImageServerWeb.Models
         }
         public int NumOfImages { get; set; }
 
-        public bool Status { get; set; }
+        public string Status { get; set; }
 
-        public string ReadInfo()
+        public List<List<String>> ReadInfo()
         {
+            List<List<String>> students = new List<List<String>>{ new List<String> { }, new List<String> { },
+            };
             string fileName = HttpContext.Current.Server.MapPath("~/App_Data/Info.txt");
-
             string[] lines = System.IO.File.ReadAllLines(fileName);
 
-            //var fileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder), "info.txt");
-            //System.Console.WriteLine(fileName);
-            //string[] lines = System.IO.File.ReadAllLines(@"C:\Users\DELL\Desktop\ImageService\ImageServerWeb\App_Data\Info.txt");
+            for(int i = 0; i < lines.Length; i++)
+            {
+                string[] student = lines[i].Split(' ');
 
-            StringBuilder sb = new StringBuilder();
-            sb.Append(lines[0]);
-            sb.Append("\n");
-            sb.Append(lines[1]);
-            Etc = sb.ToString();
-
-            return Etc;
-
+                for (int j = 0; j < student.Length; j++)
+                {
+                    students[i].Add(student[j]);
+                }
+            }
+            return students;
         }
 
     }

@@ -5,74 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-journal.css" renl="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#">Image Web</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                
-                <a class="nav-link" href="@Url.Action("Index", "Home")">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Config", "Home")">Config</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="@Url.Action("Logs", "Home")">Logs</a>
-            </li>
-			<li class="nav-item">
-				<a class="nav-link" href="@Url.Action("Images", "Home" )">Images</a>
-			</li>
-        </ul>
-    </div>
-</nav>
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Navbar</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" style="">
+			<span class="navbar-toggler-icon"></span>
+		</button>
 
-@*<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
+		<div class="collapse navbar-collapse" id="navbarColor02">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="@Url.Action("Index", "Home" )">Home <span class="sr-only">(current)</span></a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="@Url.Action("Config", "Home" )">Config</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="@Url.Action("Logs", "Home" )">Logs</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="@Url.Action("Images", "Home" )">Images</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
 
-            @Html.ActionLink("Application name", "Index", "Home", new {area = ""}, new {@class = "navbar-brand"})
-        </div>
-        <div class="collapse navbar-collapse" id="navbarColor01">
-
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    @Html.ActionLink("Home", "Index", "Home")
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-            </ul>
-            $1$<ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Config", "Config", "Home")</li>\
-                    <li>@Html.ActionLink("Logs", "Logs", "Home")</li>
-                    $2$<li>@Html.ActionLink("Details", "Details", "First")</li>
-                    <li>@Html.ActionLink("AjaxView", "AjaxView", "First")</li>#2#
-                </ul>#1#
-        </div>
-    </div>
-</div>
-
-*@
     <div class="container body-content">
         @RenderBody()
         <hr />
