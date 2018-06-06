@@ -20,17 +20,6 @@ namespace ImageServerWeb.Models
         {
             OutputDirectory = null;
             Images = new List<SavedImages>();
-            /*string path = @"C:\Users\User\Desktop\exitBtn.jpg";
-            //Image image = Image.FromFile(path);
-            DateTime imageDate = GetDateTakenFromImage(path);
-
-            SavedImages imageS = new SavedImages(path, "Lee", imageDate);
-           
-            Images.Add(imageS);
-            SavedImages imageSO = new SavedImages(path, "Omi", imageDate);
-
-            Images.Add(imageSO);*/
-
         }
 
         public void initialize()
@@ -40,9 +29,10 @@ namespace ImageServerWeb.Models
             string path;
             DateTime imageDate;
             Images.Clear();
-            if (Directory.Exists(OutputDirectory))
+            string dir = OutputDirectory + "\\Thumbnails";
+            if (Directory.Exists(dir))
             {
-                paths = Directory.GetFiles(OutputDirectory, "*", SearchOption.AllDirectories);
+                paths = Directory.GetFiles(dir, "*", SearchOption.AllDirectories);
                 for (int i = 0; i < paths.Length; i++)
                 {
                     path = paths[i];

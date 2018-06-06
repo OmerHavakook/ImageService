@@ -1,28 +1,12 @@
-﻿@ImageServerWeb.Models.ImagesModel
+﻿@model ImageServerWeb.Models.ImagesModel
 @{
     ViewBag.Title = "RemoveImage";
 }
 
 <link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
-
-
-<h2 id="remove">RemoveHandler</h2>
-<button type="button" class="btn btn-primary" id="ok" style="margin:10px">ok </button>
-<button type="button" id="cancel" class="btn btn-secondary" style="margin:10px">cancel </button>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
-	<h3 class="card-header">@Model.SelectedItem.Name</h3>
-	<div class="card-body">
-	</div>
 
-	<img src="data:image/gif;base64,@Model.Base64(@Model.SelectedItem.Path)" class="img-circle" alt=@SelectedItem.Name>
-	<canvas id="myCanvas"> </canvas>
-	<div class="card-body">
-		<p class="card-text">@Model.SelectedItem.Date</p>
-	</div>
-	<div class="card-body">
-		<button type="button" class="btn btn-info" id="View" style="margin:10px">View </button>
-		<button type="button" class="btn btn-primary" id="Remove" style="margin:10px"> @Html.ActionLink("Remove, "RemoveImage",new { id = i }) </button>
-	</div>
-</div>
+<h2 id="remove">RemoveImage</h2>
+<button type="button" id="cancel" class="btn btn-primary" style="margin:10px">Delete </button>
+
