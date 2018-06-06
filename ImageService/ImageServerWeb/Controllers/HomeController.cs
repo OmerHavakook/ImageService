@@ -47,6 +47,11 @@ namespace ImageServerWeb.Controllers
             return View(imagesModel);
         }
 
-
+        public ActionResult RemoveImage(int id)
+        {
+            imagesModel.SelectedItem = imagesModel.Images[id];
+            return View();
+        }
+        
     }
 }

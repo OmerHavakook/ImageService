@@ -170,6 +170,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\Logs.cshtml" />
     <Content Include="Views\Home\Images.cshtml" />
+    <Content Include="Views\Home\RemoveImage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

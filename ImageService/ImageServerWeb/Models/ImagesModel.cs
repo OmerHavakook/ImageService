@@ -54,6 +54,10 @@ namespace ImageServerWeb.Models
             }  
         }
 
+        [Required]
+        [Display(Name = "SelectedItem")]
+        public SavedImages SelectedItem { get; set; }
+
         public string Base64(string path)
         {
             byte[] bytes = File.ReadAllBytes(path);
