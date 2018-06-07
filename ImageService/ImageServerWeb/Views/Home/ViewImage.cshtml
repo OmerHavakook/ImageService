@@ -1,0 +1,17 @@
+﻿@model ImageServerWeb.Models.ImagesModel
+@{
+    ViewBag.Title = "ViewImage";
+}
+
+<h2>ViewImage</h2>
+<link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+<div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
+    <h3 class="card-header">@Model.SelectedItem.Name</h3>
+    <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ImagePath)" class="img-circle" alt=@Model.SelectedItem.Name>
+    <div class="card-body">
+        <button type="button" class="btn btn-primary" id="Remove" style="margin: 10px">@Html.ActionLink("Delete", "RemoveImage", new {id = Model.Images.IndexOf(Model.SelectedItem)}) </button>
+    </div>
+</div>
+

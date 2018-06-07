@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\Info.txt" />
+    <Content Include="App_Data\Lee.jpg" />
     <Content Include="Content\bootstrap-journal.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -171,6 +172,7 @@
     <Content Include="Views\Home\Logs.cshtml" />
     <Content Include="Views\Home\Images.cshtml" />
     <Content Include="Views\Home\RemoveImage.cshtml" />
+    <Content Include="Views\Home\ViewImage.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

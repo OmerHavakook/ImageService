@@ -32,7 +32,6 @@ namespace ImageServerWeb.Controllers
         public ActionResult Config()
         {
             ConfigModel.Initialize();
-            
             return View(ConfigModel);
 
         }
@@ -61,6 +60,11 @@ namespace ImageServerWeb.Controllers
             ImagesModel.SelectedItem = ImagesModel.Images[id];
             return View(ImagesModel);
         }
-        
+
+        public ActionResult ViewImage(int id)
+        {
+            ImagesModel.SelectedItem = ImagesModel.Images[id];
+            return View(ImagesModel);
+        }
     }
 }

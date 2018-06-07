@@ -9,11 +9,8 @@
 <h2 id="remove">RemoveImage</h2>
 <div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
     <h3 class="card-header">@Model.SelectedItem.Name</h3>
-    <div class="card-body">
-    </div>
 
-    <img src="data:image/gif;base64,@Model.Base64(Model.SelectedItem.ThumbPath)" class="img-circle" alt=@Model.SelectedItem.Name>
-    <canvas id="myCanvas"> </canvas>
+    <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ThumbPath)" class="img-circle" alt=@Model.SelectedItem.Name>
     <div class="card-body">
         <h3>Are you sure you want to delete the image?"</h3>
         <button type="button" class="btn btn-primary" id="Delete" style="margin:10px">Delete</button>

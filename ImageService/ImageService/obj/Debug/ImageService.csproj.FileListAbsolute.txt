@@ -61,3 +61,9 @@ C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServic
 C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageService\ImageService\obj\Debug\ImageService.pdb
 C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.csprojAssemblyReference.cache
 C:\Users\DELL\Desktop\ImageService\ImageService\obj\Debug\ImageService.csproj.CopyComplete
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\bin\Release\ImageService.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\bin\Release\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\bin\Release\ImageService.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageService\obj\Debug\ImageService.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageService\obj\Debug\ImageService.pdb

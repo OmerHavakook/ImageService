@@ -76,3 +76,15 @@ C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServic
 C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageService\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.csprojResolveAssemblyReference.cache
 C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageService\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.exe
 C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageService\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\ImageServiceCommunication.exe.config
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\ImageServiceCommunication.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\ImageServiceCommunication.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\ImageServiceInfrastructure.dll
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\ImageServiceLogging.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\Newtonsoft.Json.dll
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\ImageServiceInfrastructure.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\ImageServiceLogging.pdb
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\bin\Debug\Newtonsoft.Json.xml
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.pdb

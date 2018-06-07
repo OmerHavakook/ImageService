@@ -497,9 +497,13 @@ mark,
   padding: 0.25rem;
   background-color: #fff;
   border: 1px solid #dee2e6;
-  border-radius: 0.25rem;
+  border-radius: 50%;
   max-width: 100%;
   height: auto;
+}
+
+.img-thumb {
+    border-radius: 50%;
 }
 
 .figure {
@@ -4657,6 +4661,7 @@ input[type="button"].btn-block {
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
   padding: 1.25rem;
+    align-content: center;
 }
 
 .card-title {

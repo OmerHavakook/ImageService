@@ -2,49 +2,35 @@
 @{
     ViewBag.Title = "Images";
 }
+<style type="text/css"></style>
 
 <link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<style>
+    .img {  border-radius: 50%;}
+</style>
 
 
 @for(int i=0;i<@Model.Images.Count;i++){
-<div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
+<div class="card mb-3" style="max-width: 20rem; float: left; max-height: 100rem;">
     <h3 class="card-header">@Model.Images[i].Name</h3>
-    <div class="card-body">
+    <div class="card-body" data-design="@Model.SingleBase64(Model.Images[i].ThumbPath)">
+        <img id="preview" src="data:image/gif;base64,@Model.SingleBase64(@Model.Images[i].ThumbPath)" class="img" alt=@Model.Images[i].Name>
     </div>
 
 
-    <img id="preview" src="data:image/gif;base64,@Model.Base64(@Model.Images[i].ThumbPath)" class="img-circle" alt=@Model.Images[i].Name>
-    <canvas id="leaf"><
-    /canvas>
+    
+   
 
     <div class="card-body">
         <p class="card-text">@Model.Images[i].Date</p>
     </div>
     <div class="card-body">
-        <button type="button" class="btn btn-info" id="View" style="margin:10px">View </button>
+        <button type="button" class="btn btn-info" id="View" style="margin:10px">@Html.ActionLink("View", "ViewImage", new { id = i })  </button>
         <button type="button" class="btn btn-primary" id="Remove" style="margin:10px">@Html.ActionLink("Remove", "RemoveImage", new { id = i }) </button>
     </div>
 </div>
 
-
-<script>
-    var imageObj = new Image();
-    imageObj.src = "data:image/gif;base64,@Model.Base64(@Model.Images[i].ThumbPath)";
-    var img = document.getElementById("preview");
-    var c = document.getElementById("leaf");
-    var context = c.getContext("2d");
-    img.onload = function () {
-        context.save();
-        context.beginPath();
-        context.moveTo(188, 150);
-        context.quadraticCurveTo(288, 0, 388, 150);
-        context.lineWidth = 10;
-        context.quadraticCurveTo(288, 288, 188, 150);
-        context.lineWidth = 10;
-        context.clip();
-        context.drawImage(imageObj, 10, 50);
-    };
-</script>
 
    
 
