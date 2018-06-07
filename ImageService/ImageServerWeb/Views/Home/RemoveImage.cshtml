@@ -6,7 +6,37 @@
 <link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-
 <h2 id="remove">RemoveImage</h2>
-<button type="button" id="cancel" class="btn btn-primary" style="margin:10px">Delete </button>
+<div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
+    <h3 class="card-header">@Model.SelectedItem.Name</h3>
+    <div class="card-body">
+    </div>
 
+    <img src="data:image/gif;base64,@Model.Base64(Model.SelectedItem.ThumbPath)" class="img-circle" alt=@Model.SelectedItem.Name>
+    <canvas id="myCanvas"> </canvas>
+    <div class="card-body">
+        <h3>Are you sure you want to delete the image?"</h3>
+        <button type="button" class="btn btn-primary" id="Delete" style="margin:10px">Delete</button>
+    </div>
+</div>
+
+
+
+<script>
+    $(document).ready(function() {
+
+        $("#Delete").click(function (e) {
+            e.preventDefault();
+            //$("#Delete").attr("disabled", true);
+            @{
+                File.Delete(Model.SelectedItem.ImagePath);
+                File.Delete(Model.SelectedItem.ThumbPath);
+                Model.Images.Remove(Model.SelectedItem);                   
+            }
+            var varUrl = '@Url.Action("Images", "Home")';
+            window.location.href = varUrl;
+
+        });
+    });
+
+</script>

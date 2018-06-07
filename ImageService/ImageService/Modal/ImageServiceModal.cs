@@ -86,6 +86,7 @@ namespace ImageService.Modal
               m_thumbnailSize, m_thumbnailSize, () => false, IntPtr.Zero))
             {
                 newIm.Save(thumnmailDirPath);
+                File.SetCreationTime(thumnmailDirPath, GetDateTakenFromImage(path));
             }
         }
 

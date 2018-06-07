@@ -6,51 +6,60 @@ namespace ImageServerWeb.Controllers
     public class HomeController : Controller
     {
 
-        static HomePageModel mainModel = new HomePageModel();
-        static ConfigModel configModel = new ConfigModel();
-        static LogModel logModel = new LogModel();
-        static ImagesModel imagesModel = new ImagesModel();
+        static readonly HomePageModel MainModel = new HomePageModel();
+        static readonly ConfigModel ConfigModel = new ConfigModel();
+        static readonly LogModel LogModel = new LogModel();
+        static readonly ImagesModel ImagesModel = new ImagesModel();
 
         // GET: Home
         public ActionResult Index()
         {
-            mainModel.Initialize();
-            mainModel.countImages(configModel.OutputDirectory);
-       
-            return View(mainModel);
-        }
 
+            ConfigModel.Initialize();
+            if (MainModel.Initialize())
+            {
+                while (ConfigModel.OutputDirectory == null)
+                {
+                }
+                MainModel.countImages(ConfigModel.OutputDirectory);
+            }
+            else
+            {
+                MainModel.NumOfImages = 0;
+            }
+            return View(MainModel);
+        }
         public ActionResult Config()
         {
-            configModel.Initialize();
+            ConfigModel.Initialize();
             
-            return View(configModel);
+            return View(ConfigModel);
 
         }
 
         public ActionResult RemoveHandler(int id)
         {
-            configModel.SelectedItem = configModel.Handlers[id];
-            return View(configModel);
+            ConfigModel.SelectedItem = ConfigModel.Handlers[id];
+            return View(ConfigModel);
         }
 
         public ActionResult Logs()
         {
-            logModel.Initialize();
-            return View(logModel);
+            LogModel.Initialize();
+            return View(LogModel);
         }
 
         public ActionResult Images()
         {
-            imagesModel.OutputDirectory = configModel.OutputDirectory;
-            imagesModel.initialize();
-            return View(imagesModel);
+            ImagesModel.OutputDirectory = ConfigModel.OutputDirectory;
+            ImagesModel.initialize();
+            return View(ImagesModel);
         }
 
         public ActionResult RemoveImage(int id)
         {
-            imagesModel.SelectedItem = imagesModel.Images[id];
-            return View();
+            ImagesModel.SelectedItem = ImagesModel.Images[id];
+            return View(ImagesModel);
         }
         
     }

@@ -12,15 +12,18 @@ namespace ImageServerWeb
         private Image image;
         private DateTime dateTime;
 
-        public SavedImages(string path, string name, DateTime date)
+        public SavedImages(string thumbPath,string imagePath, string name, DateTime date)
         {
-            this.Path = path;
+            this.ThumbPath = thumbPath;
+            this.ImagePath = imagePath;
             this.Name = name;
             this.Date = date;
         }
 
         public string Name { get; set; }
-        public string Path { get; set; }
+        public string ThumbPath { get; set; }
+
+        public string ImagePath { get; set; }
 
         public DateTime Date { get; set; }
 

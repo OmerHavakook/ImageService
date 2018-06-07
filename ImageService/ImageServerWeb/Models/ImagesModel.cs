@@ -26,7 +26,8 @@ namespace ImageServerWeb.Models
         {
             string[] paths = null;
             string name;
-            string path;
+            string thumbPath;
+            string imagePath;
             DateTime imageDate;
             Images.Clear();
             string dir = OutputDirectory + "\\Thumbnails";
@@ -35,14 +36,18 @@ namespace ImageServerWeb.Models
                 paths = Directory.GetFiles(dir, "*", SearchOption.AllDirectories);
                 for (int i = 0; i < paths.Length; i++)
                 {
-                    path = paths[i];
-                    imageDate = GetDateTakenFromImage(path);
-                    name = Path.GetFileName(path);
-                    SavedImages image = new SavedImages(path, name, imageDate);
+                    thumbPath = paths[i];
+        
+                    imageDate = File.GetCreationTime(thumbPath);
+                    name = Path.GetFileName(thumbPath);
+                    imagePath = Path.Combine(OutputDirectory, imageDate.Year.ToString(), imageDate.Month.ToString(),name);
+                    SavedImages image = new SavedImages(thumbPath, imagePath,name, imageDate);
                     Images.Add(image);
                 }
             }  
         }
+
+
 
         [Required]
         [Display(Name = "SelectedItem")]
@@ -53,22 +58,6 @@ namespace ImageServerWeb.Models
             byte[] bytes = File.ReadAllBytes(path);
             string base64 = System.Convert.ToBase64String(bytes);
             return base64;
-        }
-
-        public static DateTime GetDateTakenFromImage(string path)
-        {
-            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-            using (Image myImage = Image.FromStream(fs, false, false))
-            {
-                if (myImage.PropertyIdList.Any(p => p == 36867))
-                {
-                    // if there is the date in GetPropertyItem(36867), save it
-                    PropertyItem propItem = myImage.GetPropertyItem(36867);
-                    string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
-                    return DateTime.Parse(dateTaken);
-                } // if no info exists take the creation time
-                return File.GetCreationTime(path);
-            }
         }
 
         [Required]

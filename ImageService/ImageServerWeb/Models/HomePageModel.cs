@@ -17,16 +17,21 @@ namespace ImageServerWeb.Models
             Initialize();
         }
 
-        public void Initialize()
+        public bool Initialize()
         {
+            bool res;
             if (new ServiceController("ImageService").Status == ServiceControllerStatus.Running)
             {
                 Status = "Active";
-            } else
+                res = true;
+            }
+            else
             {
                 Status = "Not active";
+                res = false;
             }
             Students = ReadInfo();
+            return res;
         }
 
         public void countImages(string path)
