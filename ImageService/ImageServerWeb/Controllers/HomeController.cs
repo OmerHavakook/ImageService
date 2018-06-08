@@ -42,6 +42,13 @@ namespace ImageServerWeb.Controllers
             return View(ConfigModel);
         }
 
+        public ActionResult RemoveOk()
+        {
+            ConfigModel.OnRemove();
+
+            return RedirectToAction("Config","Home");
+        }
+
         public ActionResult Logs()
         {
             LogModel.Initialize();

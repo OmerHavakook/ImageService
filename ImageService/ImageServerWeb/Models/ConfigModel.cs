@@ -124,7 +124,8 @@ namespace ImageServerWeb.Models
             CommandMessage msg = new CommandMessage((int)CommandEnum.CloseCommand, args);
             TcpClient instance = TcpClient.Instance;
             instance.Channel.Write(msg.ToJson());
-            
+            while (!IsRemoved)
+            { }
         }
 
         [Required]

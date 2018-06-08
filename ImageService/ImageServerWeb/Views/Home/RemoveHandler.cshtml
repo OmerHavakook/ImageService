@@ -18,14 +18,14 @@
             e.preventDefault();
             $("#ok").attr("disabled", true);
             $("#cancel").attr("disabled", true);
-            @{
-                Model.OnRemove();
-                while (!Model.IsRemoved)
-                {}
-            }
-            var varUrl = '@Url.Action("Config","Home")';
+            var varUrl = '@Url.Action("RemoveOk","Home")';
             window.location.href = varUrl;
 
+        });
+
+        $("#cancel").click(function(e) {
+            var varUrl = '@Url.Action("Config","Home")';
+            window.location.href = varUrl;
         });
     });
 
