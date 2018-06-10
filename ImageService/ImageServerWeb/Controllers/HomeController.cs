@@ -15,10 +15,12 @@ namespace ImageServerWeb.Controllers
         static readonly LogModel LogModel = new LogModel();
         static readonly ImagesModel ImagesModel = new ImagesModel();
 
-        // GET: Home
+        /// <summary>
+        /// The main View
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
-
             ConfigModel.Initialize();
             if (MainModel.Initialize()) // check if service status is active
             {
@@ -34,7 +36,10 @@ namespace ImageServerWeb.Controllers
             return View(MainModel);
         }
 
-        // GET: Config
+        /// <summary>
+        /// Is being called when the user chose to watch the configs
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Config()
         {
             // initilie the config model
@@ -42,7 +47,13 @@ namespace ImageServerWeb.Controllers
             return View(ConfigModel);
         }
 
-        // For removing a handler from the handlers list
+        /// <summary>
+        /// Is being called when the user chose to remove a handler from
+        /// the list of handlers
+        /// </summary>
+        /// <param name="id"></param> the index of specific handler in the
+        /// list of handlers
+        /// <returns></returns>
         public ActionResult RemoveHandler(int id)
         {
             // update the selected item
@@ -50,7 +61,10 @@ namespace ImageServerWeb.Controllers
             return View(ConfigModel);
         }
 
-        // If user chose ok on removing a handler
+        /// <summary>
+        /// Is being called when the user chose ok on removing a handler
+        /// </summary>
+        /// <returns></returns>
         public ActionResult RemoveHandlerOk()
         {
             ConfigModel.OnRemove();
@@ -58,14 +72,20 @@ namespace ImageServerWeb.Controllers
             return RedirectToAction("Config", "Home");
         }
 
-        // GET: Logs
+        /// <summary>
+        /// Is being called when the user chose to watch the list of logs
+        /// </summary>
+        /// <returns></returns> View of logs
         public ActionResult Logs()
         {
             LogModel.Initialize();
             return View(LogModel);
         }
 
-        // GET: Images
+        /// <summary>
+        /// Is being called when the user chose to watch the thumbnails
+        /// </summary>
+        /// <returns></returns> the ImageView
         public ActionResult Images()
         {
             // updae output directory
@@ -74,7 +94,11 @@ namespace ImageServerWeb.Controllers
             return View(ImagesModel);
         }
 
-        // If the user chose to remove an image
+        /// <summary>
+        /// If the user chose to remove an imag
+        /// </summary>
+        /// <param name="id"></param> the index of the image in the list
+        /// <returns></returns> View of confirmation
         public ActionResult RemoveImage(int id)
         {
             // update the selected image
@@ -82,7 +106,11 @@ namespace ImageServerWeb.Controllers
             return View(ImagesModel);
         }
 
-        // If the user chose to view an image
+        /// <summary>
+        /// Is being called when the user chose to view an image
+        /// </summary>
+        /// <param name="id"></param> the index of the image in the list
+        /// <returns></returns> View Image
         public ActionResult ViewImage(int id)
         {
             // update the selected image
@@ -90,8 +118,13 @@ namespace ImageServerWeb.Controllers
             return View(ImagesModel);
         }
 
+        /// <summary>
+        /// Is being called whenever the user confirm deleting the image
+        /// </summary>
+        /// <returns></returns> returns to the Image View
         public ActionResult RemoveImageOk()
         {
+            // Deleting images
             System.IO.File.Delete(ImagesModel.SelectedItem.ImagePath);
             System.IO.File.Delete(ImagesModel.SelectedItem.ThumbPath);
             ImagesModel.Images.Remove(ImagesModel.SelectedItem);

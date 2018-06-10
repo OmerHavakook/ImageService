@@ -107,5 +107,19 @@ namespace ImageServerWeb.Models
         [Required]
         [Display(Name = "Images")]
         public List<SavedImages> Images { get; set; }
+
+        /*/// <summary>
+        /// This mehod is being called whenever the user asked
+        /// to remove an handler
+        /// </summary>
+        public void OnRemove()
+        {
+            string[] args = { SelectedItem };
+            CommandMessage msg = new CommandMessage((int)CommandEnum.CloseCommand, args);
+            TcpClient instance = TcpClient.Instance;
+            instance.Channel.Write(msg.ToJson()); // notify the server
+            SpinWait.SpinUntil(() => IsRemoved, 4000);// wait until the service updates the data
+        }*/
+
     }
 }
