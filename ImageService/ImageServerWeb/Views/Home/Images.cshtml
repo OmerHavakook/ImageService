@@ -21,8 +21,11 @@
         <p class="card-text">@Model.Images[i].Date</p>
     </div>
     <div class="card-body">
-        <button type="button" class="btn btn-info" id="View" style="margin:10px">@Html.ActionLink("View", "ViewImage", new { id = i })  </button>
-        <button type="button" class="btn btn-primary" id="Remove" style="margin:10px">@Html.ActionLink("Remove", "RemoveImage", new { id = i }) </button>
+        <button type="button"  onclick="location.href = '@Url.Action("ViewImage", "Home",new { id = i })';"class="btn btn-info" id="View" style="margin:10px">View </button>
+        <button type="button" onclick="location.href='@Url.Action("RemoveImage", "Home",new { id = i })';" class="btn btn-primary" id="Remove" style="margin:10px">Delete</button>
     </div>
 </div>
 }
+
+<br/>
+<br style="float: bottom"/>

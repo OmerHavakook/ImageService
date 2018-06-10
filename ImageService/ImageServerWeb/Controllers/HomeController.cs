@@ -1,4 +1,5 @@
 ﻿using ImageServerWeb.Models;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace ImageServerWeb.Controllers
@@ -22,13 +23,11 @@ namespace ImageServerWeb.Controllers
             if (MainModel.Initialize()) // check if service status is active
             {
                 // wait until data changes
-                while (ConfigModel.OutputDirectory == null)
-                {
-                }
+                SpinWait.SpinUntil(() => ConfigModel.OutputDirectory != null, 4000);
                 // count num of images
                 MainModel.countImages(ConfigModel.OutputDirectory);
             }
-            else // if main model is not been initialized
+            else // if service status is not active
             {
                 MainModel.NumOfImages = 0;
             }
@@ -52,13 +51,13 @@ namespace ImageServerWeb.Controllers
         }
 
         // If user chose ok on removing a handler
-        public ActionResult RemoveOk()
+        public ActionResult RemoveHandlerOk()
         {
             ConfigModel.OnRemove();
             // go the config view again
-            return RedirectToAction("Config","Home");
+            return RedirectToAction("Config", "Home");
         }
-        
+
         // GET: Logs
         public ActionResult Logs()
         {
@@ -89,6 +88,14 @@ namespace ImageServerWeb.Controllers
             // update the selected image
             ImagesModel.SelectedItem = ImagesModel.Images[id];
             return View(ImagesModel);
+        }
+
+        public ActionResult RemoveImageOk()
+        {
+            System.IO.File.Delete(ImagesModel.SelectedItem.ImagePath);
+            System.IO.File.Delete(ImagesModel.SelectedItem.ThumbPath);
+            ImagesModel.Images.Remove(ImagesModel.SelectedItem);
+            return RedirectToAction("Images", "Home");
         }
     }
 }

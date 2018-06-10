@@ -10,24 +10,10 @@
 <div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
     <h3 class="card-header">@Model.SelectedItem.Name</h3>
 
-    <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ThumbPath)" class="img-circle" alt=@Model.SelectedItem.Name>
+    <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ThumbPath)" class="img-thumbnail" alt=@Model.SelectedItem.Name>
     <div class="card-body">
         <h3>Are you sure you want to delete the image?"</h3>
-        <button type="button" class="btn btn-primary" id="DeleteRequest" style="margin:10px">Delete</button>
+        <button type="button" onclick="location.href='@Url.Action("RemoveImageOk","Home")';" class="btn btn-primary" id="Remove" style="margin:10px">Delete</button>
+        <button type="button" onclick="location.href='@Url.Action("Images","Home")';" class="btn btn-secondary" id="Cancel" style="margin:10px">Cancel</button>
     </div>
 </div>
-
-<script>
-	$(document).ready(function () {
-		$("#DeleteRequest").click(function (e) {
-            e.preventDefault();
-            @{
-                File.Delete(Model.SelectedItem.ImagePath);
-                File.Delete(Model.SelectedItem.ThumbPath);
-                Model.Images.Remove(Model.SelectedItem);                   
-            }
-            var varUrl = '@Url.Action("Images", "Home")';
-            window.location.href = varUrl;
-        });
-    });
-</script>

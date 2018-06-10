@@ -7,10 +7,11 @@
 <link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
-<div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
+<div class="card mb-3" style="">
     <h3 class="card-header">@Model.SelectedItem.Name</h3>
-    <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ImagePath)" class="img-circle" alt=@Model.SelectedItem.Name>
+    <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ImagePath)" style="width:100%;height:100%;" alt=@Model.SelectedItem.Name>
     <div class="card-body">
-        <button type="button" class="btn btn-primary" id="Remove" style="margin: 10px">@Html.ActionLink("Delete", "RemoveImage", new {id = Model.Images.IndexOf(Model.SelectedItem)}) </button>
+        <button type="button" onclick="location.href='@Url.Action("RemoveImage","Home",new {id = Model.Images.IndexOf(Model.SelectedItem)})';" class="btn btn-primary" id="Remove" style="margin:10px">Delete</button>
+        <button type="button" onclick="location.href='@Url.Action("Images","Home")';" class="btn btn-secondary" id="Return" style="margin:10px">Return</button>
     </div>
 </div>

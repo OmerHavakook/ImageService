@@ -5,7 +5,7 @@ using ImageServiceInfrastructure.Event;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Net.Configuration;
+using System.Threading;
 
 namespace ImageServerWeb.Models
 {
@@ -37,8 +37,8 @@ namespace ImageServerWeb.Models
         public void Initialize()
         {
             TcpClient client = TcpClient.Instance;
-            if (!Connected) { client.Connect();}
-            System.Threading.Thread.Sleep(300); 
+            if (!Connected) { client.Connect(); }
+            System.Threading.Thread.Sleep(300);
         }
 
         /// <summary>
@@ -51,13 +51,7 @@ namespace ImageServerWeb.Models
         /// <summary>
         /// Property
         /// </summary>
-        public bool Connected
-        {
-            get
-            {
-                return TcpClient.Instance.Connected;
-            }
-        }
+        public bool Connected => TcpClient.Instance.Connected;
 
         /// <summary>
         /// Property
@@ -118,7 +112,7 @@ namespace ImageServerWeb.Models
         public void removeHandler(string handler)
         {
             this.Handlers.Remove(handler);
-           IsRemoved = true; // change bool
+            IsRemoved = true; // change bool
         }
 
         /// <summary>
@@ -159,8 +153,7 @@ namespace ImageServerWeb.Models
             CommandMessage msg = new CommandMessage((int)CommandEnum.CloseCommand, args);
             TcpClient instance = TcpClient.Instance;
             instance.Channel.Write(msg.ToJson()); // notify the server
-            while (!IsRemoved) // wait until the service updates the data
-            { }
+            SpinWait.SpinUntil(() => IsRemoved, 4000);// wait until the service updates the data
         }
 
         /// <summary>
