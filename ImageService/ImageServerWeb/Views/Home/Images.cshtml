@@ -17,11 +17,6 @@
     <div class="card-body" data-design="@Model.SingleBase64(Model.Images[i].ThumbPath)">
         <img id="preview" src="data:image/gif;base64,@Model.SingleBase64(@Model.Images[i].ThumbPath)" class="img" alt=@Model.Images[i].Name>
     </div>
-
-
-    
-   
-
     <div class="card-body">
         <p class="card-text">@Model.Images[i].Date</p>
     </div>
@@ -30,8 +25,4 @@
         <button type="button" class="btn btn-primary" id="Remove" style="margin:10px">@Html.ActionLink("Remove", "RemoveImage", new { id = i }) </button>
     </div>
 </div>
-
-
-   
-
-										 }
+}

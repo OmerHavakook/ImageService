@@ -11,18 +11,29 @@ namespace ImageServerWeb.Models
 {
     public class ConfigModel
     {
+        /// <summary>
+        /// c'tor
+        /// </summary>
         public ConfigModel()
         {
+            // creating an instance of the communication channel
             TcpClient client = TcpClient.Instance;
+            // adding the event of the notifications
             client.Channel.MessageRecived += GetMessageFromServer;
-            Handlers = new List<string>();
-            OutputDirectory = null;
+            Handlers = new List<string>(); // creating a list of handlers
+            OutputDirectory = null; // initialize the OutputDirectory to null
         }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "IsRemoved")]
         public bool IsRemoved { get; set; }
 
+        /// <summary>
+        /// Trying to to make a communication with the service
+        /// </summary>
         public void Initialize()
         {
             TcpClient client = TcpClient.Instance;
@@ -30,10 +41,16 @@ namespace ImageServerWeb.Models
             System.Threading.Thread.Sleep(300); 
         }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "SelectedItem")]
         public string SelectedItem { get; set; }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         public bool Connected
         {
             get
@@ -42,34 +59,40 @@ namespace ImageServerWeb.Models
             }
         }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "OutputDirectory")]
-        /// <summary>
-        /// Property for _mOutputDirectory
-        /// </summary>
         public string OutputDirectory { get; set; }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "SourceName")]
-        /// <summary>
-        /// Property for _mSourceName
-        /// </summary>
         public string SourceName { get; set; }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "LogName")]
-        /// <summary>
-        /// Property for _mLogName
-        /// </summary>
         public string LogName { get; set; }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "ThumbnailSize")]
-        /// <summary>
-        /// Property for _mThumbnailSize
-        /// </summary>
         public int? ThumbnailSize { get; set; }
 
+        /// <summary>
+        /// This method is being invoken whenever the server sends
+        /// the TcpChannel msgs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="info"></param>
         public void GetMessageFromServer(object sender, DataCommandArgs info)
         {
             var msg = CommandMessage.FromJson(info.Data);
@@ -87,12 +110,22 @@ namespace ImageServerWeb.Models
             }
         }
 
+        /// <summary>
+        /// This method removes a handler from the list of handlers
+        /// Is being called when the server asks to.
+        /// </summary>
+        /// <param name="handler"></param>
         public void removeHandler(string handler)
         {
             this.Handlers.Remove(handler);
-           IsRemoved = true;
+           IsRemoved = true; // change bool
         }
 
+        /// <summary>
+        /// This method changes the config info
+        /// </summary>
+        /// <param name="settings"></param> data that was sent from
+        /// the user
         public void InitializeConfig(string[] settings)
         {
             try
@@ -101,7 +134,7 @@ namespace ImageServerWeb.Models
                 SourceName = settings[1];
                 LogName = settings[2];
                 ThumbnailSize = int.Parse(settings[3]);
-
+                // adding handlers
                 for (int i = 4; i < settings.Length; i++)
                 {
                     if (settings[i] != null)
@@ -112,22 +145,27 @@ namespace ImageServerWeb.Models
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-
             }
-
         }
 
+        /// <summary>
+        /// This mehod is being called whenever the user asked
+        /// to remove an handler
+        /// </summary>
         public void OnRemove()
         {
             IsRemoved = false;
             string[] args = { SelectedItem };
             CommandMessage msg = new CommandMessage((int)CommandEnum.CloseCommand, args);
             TcpClient instance = TcpClient.Instance;
-            instance.Channel.Write(msg.ToJson());
-            while (!IsRemoved)
+            instance.Channel.Write(msg.ToJson()); // notify the server
+            while (!IsRemoved) // wait until the service updates the data
             { }
         }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "Handlers")]
         public List<string> Handlers { get; set; }

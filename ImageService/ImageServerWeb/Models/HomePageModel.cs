@@ -10,17 +10,25 @@ namespace ImageServerWeb.Models
 {
     public class HomePageModel
     {
-
+        /// <summary>
+        /// c'tor
+        /// </summary>
         public HomePageModel()
         {
             NumOfImages = 0;
             Initialize();
         }
 
+        /// <summary>
+        /// Getting the status from the service and reading the information
+        /// about the students
+        /// </summary>
+        /// <returns></returns>
         public bool Initialize()
         {
             bool res;
-            if (new ServiceController("ImageService").Status == ServiceControllerStatus.Running)
+            if (new ServiceController("ImageService").Status ==
+                ServiceControllerStatus.Running)
             {
                 Status = "Active";
                 res = true;
@@ -34,30 +42,47 @@ namespace ImageServerWeb.Models
             return res;
         }
 
+        /// <summary>
+        /// This method counts the number of images in theOutputDirectory
+        /// </summary>
+        /// <param name="path"></param>
         public void countImages(string path)
         {
             if (Directory.Exists(path))
             {
-                NumOfImages = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
-
+                // update the number of images
+                NumOfImages = Directory.GetFiles(path, "*",
+                    SearchOption.AllDirectories).Length;
             }
         }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         public List<List<String>> Students
         {
-            
             get;
             set;
         }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "NumOfImages")]
         public int NumOfImages { get; set; }
 
+        /// <summary>
+        /// Property
+        /// </summary>
         [Required]
         [Display(Name = "Status")]
         public string Status { get; set; }
 
+        /// <summary>
+        /// This method read the details about the students
+        /// </summary>
+        /// <returns></returns>
         public List<List<String>> ReadInfo()
         {
             List<List<String>> students = new List<List<String>>{ new List<String> { }, new List<String> { },

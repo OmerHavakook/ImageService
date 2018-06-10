@@ -13,18 +13,14 @@
     <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ThumbPath)" class="img-circle" alt=@Model.SelectedItem.Name>
     <div class="card-body">
         <h3>Are you sure you want to delete the image?"</h3>
-        <button type="button" class="btn btn-primary" id="Delete" style="margin:10px">Delete</button>
+        <button type="button" class="btn btn-primary" id="DeleteRequest" style="margin:10px">Delete</button>
     </div>
 </div>
 
-
-
 <script>
-    $(document).ready(function() {
-
-        $("#Delete").click(function (e) {
+	$(document).ready(function () {
+		$("#DeleteRequest").click(function (e) {
             e.preventDefault();
-            //$("#Delete").attr("disabled", true);
             @{
                 File.Delete(Model.SelectedItem.ImagePath);
                 File.Delete(Model.SelectedItem.ThumbPath);
@@ -32,8 +28,6 @@
             }
             var varUrl = '@Url.Action("Images", "Home")';
             window.location.href = varUrl;
-
         });
     });
-
 </script>
