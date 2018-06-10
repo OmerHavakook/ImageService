@@ -5,12 +5,19 @@
 
 <link href="~/Content/bootstrap-journal.css" rel="stylesheet" type="text/css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<style>
+	.img {  border-radius: 50%;}
+</style>
+
 
 <h2 id="remove">RemoveImage</h2>
 <div class="card mb-3" style="max-width: 20rem; float: left; max-height: 40rem;">
     <h3 class="card-header">@Model.SelectedItem.Name</h3>
+	
+	<div class="card-body" data-design="@Model.SingleBase64(Model.SelectedItem.ThumbPath)">
+		<img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ThumbPath)" class="img-thumbnail" alt=@Model.SelectedItem.Name>
+	</div>
 
-    <img src="data:image/gif;base64,@Model.SingleBase64(Model.SelectedItem.ThumbPath)" class="img-thumbnail" alt=@Model.SelectedItem.Name>
     <div class="card-body">
         <h3>Are you sure you want to delete the image?"</h3>
         <button type="button" onclick="location.href='@Url.Action("RemoveImageOk","Home")';" class="btn btn-primary" id="Remove" style="margin:10px">Delete</button>
