@@ -125,9 +125,9 @@ namespace ImageServerWeb.Controllers
         public ActionResult RemoveImageOk()
         {
             // Deleting images
-            System.IO.File.Delete(ImagesModel.SelectedItem.ImagePath);
-            System.IO.File.Delete(ImagesModel.SelectedItem.ThumbPath);
-            ImagesModel.Images.Remove(ImagesModel.SelectedItem);
+            /*System.IO.File.Delete(ImagesModel.SelectedItem.ImagePath);
+            System.IO.File.Delete(ImagesModel.SelectedItem.ThumbPath);*/
+            ImagesModel.OnRemove(ImagesModel.SelectedItem);
             return RedirectToAction("Images", "Home");
         }
     }

@@ -5,6 +5,7 @@
         NewFileCommand,
         CloseCommand,
         GetConfigCommand,
-        LogCommand
+        LogCommand,
+        DeleteCommand
     }
 }

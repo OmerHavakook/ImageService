@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Text.RegularExpressions;
+using System.Threading;
+using ImageServerWeb.Communication;
+using ImageServiceCommunication;
+using ImageServiceInfrastructure.Enums;
+using ImageServiceInfrastructure.Event;
 
 namespace ImageServerWeb.Models
 {
@@ -13,9 +18,37 @@ namespace ImageServerWeb.Models
         /// </summary>
         public ImagesModel()
         {
+            // creating an instance of the communication channel
+            TcpClient client = TcpClient.Instance;
+            // adding the event of the notifications
+            client.Channel.MessageRecived += GetMessageFromServer;
             OutputDirectory = null;
             // creating a list of SavedImages
             Images = new List<SavedImages>();
+        }
+
+        /// <summary>
+        /// This method is being invoken whenever the server sends
+        /// the TcpChannel msgs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="info"></param>
+        public void GetMessageFromServer(object sender, DataCommandArgs info)
+        {
+            var msg = CommandMessage.FromJson(info.Data);
+            if (msg == null)
+            {
+                return;
+            }
+            if (msg.CommandId == (int)CommandEnum.DeleteCommand) // Delete
+            {
+                if (msg.Args[0].Equals(SelectedItem.ImagePath) &&
+                    msg.Args[1].Equals(SelectedItem.ThumbPath))
+                {
+                    IsRemoved = true;
+                }
+            }
+
         }
 
         /// <summary>
@@ -108,18 +141,30 @@ namespace ImageServerWeb.Models
         [Display(Name = "Images")]
         public List<SavedImages> Images { get; set; }
 
-        /*/// <summary>
+        /// <summary>
         /// This mehod is being called whenever the user asked
         /// to remove an handler
         /// </summary>
-        public void OnRemove()
+        public void OnRemove(SavedImages image)
         {
-            string[] args = { SelectedItem };
-            CommandMessage msg = new CommandMessage((int)CommandEnum.CloseCommand, args);
+            IsRemoved = false;
+            string[] args = { image.ImagePath,image.ThumbPath };
+            CommandMessage msg = new CommandMessage((int)CommandEnum.DeleteCommand, args);
             TcpClient instance = TcpClient.Instance;
             instance.Channel.Write(msg.ToJson()); // notify the server
             SpinWait.SpinUntil(() => IsRemoved, 4000);// wait until the service updates the data
-        }*/
+            if (IsRemoved) // If IsRemoved is true it means than the server deleted the image
+            {
+                Images.Remove(SelectedItem);
+            }
+        }
+
+        /// <summary>
+        /// Property
+        /// </summary>
+        [Required]
+        [Display(Name = "IsRemoved")]
+        public bool IsRemoved { get; set; }
 
     }
 }

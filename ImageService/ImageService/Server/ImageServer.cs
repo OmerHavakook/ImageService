@@ -127,10 +127,42 @@ namespace ImageService.Server
                 // send the msg to all the clients
                 serverChannel.SendToAll(msg.ToJson());
             }
-            else
+            else if (msg.CommandId == (int) CommandEnum.DeleteCommand)
             {
+                DeleteImages(msg.Args);
+            } else {
                 string answer = _mController.ExecuteCommand(msg.CommandId, null, out result);
                 serverChannel.SendToAll(answer);
+            }
+        }
+
+        /// <summary>
+        /// Delete images from folder
+        /// </summary>
+        /// <param name="args"></param>
+        private void DeleteImages(string[] args)
+        {
+            try
+            {
+                if (File.Exists(args[0]))
+                {
+                    System.IO.File.Delete(args[0]);
+                    _mLogging.Log("Deleting " + args[0], MessageTypeEnum.INFO);
+                }
+
+                if (File.Exists(args[1]))
+                {
+                    System.IO.File.Delete(args[1]);
+                    _mLogging.Log("Deleting " + args[1], MessageTypeEnum.INFO);
+                }
+                CommandMessage msg = new CommandMessage((int)CommandEnum.DeleteCommand,args);
+                serverChannel.SendToAll(msg.ToJson());
+
+            }
+            catch (Exception e)
+            {
+                _mLogging.Log(e.ToString(), MessageTypeEnum.INFO);
+
             }
         }
 
