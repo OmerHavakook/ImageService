@@ -208,3 +208,5 @@ C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServer
 C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServerWeb\obj\Debug\ImageServerWeb.dll
 C:\Users\User\Documents\Visual Studio 2015\Projects\GIT\ImageService\ImageServerWeb\obj\Debug\ImageServerWeb.pdb
 C:\Users\DELL\Desktop\ImageService\ImageServerWeb\obj\Debug\ImageServerWeb.csprojResolveAssemblyReference.cache
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\ImageServiceLogging.exe
+C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServerWeb\bin\ImageServiceLogging.pdb

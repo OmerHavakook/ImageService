@@ -1,4 +1,5 @@
 ﻿
+using ImageServiceCommunication.Interfaces;
 using ImageServiceInfrastructure.Event;
 using System;
 using System.IO;
@@ -9,11 +10,9 @@ using System.Threading.Tasks;
 
 namespace ImageServiceCommunication
 {
-    public class ClientHandler
+    public class ClientHandler : IClientHandler
     {
-        // static event!!!
-        public static event EventHandler<DataCommandArgs> MessageRecived;
-
+       
         private readonly TcpClient _client;
         private readonly BinaryReader _reader; // read
         private readonly BinaryWriter _writer; // write
@@ -49,6 +48,8 @@ namespace ImageServiceCommunication
             _writer.Close();
             _client.Close();
         }
+
+        public static event EventHandler<DataCommandArgs> MessageRecived;
 
         /// <summary>
         /// This function starts handling reading msg from the clients

@@ -24,7 +24,6 @@ C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\bin\Debug\ImageSer
 C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.csproj.CoreCompileInputs.cache
 C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.pdb
 C:\Users\DELL\Desktop\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.csprojResolveAssemblyReference.cache
-C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.csprojResolveAssemblyReference.cache
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceInfrastructure\bin\Debug\ImageServiceInfrastructure.dll.config
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceInfrastructure\bin\Debug\ImageServiceInfrastructure.dll
 C:\Users\User\Documents\Visual Studio 2015\Projects\ImageService\ImageServiceInfrastructure\obj\Debug\ImageServiceInfrastructure.dll

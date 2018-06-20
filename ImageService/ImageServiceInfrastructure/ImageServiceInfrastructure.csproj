@@ -51,6 +51,7 @@
     <Compile Include="Enums\MessageTypeEnum.cs" />
     <Compile Include="Event\CommandInfoEventArgs.cs" />
     <Compile Include="Event\CommandRecievedEventArgs.cs" />
+    <Compile Include="Event\MobileCommandArgs.cs" />
     <Compile Include="Event\DataCommandArgs.cs" />
     <Compile Include="Event\DirectoryCloseEventArgs.cs" />
     <Compile Include="Event\MessageRecievedEventArgs.cs" />

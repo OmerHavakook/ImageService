@@ -1,14 +1,14 @@
 ﻿using ImageService.Controller;
 using ImageService.Controller.Handlers;
+using ImageServiceCommunication;
 using ImageServiceInfrastructure.Enums;
 using ImageServiceInfrastructure.Event;
+using ImageServiceLogging;
 using ImageServiceLogging.Logging;
-using ImageServiceCommunication;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using ImageServiceLogging;
 
 namespace ImageService.Server
 {
@@ -19,7 +19,9 @@ namespace ImageService.Server
         private readonly ILoggingService _mLogging;
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;          // The event that notifies about a new Command being recieved
         private TcpServerChannel serverChannel;
+        private TCPMobileServer mobileServer;
         private Object thisLock = new Object();
+        private string[] directories;
 
         /// <summary>
         /// c'tor
@@ -30,7 +32,7 @@ namespace ImageService.Server
         {
             this._mController = m_controller;
             this._mLogging = m_logging;
-            string[] directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
+            directories = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             foreach (string dir in directories)
             {
                 if (Directory.Exists(dir))
@@ -49,10 +51,19 @@ namespace ImageService.Server
             // get comunication details to connect the server
             string ip = ConfigurationManager.AppSettings.Get("Ip");
             int port = Int32.Parse(ConfigurationManager.AppSettings.Get("Port"));
-            serverChannel = new TcpServerChannel(port, ip);
-            serverChannel.NewHandler += OnNewClient; // for new client
-            ClientHandler.MessageRecived += GetMessageFromUser; // for msg from the user
-            serverChannel.Start();
+            int mobilePort = Int32.Parse(ConfigurationManager.AppSettings.Get("MobilePort"));
+           // serverChannel = new TcpServerChannel(port, ip);
+            mobileServer = new TCPMobileServer(mobilePort, ip,_mLogging);
+           // serverChannel.NewHandler += OnNewClient; // for new client
+           // ClientHandler.MessageRecived += GetMessageFromUser; // for msg from the user
+            MobileHandler.DataRecieved += MoveToHandler;
+          //  serverChannel.Start();
+            mobileServer.Start();
+        }
+
+        private void MoveToHandler(object sender, MobileCommandArgs e)
+        {
+            File.WriteAllBytes(directories[0] + "\\" + e.Name + ".png", e.PicBytes);
         }
 
         /// <summary>
@@ -98,7 +109,7 @@ namespace ImageService.Server
         {
             string[] info = { msg.Status.ToString(), msg.Message };
             CommandMessage msgC = new CommandMessage((int)CommandEnum.LogCommand, info);
-            serverChannel.SendToAll(msgC.ToJson());
+            //serverChannel.SendToAll(msgC.ToJson());
             System.Threading.Thread.Sleep(100);
         }
 
@@ -127,10 +138,12 @@ namespace ImageService.Server
                 // send the msg to all the clients
                 serverChannel.SendToAll(msg.ToJson());
             }
-            else if (msg.CommandId == (int) CommandEnum.DeleteCommand)
+            else if (msg.CommandId == (int)CommandEnum.DeleteCommand)
             {
                 DeleteImages(msg.Args);
-            } else {
+            }
+            else
+            {
                 string answer = _mController.ExecuteCommand(msg.CommandId, null, out result);
                 serverChannel.SendToAll(answer);
             }
@@ -155,7 +168,7 @@ namespace ImageService.Server
                     System.IO.File.Delete(args[1]);
                     _mLogging.Log("Deleting " + args[1], MessageTypeEnum.INFO);
                 }
-                CommandMessage msg = new CommandMessage((int)CommandEnum.DeleteCommand,args);
+                CommandMessage msg = new CommandMessage((int)CommandEnum.DeleteCommand, args);
                 serverChannel.SendToAll(msg.ToJson());
 
             }
