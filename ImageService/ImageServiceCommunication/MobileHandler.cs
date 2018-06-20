@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ImageServiceInfrastructure.Enums;
 
 namespace ImageServiceCommunication
 {
@@ -41,43 +42,38 @@ namespace ImageServiceCommunication
             {
                 try
                 {
+                    byte[] picBytes = new byte[4096];
                     while (true)
                     {
-                        byte[] bytes = new byte[4096];
-
-
-                        //read the photo name
-                        int bytesTransfered = m_stream.Read(bytes, 0, bytes.Length);
-                        string picName = Encoding.ASCII.GetString(bytes, 0, bytesTransfered);
-
-                        //read the bytes of pic
-                        int resultRead = m_stream.Read(bytes, 0, bytes.Length);
+                    
+                        int readerCounter = m_stream.Read(picBytes, 0, picBytes.Length);
+                        if (readerCounter == 0 || picBytes == null) // no read or error
+                            break;
+                        // make length
+                        string picLength = Encoding.ASCII.GetString(picBytes, 0, readerCounter);
+                        if (picLength == "End\n")
+                        {
+                            break;
+                        }
+                        // create an array of bytes at the size of the pic
+                        picBytes = new byte[int.Parse(picLength)];
+                        // read from buffer
+                        readerCounter = m_stream.Read(picBytes, 0, picBytes.Length);
+                        // get image name
+                        string picName = Encoding.ASCII.GetString(picBytes, 0, readerCounter);
+                        // read bytes
+                        int resultRead = m_stream.Read(picBytes, 0, picBytes.Length);
                         int temp = resultRead;
                         byte[] current;
-                        int numRead = resultRead;
-                        //while we didnt read all the pic length
-                        while (numRead != 0)
+                        // if more bytes should be readed than continue reading
+                        while (temp < picBytes.Length)
                         {
-                            current = new byte[4096];
-                            numRead = m_stream.Read(current, 0, current.Length);
-                            transferBytes(bytes, current, temp);
-                            temp += numRead;
+                            current = new byte[int.Parse(picLength)];
+                            readerCounter = m_stream.Read(current, 0, current.Length);
+                            addBytes(picBytes, current, temp);
+                            temp += readerCounter;
                         }
-
-                        DataRecieved?.Invoke(this, new MobileCommandArgs(picName, bytes));
-
-
-
-                        /**
-                         * int bytesTransfered = m_stream.Read(bytes, 0, bytes.Length);
-                        string piclen = Encoding.ASCII.GetString(bytes, 0, bytesTransfered);  
-
-
-
-                        byte[] picture = GetPhoto();
-
-                        DataRecieved?.Invoke(this, new MobileCommandArgs(piclen,picture));
-                         */
+                        DataRecieved?.Invoke(this, new MobileCommandArgs(picName, picBytes));
                     }
                 }
                 catch (Exception e)
@@ -85,14 +81,19 @@ namespace ImageServiceCommunication
                     Close();
                 }
             }, m_cancelToken.Token).Start();
-
         }
 
-        public void transferBytes(byte[] origin, byte[] toCopy, int start)
+        /// <summary>
+        /// This function transfer bytes between buffers
+        /// </summary>
+        /// <param name="deliverTo"></param> array of byte to transfer to
+        /// <param name="deliverFrom"></param> array of byte to transfer from
+        /// <param name="start"></param> index
+        public void addBytes(byte[] deliverTo, byte[] deliverFrom, int start)
         {
-            for (int i = start; i < origin.Length; i++)
+            for (int i = start; i < deliverTo.Length; i++)
             {
-                origin[i] = toCopy[i - start];
+                deliverTo[i] = deliverFrom[i - start];
             }
         }
     }
