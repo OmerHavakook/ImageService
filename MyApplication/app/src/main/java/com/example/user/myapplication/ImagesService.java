@@ -98,6 +98,7 @@ public class ImagesService extends Service {
     public void onDestroy(){
         Toast.makeText(this,"Service off...", Toast.LENGTH_LONG).show();
         tcp.closeConnection();
+        unregisterReceiver(this.yourReceiver);
     }
 
 }
