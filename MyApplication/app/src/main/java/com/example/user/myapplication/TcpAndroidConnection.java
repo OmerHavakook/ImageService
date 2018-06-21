@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class is responsible of making the connection with the imageService server
@@ -69,17 +71,20 @@ public class TcpAndroidConnection {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
+                List<File> images = new ArrayList<File>();
                 // get file of images
                 File dcim = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "Camera");
                 if (dcim == null) {
                     return;
                 }
+                // fill images
+                findAllImages(dcim,images);
                 //get the list of images in the dcim
-                File[] pics = dcim.listFiles();
-                double listLength = pics.length;
+                //File[] pics = dcim.listFiles();
+                double listLength = images.size();
                 double count = 0;
-                if (pics != null) {
-                    for (File pic : pics) {
+                if (images != null) {
+                    for (File pic : images) {
                         try {
                             FileInputStream fis = new FileInputStream(pic);
                             Bitmap bm = BitmapFactory.decodeStream(fis);
@@ -96,7 +101,7 @@ public class TcpAndroidConnection {
                                 String fileName = pic.getName();
                                 outputStream.write(fileName.getBytes(), 0, fileName.getBytes().length);
                                 outputStream.flush();
-                                Thread.sleep(120);
+                                Thread.sleep(100);
 
                                 // send image bytes
                                 outputStream.write(imgByte, 0, imageLen);
@@ -131,6 +136,24 @@ public class TcpAndroidConnection {
             }
         });
         thread.start();
+    }
+
+    /**
+     * This function works recursivly and returns all of the images ( even those which are
+     * saved in sub directories)
+     * @return list of files - images
+     */
+    private void findAllImages(File dcim, List<File> images) {
+        File[] files = dcim.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    findAllImages(file, images);
+                } else {
+                    images.add(file);
+                }
+            }
+        }
     }
 
     /**
